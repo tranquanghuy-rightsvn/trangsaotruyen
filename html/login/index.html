@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Đăng Nhập - Trăng Sao Truyện</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../style/style.css">
+</head>
+<body data-root="../" data-page="auth">
+
+<!-- ================= HEADER ================= -->
+<header class="site-header">
+  <div class="header-top">
+    <a href="../index.html" class="logo">
+      <img src="../assets/image.png" alt="Trăng Sao Truyện">
+      <span class="logo-text">Trăng Sao Truyện</span>
+    </a>
+    <div class="search-box">
+      <form role="search">
+        <input type="text" class="search-input" placeholder="Tìm kiếm truyện, tác giả...">
+      </form>
+      <div class="search-results"></div>
+    </div>
+    <nav class="main-nav">
+      <ul class="nav-list">
+        <li><a href="../index.html" class="nav-link">Trang chủ</a></li>
+        <li class="genre-dropdown">
+          <button class="genre-dropdown-toggle" type="button">Thể loại ▾</button>
+          <div class="genre-dropdown-menu">
+            <a href="../phan-loai/index.html?the-loai=hien-dai">Ngôn Tình Hiện Đại</a>
+            <a href="../phan-loai/index.html?the-loai=co-trang">Ngôn Tình Cổ Trang</a>
+            <a href="../phan-loai/index.html?the-loai=tien-hiep">Tiên Hiệp</a>
+            <a href="../phan-loai/index.html?the-loai=huyen-huyen">Huyền Huyễn</a>
+            <a href="../phan-loai/index.html?the-loai=trinh-tham">Trinh Thám</a>
+            <a href="../phan-loai/index.html?the-loai=kinh-di">Kinh Dị</a>
+          </div>
+        </li>
+        <li><a href="../phan-loai/index.html" class="nav-link">Phân loại</a></li>
+      </ul>
+      <div class="header-auth-links">
+        <a href="../login/index.html" class="btn btn-outline">Đăng nhập</a>
+        <a href="../signup/index.html" class="btn btn-primary">Đăng ký</a>
+      </div>
+    </nav>
+    <div class="header-actions">
+      <button class="theme-toggle" type="button" aria-label="Chuyển giao diện sáng/tối"></button>
+      <button class="menu-toggle" type="button" aria-label="Mở menu"><span></span><span></span><span></span></button>
+    </div>
+  </div>
+</header>
+
+<!-- ================= FORM ĐĂNG NHẬP ================= -->
+<main class="auth-page">
+  <div class="auth-card">
+    <div class="auth-card-logo">
+      <img src="../assets/image.png" alt="Trăng Sao Truyện">
+    </div>
+    <h1 class="auth-title">Đăng nhập</h1>
+    <p class="auth-subtitle">Chào mừng bạn quay lại Trăng Sao Truyện</p>
+
+    <form class="auth-form">
+      <div class="form-group">
+        <label for="login-email">Email hoặc tên đăng nhập</label>
+        <input type="text" id="login-email" name="email" required placeholder="vidu@email.com">
+      </div>
+      <div class="form-group">
+        <label for="login-password">Mật khẩu</label>
+        <div class="password-field">
+          <input type="password" id="login-password" name="password" required placeholder="Nhập mật khẩu">
+          <button type="button" class="toggle-password" aria-label="Hiện/Ẩn mật khẩu"></button>
+        </div>
+      </div>
+      <div class="form-row-between">
+        <label class="checkbox-line"><input type="checkbox"> Ghi nhớ đăng nhập</label>
+        <a href="#">Quên mật khẩu?</a>
+      </div>
+      <p class="form-feedback"></p>
+      <button type="submit" class="btn btn-primary">Đăng nhập</button>
+      <p class="auth-switch">Chưa có tài khoản? <a href="../signup/index.html">Đăng ký ngay</a></p>
+    </form>
+  </div>
+</main>
+
+<!-- ================= FOOTER ================= -->
+<footer class="site-footer">
+  <div class="footer-grid">
+    <div class="footer-col">
+      <div class="footer-logo">
+        <img src="../assets/image.png" alt="Trăng Sao Truyện">
+        <span>Trăng Sao Truyện</span>
+      </div>
+      <p>Kho tàng truyện chữ đa thể loại: ngôn tình hiện đại, cổ trang, tiên hiệp, huyền huyễn, trinh thám, kinh dị... cập nhật mỗi ngày.</p>
+    </div>
+    <div class="footer-col">
+      <h4>Thể loại</h4>
+      <ul>
+        <li><a href="../phan-loai/index.html?the-loai=hien-dai">Ngôn Tình Hiện Đại</a></li>
+        <li><a href="../phan-loai/index.html?the-loai=co-trang">Ngôn Tình Cổ Trang</a></li>
+        <li><a href="../phan-loai/index.html?the-loai=tien-hiep">Tiên Hiệp</a></li>
+        <li><a href="../phan-loai/index.html?the-loai=huyen-huyen">Huyền Huyễn</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Liên kết</h4>
+      <ul>
+        <li><a href="../index.html">Trang chủ</a></li>
+        <li><a href="../phan-loai/index.html">Phân loại truyện</a></li>
+        <li><a href="../login/index.html">Đăng nhập</a></li>
+        <li><a href="../signup/index.html">Đăng ký</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Về chúng tôi</h4>
+      <p>Trăng Sao Truyện là trang đọc truyện online miễn phí, giao diện thân thiện, cập nhật nhanh chóng. Đây là bản demo tĩnh phục vụ mục đích minh họa giao diện.</p>
+    </div>
+  </div>
+  <div class="footer-bottom">© 2026 Trăng Sao Truyện. Bản demo tĩnh — dữ liệu minh họa.</div>
+</footer>
+
+<script src="../js/main.js"></script>
+</body>
+</html>

@@ -46,7 +46,7 @@ const NOVELS = [
   {
     id: 2, slug: 'giam-doc-lanh-lung-va-co-vo-nho', title: 'Giám Đốc Lạnh Lùng Và Cô Vợ Nhỏ',
     author: 'Diệp Chi Thu', genres: ['hien-dai'], tags: ['Tổng tài', 'Hôn nhân trước yêu sau'],
-    status: 'ongoing', chapterCount: 156, rating: 4.6, hot: false, cover: 2, initials: 'GĐ',
+    status: 'full', chapterCount: 156, rating: 4.6, hot: false, cover: 2, initials: 'GĐ',
     views: 2100000, dayViews: 6100, weekViews: 33000, monthViews: 121000, nominations: 2100,
     updatedMinutesAgo: 340,
     description: 'Một cuộc hôn nhân sắp đặt tưởng chừng chỉ là hợp đồng, nhưng càng ở gần nhau, trái tim băng giá của vị giám đốc quyền lực càng dần tan chảy vì cô vợ nhỏ bé nhưng đầy nghị lực.'
@@ -102,7 +102,7 @@ const NOVELS = [
   {
     id: 9, slug: 'cung-dau-thien-ha-de-vuong-so-huu', title: 'Cung Đấu Thiên Hạ Đế Vương Sở Hữu',
     author: 'Tần Vũ Lăng', genres: ['co-trang'], tags: ['Cung đấu', 'Đế vương'],
-    status: 'ongoing', chapterCount: 178, rating: 4.6, hot: false, cover: 1, initials: 'CD',
+    status: 'full', chapterCount: 178, rating: 4.6, hot: false, cover: 1, initials: 'CD',
     views: 1950000, dayViews: 4700, weekViews: 23000, monthViews: 85000, nominations: 2600,
     updatedMinutesAgo: 720,
     description: 'Chốn hậu cung ngàn năm sóng gió, nơi một câu nói có thể đổi cả vận mệnh. Nàng phải học cách sinh tồn giữa vòng xoáy quyền lực của bậc đế vương.'
@@ -230,7 +230,7 @@ const NOVELS = [
   {
     id: 25, slug: 'kiem-dao-doc-ton', title: 'Kiếm Đạo Độc Tôn',
     author: 'Cuồng Đao', genres: ['tien-hiep'], tags: ['Kiếm tu', 'Phục thù'],
-    status: 'ongoing', chapterCount: 620, rating: 4.8, hot: true, cover: 1, initials: 'KĐ',
+    status: 'full', chapterCount: 620, rating: 4.8, hot: true, cover: 1, initials: 'KĐ',
     views: 6700000, dayViews: 10500, weekViews: 58000, monthViews: 220000, nominations: 7800,
     updatedMinutesAgo: 10,
     description: 'Gia tộc bị diệt môn, thiếu niên duy nhất sống sót mang theo một thanh kiếm gãy, bước lên con đường kiếm đạo đẫm máu để rửa hận cho người thân.'
@@ -310,7 +310,7 @@ const NOVELS = [
   {
     id: 35, slug: 'van-co-chi-ton-quy-lai', title: 'Vạn Cổ Chí Tôn Quy Lai',
     author: 'Thiên Tuyệt Nhị', genres: ['tien-hiep'], tags: ['Trọng sinh', 'Chí tôn'],
-    status: 'ongoing', chapterCount: 350, rating: 4.7, hot: false, cover: 3, initials: 'VC',
+    status: 'full', chapterCount: 350, rating: 4.7, hot: false, cover: 3, initials: 'VC',
     views: 3900000, dayViews: 4400, weekViews: 22000, monthViews: 83000, nominations: 3100,
     updatedMinutesAgo: 950,
     description: 'Chí tôn một thời bị đồng môn phản bội, hồn phách trọng sinh trở về vạn năm trước khi còn là một tu sĩ vô danh. Lần này, ân oán sẽ được tính lại từ đầu.'
@@ -414,6 +414,45 @@ function getChapterContent(novel, chapterNum) {
   return paragraphs;
 }
 
+// Kho tên & nội dung bình luận mẫu — dữ liệu demo tự sinh, không phải bình luận thật của người dùng
+const COMMENT_NAMES = ['Minh Anh', 'Thảo Vy', 'Gia Hân', 'Bảo Ngọc', 'Thanh Trúc', 'Hoàng Yến', 'Tuấn Kiệt', 'Quỳnh Như', 'Đăng Khoa', 'Phương Linh'];
+const COMMENT_TEXTS = [
+  'Truyện hay quá, đọc không dứt ra được!',
+  'Cốt truyện lôi cuốn, mong tác giả ra chương đều đặn.',
+  'Nhân vật chính được xây dựng rất có chiều sâu.',
+  'Đoạn cao trào làm mình hồi hộp suốt cả buổi tối.',
+  'Văn phong mượt mà, dễ đọc, rất đáng để theo dõi.',
+  'Chờ chương mới từng ngày luôn á!',
+  'Tình tiết bất ngờ khiến mình phải đọc lại lần hai.',
+  'Một trong những truyện hay nhất mình đọc gần đây.',
+  'Cảm ơn tác giả vì một câu chuyện ý nghĩa.',
+  'Đọc mà cứ cười tủm tỉm suốt, quá dễ thương.'
+];
+
+// Sinh danh sách bình luận demo cho một truyện — dữ liệu giả lập, không lưu trữ, chỉ để minh họa giao diện
+function getDemoComments(novel) {
+  const count = 3 + (novel.id % 4);
+  const comments = [];
+  for (let i = 0; i < count; i++) {
+    const seed = novel.id * 11 + i * 7;
+    const daysAgo = 1 + (seed % 20);
+    const date = new Date(Date.now() - daysAgo * 86400000 - (seed % 24) * 3600000);
+    comments.push({
+      author: COMMENT_NAMES[seed % COMMENT_NAMES.length],
+      rating: 4 + (seed % 2),
+      text: COMMENT_TEXTS[(seed + i) % COMMENT_TEXTS.length],
+      date: date.toISOString()
+    });
+  }
+  return comments.sort((a, b) => new Date(b.date) - new Date(a.date));
+}
+
+function formatCommentDate(isoStr) {
+  const d = new Date(isoStr);
+  const pad = n => String(n).padStart(2, '0');
+  return `${pad(d.getHours())}:${pad(d.getMinutes())} ${pad(d.getDate())}/${pad(d.getMonth() + 1)}/${d.getFullYear()}`;
+}
+
 /* =============================================================
    3. LƯU TRỮ CỤC BỘ (LOCALSTORAGE): THEME / FONT / VỊ TRÍ ĐỌC / YÊU THÍCH
    ============================================================= */
@@ -424,7 +463,8 @@ const Store = {
     READER_BG: 'tst_reader_bg',        // 'white' | 'cream' | 'dark'
     FONT_SIZE: 'tst_font_size',        // số px
     READING_POS: 'tst_reading_pos',    // { [slug]: chapterNum }
-    FAVORITES: 'tst_favorites'         // [slug, ...]
+    FAVORITES: 'tst_favorites',        // [slug, ...]
+    COMMENTS: 'tst_comments'           // { [slug]: [{author, rating, text, date}, ...] }
   },
 
   getSiteTheme() { return localStorage.getItem(this.KEYS.SITE_THEME) || 'light'; },
@@ -458,6 +498,18 @@ const Store = {
     else favs.push(slug);
     localStorage.setItem(this.KEYS.FAVORITES, JSON.stringify(favs));
     return favs.includes(slug);
+  },
+
+  getAllUserComments() {
+    try { return JSON.parse(localStorage.getItem(this.KEYS.COMMENTS)) || {}; }
+    catch (e) { return {}; }
+  },
+  getUserComments(slug) { return this.getAllUserComments()[slug] || []; },
+  addUserComment(slug, comment) {
+    const all = this.getAllUserComments();
+    all[slug] = all[slug] || [];
+    all[slug].unshift(comment);
+    localStorage.setItem(this.KEYS.COMMENTS, JSON.stringify(all));
   }
 };
 
@@ -471,14 +523,10 @@ function applyStoredSiteTheme() {
    4. TEMPLATE COMPONENT: THẺ TRUYỆN, DÒNG BẢNG XẾP HẠNG, DÒNG CHƯƠNG
    ============================================================= */
 
-function novelCardHTML(novel, opts) {
-  opts = opts || {};
+function novelCardHTML(novel) {
   const badges = [];
-  if (novel.hot) badges.push('<span class="badge badge-hot">HOT</span>');
-  if (novel.status === 'full') badges.push('<span class="badge badge-full">FULL</span>');
-  const metaLine = opts.showUpdate
-    ? `<span class="card-update">Chương ${novel.chapterCount} · ${timeAgoText(novel.updatedMinutesAgo)}</span>`
-    : `<span class="card-views">👁 ${formatViews(novel.views)}</span>`;
+  if (novel.hot) badges.push('<span class="badge-ribbon badge-ribbon-hot">HOT</span>');
+  if (novel.status === 'full') badges.push('<span class="badge-ribbon badge-ribbon-full">FULL</span>');
 
   return `
     <a class="novel-card" href="${PAGE_PATH.detail}?slug=${novel.slug}">
@@ -488,32 +536,8 @@ function novelCardHTML(novel, opts) {
       </div>
       <div class="novel-info">
         <h3 class="novel-title">${novel.title}</h3>
-        <p class="novel-author">${novel.author}</p>
-        <div class="novel-meta">${metaLine}</div>
       </div>
     </a>`;
-}
-
-function rankingRowHTML(novel, rank) {
-  return `
-    <li class="ranking-row">
-      <span class="ranking-num rank-${rank <= 3 ? rank : 'other'}">${rank}</span>
-      <div class="ranking-cover cover-${novel.cover}"><img class="cover-img" src="${coverImgURL(novel, 80, 106)}" alt="${novel.title}" loading="lazy"></div>
-      <div class="ranking-info">
-        <a href="${PAGE_PATH.detail}?slug=${novel.slug}" class="ranking-title">${novel.title}</a>
-        <span class="ranking-sub">${formatViews(novel.views)} lượt đọc</span>
-      </div>
-    </li>`;
-}
-
-function chapterRowHTML(novel, chapter) {
-  return `
-    <li class="chapter-row">
-      <a href="${PAGE_PATH.reader}?slug=${novel.slug}&chuong=${chapter.num}">
-        <span class="chapter-name">${chapter.title}</span>
-        <span class="chapter-time">${timeAgoText(chapter.minutesAgo)}</span>
-      </a>
-    </li>`;
 }
 
 /* =============================================================
@@ -531,24 +555,36 @@ function initHeader() {
     });
   }
 
-  // --- Dropdown thể loại ---
-  const genreDropdownBtn = document.querySelector('.genre-dropdown-toggle');
-  const genreDropdownMenu = document.querySelector('.genre-dropdown-menu');
-  if (genreDropdownBtn && genreDropdownMenu) {
-    genreDropdownBtn.addEventListener('click', (e) => {
+  // --- Các dropdown trên thanh điều hướng: Danh sách / Phân loại theo chương / Tùy chỉnh / Tài khoản ---
+  const dropdownToggles = document.querySelectorAll('.nav-dropdown-toggle');
+  dropdownToggles.forEach(toggle => {
+    const menu = toggle.nextElementSibling;
+    toggle.addEventListener('click', (e) => {
       e.stopPropagation();
-      genreDropdownMenu.classList.toggle('is-open');
+      const wasOpen = menu.classList.contains('is-open');
+      dropdownToggles.forEach(t => t.nextElementSibling.classList.remove('is-open'));
+      menu.classList.toggle('is-open', !wasOpen);
     });
-    document.addEventListener('click', () => genreDropdownMenu.classList.remove('is-open'));
-  }
+  });
+  document.addEventListener('click', () => {
+    dropdownToggles.forEach(t => t.nextElementSibling.classList.remove('is-open'));
+  });
 
-  // --- Toggle Dark mode toàn site ---
-  const themeToggle = document.querySelector('.theme-toggle');
+  // --- Toggle Dark mode toàn site (mục trong dropdown "Tùy chỉnh") ---
+  const themeToggle = document.querySelector('.theme-toggle-item');
+  function refreshThemeToggleLabel() {
+    if (!themeToggle) return;
+    const isDark = Store.getSiteTheme() === 'dark';
+    themeToggle.querySelector('.theme-toggle-icon').textContent = isDark ? '☀️' : '🌙';
+    themeToggle.querySelector('.theme-toggle-label').textContent = isDark ? 'Chế độ sáng' : 'Chế độ tối';
+  }
   if (themeToggle) {
+    refreshThemeToggleLabel();
     themeToggle.addEventListener('click', () => {
       const next = Store.getSiteTheme() === 'dark' ? 'light' : 'dark';
       Store.setSiteTheme(next);
       applyStoredSiteTheme();
+      refreshThemeToggleLabel();
     });
   }
 
@@ -581,6 +617,18 @@ function initHeader() {
   }
 }
 
+// Cập nhật thanh breadcrumb dưới header. parts: mảng {label, href?} — phần tử không có
+// href được coi là trang hiện tại. Mục "🏠 Trang chủ" đã có sẵn trong HTML, hàm này chỉ
+// nối thêm các mục phía sau.
+function setBreadcrumb(parts) {
+  const el = document.querySelector('.breadcrumb-extra');
+  if (!el) return;
+  el.innerHTML = parts.map(p => p.href
+    ? `<span class="crumb-sep">/</span><a href="${p.href}">${p.label}</a>`
+    : `<span class="crumb-sep">/</span><span class="breadcrumb-current">${p.label}</span>`
+  ).join('');
+}
+
 /* =============================================================
    6. TRANG CHỦ (index.html)
    ============================================================= */
@@ -592,43 +640,88 @@ function initHomePage() {
   const ancientList = NOVELS.filter(n => n.genres.includes('co-trang'));
   const otherList = NOVELS.filter(n => !n.genres.includes('hien-dai') && !n.genres.includes('co-trang'));
 
-  fillGrid('#grid-hot', hotList, { showUpdate: false });
-  fillGrid('#grid-latest', latestList, { showUpdate: true });
-  fillGrid('#grid-modern', modernList, { showUpdate: false });
-  fillGrid('#grid-ancient', ancientList, { showUpdate: false });
-  fillGrid('#grid-other', otherList, { showUpdate: false });
+  const completedList = [...NOVELS].filter(n => n.status === 'full').sort((a, b) => b.views - a.views).slice(0, 12);
 
-  initRankingSidebar();
+  fillGrid('#grid-hot', hotList);
+  fillGrid('#grid-latest', latestList);
+  fillGrid('#grid-modern', modernList);
+  fillGrid('#grid-ancient', ancientList);
+  fillGrid('#grid-other', otherList);
+  fillGrid('#grid-completed', completedList, completedNovelCardHTML);
+
+  initHomeBottomSection();
 }
 
-function fillGrid(selector, list, opts) {
+function fillGrid(selector, list, renderFn) {
   const el = document.querySelector(selector);
   if (!el) return;
-  el.innerHTML = list.map(n => novelCardHTML(n, opts)).join('');
+  renderFn = renderFn || novelCardHTML;
+  el.innerHTML = list.map(n => renderFn(n)).join('');
 }
 
-function initRankingSidebar() {
-  const tabs = document.querySelectorAll('.ranking-tab');
-  const listEl = document.querySelector('.ranking-list');
-  if (!tabs.length || !listEl) return;
+// Thẻ truyện dùng riêng cho khung "Truyện Đã Hoàn Thành": có thêm nhãn số chương
+function completedNovelCardHTML(novel) {
+  return `
+    <a class="novel-card" href="${PAGE_PATH.detail}?slug=${novel.slug}">
+      <div class="novel-cover cover-${novel.cover}">
+        <img class="cover-img" src="${coverImgURL(novel, 300, 400)}" alt="${novel.title}" loading="lazy">
+        <div class="card-badges"><span class="badge-ribbon badge-ribbon-full">FULL</span></div>
+      </div>
+      <div class="novel-info">
+        <h3 class="novel-title">${novel.title}</h3>
+        <span class="chip-full">Full · ${novel.chapterCount} chương</span>
+      </div>
+    </a>`;
+}
 
-  const metricMap = { day: 'dayViews', week: 'weekViews', month: 'monthViews', vote: 'nominations' };
+// Dòng truyện dạng danh sách dùng ở trang phân loại (thumbnail + tiêu đề + tác giả + số chương)
+function categoryRowHTML(novel) {
+  let badge = '';
+  if (novel.updatedMinutesAgo < 60) badge = '<span class="row-badge row-badge-new">New</span>';
+  else if (novel.hot) badge = '<span class="row-badge row-badge-hot">Hot</span>';
 
-  function renderRanking(period) {
-    const metric = metricMap[period];
-    const sorted = [...NOVELS].sort((a, b) => b[metric] - a[metric]).slice(0, 6);
-    listEl.innerHTML = sorted.map((n, i) => rankingRowHTML(n, i + 1)).join('');
+  return `
+    <li class="category-row">
+      <a class="category-row-link" href="${PAGE_PATH.detail}?slug=${novel.slug}">
+        <div class="category-row-thumb">
+          <img class="cover-img" src="${coverImgURL(novel, 120, 90)}" alt="${novel.title}" loading="lazy">
+        </div>
+        <div class="category-row-info">
+          <div class="category-row-title-line">
+            <span class="category-row-title">${novel.title}</span>
+            ${badge}
+          </div>
+          <div class="category-row-author"><span class="pencil-icon">✎</span> ${novel.author}</div>
+        </div>
+        <div class="category-row-chapter">Chương ${novel.chapterCount}</div>
+      </a>
+    </li>`;
+}
+
+// Khung dưới cùng trang chủ: Top truyện nhiều lượt xem trong tuần + Thể loại truyện
+function initHomeBottomSection() {
+  const weekTableBody = document.querySelector('.top-week-table tbody');
+  if (weekTableBody) {
+    const weekList = [...NOVELS].sort((a, b) => b.weekViews - a.weekViews).slice(0, 10);
+    weekTableBody.innerHTML = weekList.map((n, i) => `
+      <tr>
+        <td class="top-week-rank">${i + 1}</td>
+        <td class="top-week-title"><a href="${PAGE_PATH.detail}?slug=${n.slug}">${n.title}</a></td>
+        <td class="top-week-genres">${n.genres.map(g => GENRE_LABELS[g]).concat(n.tags).join(', ')}</td>
+      </tr>`).join('');
   }
 
-  tabs.forEach(tab => {
-    tab.addEventListener('click', () => {
-      tabs.forEach(t => t.classList.remove('is-active'));
-      tab.classList.add('is-active');
-      renderRanking(tab.dataset.period);
-    });
-  });
+  fillGenreTagGrid();
+}
 
-  renderRanking('day');
+// Đổ danh sách thể loại/tag vào khung ".genre-tag-grid" (dùng ở trang chủ và trang phân loại)
+function fillGenreTagGrid() {
+  const genreTagGrid = document.querySelector('.genre-tag-grid');
+  if (!genreTagGrid) return;
+  const allTags = new Set();
+  NOVELS.forEach(n => n.tags.forEach(t => allTags.add(t)));
+  const sortedTags = [...allTags].sort((a, b) => a.localeCompare(b, 'vi'));
+  genreTagGrid.innerHTML = sortedTags.map(t => `<span>${t}</span>`).join('');
 }
 
 /* =============================================================
@@ -642,20 +735,31 @@ function initDetailPage() {
 
   document.title = `${novel.title} - Trăng Sao Truyện`;
 
+  setBreadcrumb([
+    { label: GENRE_LABELS[novel.genres[0]], href: `${PAGE_PATH.category}?the-loai=${novel.genres[0]}` },
+    { label: novel.title }
+  ]);
+
   document.querySelector('.detail-cover').classList.add(`cover-${novel.cover}`);
   const detailCoverImg = document.querySelector('.detail-cover .cover-img');
   detailCoverImg.src = coverImgURL(novel, 440, 587);
   detailCoverImg.alt = novel.title;
   document.querySelector('.detail-title').textContent = novel.title;
+  document.querySelector('.detail-rating-stars').textContent = renderStars(novel.rating);
+  document.querySelector('.detail-rating-text').textContent = `${novel.rating.toFixed(1)}/5 · ${formatViews(novel.nominations)} đánh giá`;
+  document.querySelector('.detail-views').textContent = formatViews(novel.views);
   document.querySelector('.detail-author').textContent = novel.author;
   document.querySelector('.detail-genres').innerHTML = novel.genres.map(g => `<span class="tag">${GENRE_LABELS[g]}</span>`).join('') +
     novel.tags.map(t => `<span class="tag tag-outline">${t}</span>`).join('');
   document.querySelector('.detail-status').textContent = novel.status === 'full' ? 'Hoàn thành' : 'Đang ra';
-  document.querySelector('.detail-status').classList.add(novel.status === 'full' ? 'status-full' : 'status-ongoing');
-  document.querySelector('.detail-views').textContent = `${formatViews(novel.views)} lượt đọc`;
-  document.querySelector('.detail-rating-stars').textContent = renderStars(novel.rating);
-  document.querySelector('.detail-rating-num').textContent = novel.rating.toFixed(1);
-  document.querySelector('.detail-description').textContent = novel.description;
+
+  const descEl = document.querySelector('.detail-description');
+  descEl.textContent = novel.description;
+  const descToggle = document.querySelector('.detail-desc-toggle');
+  descToggle.addEventListener('click', () => {
+    const expanded = descEl.classList.toggle('is-expanded');
+    descToggle.textContent = expanded ? 'Thu gọn «' : 'Xem thêm »';
+  });
 
   const chapters = getChapters(novel);
 
@@ -675,28 +779,184 @@ function initDetailPage() {
   function refreshFavBtn() {
     const active = Store.isFavorite(novel.slug);
     favBtn.classList.toggle('is-active', active);
-    favBtn.textContent = active ? '♥ Đã yêu thích' : '♡ Yêu thích';
+    favBtn.textContent = active ? '♥ Đã yêu thích' : '♡ Yêu thích truyện';
   }
   refreshFavBtn();
   favBtn.addEventListener('click', () => { Store.toggleFavorite(novel.slug); refreshFavBtn(); });
 
-  document.querySelector('.chapter-count-label').textContent = `Toàn bộ ${chapters.length} chương`;
-  const chapterListEl = document.querySelector('.chapter-list');
-  chapterListEl.innerHTML = chapters.map(c => chapterRowHTML(novel, c)).join('');
+  initChapterPagination(novel, chapters);
+  initDetailSidebarPanels(novel);
+  initCommentSection(novel);
+}
 
-  // Thanh tìm kiếm chương trong danh sách chương
-  const chapterSearch = document.querySelector('.chapter-search');
-  if (chapterSearch) {
-    chapterSearch.addEventListener('input', () => {
-      const kw = chapterSearch.value.trim().toLowerCase();
-      const filtered = kw ? chapters.filter(c => c.title.toLowerCase().includes(kw)) : chapters;
-      chapterListEl.innerHTML = filtered.map(c => chapterRowHTML(novel, c)).join('') || '<li class="chapter-empty">Không tìm thấy chương phù hợp</li>';
+// Danh sách chương phân trang (15 chương/trang) thay vì cuộn dài
+function initChapterPagination(novel, chapters) {
+  const PAGE_SIZE = 15;
+  const listEl = document.querySelector('.chapter-bullet-list');
+  const paginationEl = document.querySelector('.chapter-pagination');
+  const totalPages = Math.max(1, Math.ceil(chapters.length / PAGE_SIZE));
+  let currentPage = 1;
+
+  function renderPage(page) {
+    currentPage = Math.min(Math.max(page, 1), totalPages);
+    const start = (currentPage - 1) * PAGE_SIZE;
+    const pageChapters = chapters.slice(start, start + PAGE_SIZE);
+    listEl.innerHTML = pageChapters.length
+      ? pageChapters.map(c => chapterBulletHTML(novel, c)).join('')
+      : '<li class="chapter-empty">Chưa có chương nào</li>';
+    renderPaginationBar();
+  }
+
+  function renderPaginationBar() {
+    if (totalPages <= 1) { paginationEl.innerHTML = ''; return; }
+
+    const delta = 2;
+    const pages = [];
+    for (let p = 1; p <= totalPages; p++) {
+      if (p === 1 || p === totalPages || (p >= currentPage - delta && p <= currentPage + delta)) {
+        pages.push(p);
+      } else if (pages[pages.length - 1] !== '...') {
+        pages.push('...');
+      }
+    }
+
+    const pageBtns = pages.map(p => p === '...'
+      ? '<span class="chapter-page-ellipsis">…</span>'
+      : `<button type="button" class="chapter-page-btn${p === currentPage ? ' is-active' : ''}" data-page="${p}">${p}</button>`
+    ).join('');
+
+    paginationEl.innerHTML = `
+      <button type="button" class="chapter-page-btn${currentPage === 1 ? ' is-disabled' : ''}" data-page="${currentPage - 1}">‹</button>
+      ${pageBtns}
+      <button type="button" class="chapter-page-btn${currentPage === totalPages ? ' is-disabled' : ''}" data-page="${currentPage + 1}">›</button>`;
+
+    paginationEl.querySelectorAll('.chapter-page-btn').forEach(btn => {
+      btn.addEventListener('click', () => renderPage(parseInt(btn.dataset.page, 10)));
     });
   }
 
-  // Truyện đề xuất cùng thể loại
-  const related = NOVELS.filter(n => n.slug !== novel.slug && n.genres.some(g => novel.genres.includes(g))).slice(0, 6);
-  fillGrid('.related-grid', related, { showUpdate: false });
+  renderPage(1);
+}
+
+// Dòng chương dạng bullet đơn giản (dùng ở trang chi tiết)
+function chapterBulletHTML(novel, chapter) {
+  return `<li><a href="${PAGE_PATH.reader}?slug=${novel.slug}&chuong=${chapter.num}">${chapter.title}</a></li>`;
+}
+
+// Sidebar trang chi tiết: "Truyện cùng tác giả" + "Truyện đang hot" (tab ngày/tháng/all time)
+function initDetailSidebarPanels(novel) {
+  const sideLinkList = document.querySelector('.side-link-list');
+  if (sideLinkList) {
+    // Ưu tiên truyện cùng tác giả; nếu không đủ, lấy thêm truyện khác cho đủ demo
+    const sameAuthor = NOVELS.filter(n => n.author === novel.author && n.slug !== novel.slug);
+    const others = NOVELS.filter(n => n.slug !== novel.slug && n.author !== novel.author);
+    const list = sameAuthor.concat(others).slice(0, 8);
+    sideLinkList.innerHTML = list.map(n => `<li><a href="${PAGE_PATH.detail}?slug=${n.slug}">${n.title}</a></li>`).join('');
+  }
+
+  const hotTabs = document.querySelectorAll('.hot-tab');
+  const hotRankList = document.querySelector('.hot-rank-list');
+  if (hotTabs.length && hotRankList) {
+    const metricMap = { day: 'dayViews', month: 'monthViews', alltime: 'views' };
+
+    function renderHotRank(period) {
+      const sorted = [...NOVELS].sort((a, b) => b[metricMap[period]] - a[metricMap[period]]).slice(0, 8);
+      hotRankList.innerHTML = sorted.map((n, i) => hotRankRowHTML(n, i + 1)).join('');
+    }
+
+    hotTabs.forEach(tab => {
+      tab.addEventListener('click', () => {
+        hotTabs.forEach(t => t.classList.remove('is-active'));
+        tab.classList.add('is-active');
+        renderHotRank(tab.dataset.period);
+      });
+    });
+
+    renderHotRank('day');
+  }
+}
+
+function hotRankRowHTML(novel, rank) {
+  return `
+    <li class="hot-rank-row">
+      <span class="hot-rank-num rank-${rank <= 3 ? rank : 'other'}">${rank}</span>
+      <a class="hot-rank-title" href="${PAGE_PATH.detail}?slug=${novel.slug}">${novel.title}</a>
+    </li>`;
+}
+
+// Khối bình luận truyện: chọn sao, đếm ký tự, gửi bình luận (lưu localStorage), làm mới danh sách
+function initCommentSection(novel) {
+  const starBtns = document.querySelectorAll('.comment-star-picker .star-btn');
+  const textarea = document.querySelector('.comment-textarea');
+  const charCount = document.querySelector('.comment-char-count');
+  const submitBtn = document.querySelector('.comment-submit-btn');
+  const refreshBtn = document.querySelector('.comment-refresh-btn');
+  const listEl = document.querySelector('.comment-list');
+  const summaryEl = document.querySelector('.comment-summary');
+  if (!listEl) return;
+
+  let selectedRating = 5;
+
+  function refreshStars() {
+    starBtns.forEach(btn => btn.classList.toggle('is-active', parseInt(btn.dataset.value, 10) <= selectedRating));
+  }
+  refreshStars();
+  starBtns.forEach(btn => {
+    btn.addEventListener('click', () => {
+      selectedRating = parseInt(btn.dataset.value, 10);
+      refreshStars();
+    });
+  });
+
+  if (textarea && charCount) {
+    textarea.addEventListener('input', () => {
+      charCount.textContent = `${textarea.value.length}/500`;
+    });
+  }
+
+  function renderComments() {
+    const all = Store.getUserComments(novel.slug).concat(getDemoComments(novel));
+
+    listEl.innerHTML = all.length
+      ? all.map(c => `
+        <li class="comment-item">
+          <div class="comment-item-head">
+            <div>
+              <div class="comment-author">${c.author}</div>
+              <div class="comment-date">${formatCommentDate(c.date)}</div>
+            </div>
+            <div class="comment-stars">${renderStars(c.rating)}</div>
+          </div>
+          <p class="comment-text">${c.text}</p>
+          <a href="#" class="comment-reply-link" onclick="return false;">💬 Phản hồi ${c.author}</a>
+        </li>`).join('')
+      : '<li class="comment-empty">Chưa có bình luận nào. Hãy là người đầu tiên!</li>';
+
+    const avgRating = all.length ? (all.reduce((sum, c) => sum + c.rating, 0) / all.length).toFixed(1) : '0';
+    if (summaryEl) summaryEl.textContent = `${all.length} bình luận · Điểm trung bình ${avgRating}/5 sao`;
+  }
+
+  if (submitBtn && textarea) {
+    submitBtn.addEventListener('click', () => {
+      const text = textarea.value.trim();
+      if (!text) { textarea.focus(); return; }
+      Store.addUserComment(novel.slug, {
+        author: 'Bạn',
+        rating: selectedRating,
+        text,
+        date: new Date().toISOString()
+      });
+      textarea.value = '';
+      charCount.textContent = '0/500';
+      selectedRating = 5;
+      refreshStars();
+      renderComments();
+    });
+  }
+
+  if (refreshBtn) refreshBtn.addEventListener('click', renderComments);
+
+  renderComments();
 }
 
 /* =============================================================
@@ -738,6 +998,11 @@ function renderChapter(novel, chapters, chapterNum) {
   document.querySelector('.reader-novel-title').href = `${PAGE_PATH.detail}?slug=${novel.slug}`;
   document.querySelector('.btn-back-detail').href = `${PAGE_PATH.detail}?slug=${novel.slug}`;
   document.querySelector('.reader-chapter-title').textContent = chapter.title;
+
+  setBreadcrumb([
+    { label: novel.title, href: `${PAGE_PATH.detail}?slug=${novel.slug}` },
+    { label: chapter.title }
+  ]);
 
   const paragraphs = getChapterContent(novel, chapterNum);
   document.querySelector('.reader-content').innerHTML = paragraphs.map(p => `<p>${p}</p>`).join('');
@@ -808,71 +1073,35 @@ function initReaderSettings(novel) {
    ============================================================= */
 
 function initCategoryPage() {
-  const genreFilterBtns = document.querySelectorAll('.genre-filter-btn');
-  const chapterFilterBtns = document.querySelectorAll('.chapter-filter-btn');
-  const sortBtns = document.querySelectorAll('.sort-btn');
-  const grid = document.querySelector('.category-grid');
-  const countLabel = document.querySelector('.result-count');
+  const list_ = document.querySelector('.category-list');
   const titleEl = document.querySelector('.category-header h1');
 
-  let genreFilter = getQueryParam('the-loai') || 'all';
-  let chapterFilter = getQueryParam('so-chuong') || 'all';
-  let sortMode = getQueryParam('sort') || 'hot';
+  const genreFilter = getQueryParam('the-loai') || 'all';
+  const chapterFilter = getQueryParam('so-chuong') || 'all';
+  const sortMode = getQueryParam('sort') || 'hot';
 
-  function applyFilters() {
-    let list = [...NOVELS];
+  fillGenreTagGrid();
 
-    if (genreFilter !== 'all') list = list.filter(n => n.genres.includes(genreFilter));
+  let list = [...NOVELS];
 
-    if (chapterFilter === 'under20') list = list.filter(n => n.chapterCount < 20);
-    else if (chapterFilter === '20to50') list = list.filter(n => n.chapterCount >= 20 && n.chapterCount <= 50);
-    else if (chapterFilter === 'over100') list = list.filter(n => n.chapterCount > 100);
+  if (genreFilter !== 'all') list = list.filter(n => n.genres.includes(genreFilter));
 
-    if (sortMode === 'hot') list.sort((a, b) => b.views - a.views);
-    else if (sortMode === 'new') list.sort((a, b) => a.updatedMinutesAgo - b.updatedMinutesAgo);
-    else if (sortMode === 'full') list = list.filter(n => n.status === 'full');
+  if (chapterFilter === 'under20') list = list.filter(n => n.chapterCount < 20);
+  else if (chapterFilter === '20to50') list = list.filter(n => n.chapterCount >= 20 && n.chapterCount <= 50);
+  else if (chapterFilter === 'over100') list = list.filter(n => n.chapterCount > 100);
 
-    grid.innerHTML = list.length
-      ? list.map(n => novelCardHTML(n, { showUpdate: sortMode === 'new' })).join('')
-      : '<p class="empty-state">Không có truyện phù hợp với bộ lọc hiện tại.</p>';
-    countLabel.textContent = `${list.length} truyện`;
-    titleEl.textContent = genreFilter === 'all' ? 'Tất Cả Truyện' : GENRE_LABELS[genreFilter];
-  }
+  if (sortMode === 'hot') list.sort((a, b) => b.views - a.views);
+  else if (sortMode === 'new') list.sort((a, b) => a.updatedMinutesAgo - b.updatedMinutesAgo);
+  else if (sortMode === 'full') list = list.filter(n => n.status === 'full');
 
-  genreFilterBtns.forEach(btn => {
-    if (btn.dataset.genre === genreFilter) btn.classList.add('is-active');
-    else btn.classList.remove('is-active');
-    btn.addEventListener('click', () => {
-      genreFilterBtns.forEach(b => b.classList.remove('is-active'));
-      btn.classList.add('is-active');
-      genreFilter = btn.dataset.genre;
-      applyFilters();
-    });
-  });
+  list_.innerHTML = list.length
+    ? list.map(n => categoryRowHTML(n)).join('')
+    : '<li class="empty-state">Không có truyện phù hợp.</li>';
+  titleEl.textContent = genreFilter === 'all' ? 'Tất Cả Truyện' : GENRE_LABELS[genreFilter];
 
-  chapterFilterBtns.forEach(btn => {
-    if (btn.dataset.range === chapterFilter) btn.classList.add('is-active');
-    else btn.classList.remove('is-active');
-    btn.addEventListener('click', () => {
-      chapterFilterBtns.forEach(b => b.classList.remove('is-active'));
-      btn.classList.add('is-active');
-      chapterFilter = btn.dataset.range;
-      applyFilters();
-    });
-  });
-
-  sortBtns.forEach(btn => {
-    if (btn.dataset.sort === sortMode) btn.classList.add('is-active');
-    else btn.classList.remove('is-active');
-    btn.addEventListener('click', () => {
-      sortBtns.forEach(b => b.classList.remove('is-active'));
-      btn.classList.add('is-active');
-      sortMode = btn.dataset.sort;
-      applyFilters();
-    });
-  });
-
-  applyFilters();
+  setBreadcrumb(genreFilter === 'all'
+    ? [{ label: 'Phân loại' }]
+    : [{ label: 'Phân loại', href: PAGE_PATH.category }, { label: GENRE_LABELS[genreFilter] }]);
 }
 
 /* =============================================================

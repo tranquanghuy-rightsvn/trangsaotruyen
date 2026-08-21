@@ -46,7 +46,7 @@ const NOVELS = [
   },
   {
     id: 2, slug: 'giam-doc-lanh-lung-va-co-vo-nho', title: 'Giám Đốc Lạnh Lùng Và Cô Vợ Nhỏ',
-    author: 'Diệp Chi Thu', genres: ['hien-dai'], tags: ['Tổng tài', 'Hôn nhân trước yêu sau'],
+    author: 'Diệp Chi Thu', genres: ['hien-dai','co-trang'], tags: ['Tổng tài', 'Hôn nhân trước yêu sau'],
     status: 'full', chapterCount: 156, rating: 4.6, hot: false, cover: 2, initials: 'GĐ',
     views: 2100000, dayViews: 6100, weekViews: 33000, monthViews: 121000, nominations: 2100,
     updatedMinutesAgo: 340,
@@ -63,7 +63,7 @@ const NOVELS = [
   {
     id: 4, slug: 'chua-lanh-trai-tim-lanh-gia', title: 'Chữa Lành Trái Tim Lạnh Giá',
     author: 'Hạ Vũ Thần', genres: ['hien-dai'], tags: ['Chữa lành', 'Đô thị'],
-    status: 'ongoing', chapterCount: 35, rating: 4.5, hot: false, cover: 4, initials: 'CT',
+    status: 'ongoing', chapterCount: 35, rating: 4.5, hot: true, cover: 4, initials: 'CT',
     views: 610000, dayViews: 2900, weekViews: 15000, monthViews: 55000, nominations: 900,
     updatedMinutesAgo: 1450,
     description: 'Cô bác sĩ tâm lý nhận nhiệm vụ đặc biệt: chữa lành cho vị doanh nhân trẻ tuổi tưởng chừng vô cảm. Nhưng chính cô cũng cần một ai đó chữa lành cho mình.'
@@ -71,7 +71,7 @@ const NOVELS = [
   {
     id: 5, slug: 'hon-nhan-chi-la-hop-dong', title: 'Hôn Nhân Chỉ Là Hợp Đồng',
     author: 'Tô Tiểu Mạn', genres: ['hien-dai'], tags: ['Tổng tài', 'Hôn nhân hợp đồng'],
-    status: 'full', chapterCount: 210, rating: 4.7, hot: false, cover: 5, initials: 'HN',
+    status: 'full', chapterCount: 210, rating: 4.7, hot: true, cover: 5, initials: 'HN',
     views: 3300000, dayViews: 4100, weekViews: 21000, monthViews: 79000, nominations: 4200,
     updatedMinutesAgo: 4320,
     description: 'Một bản hợp đồng hôn nhân ba năm, tưởng chừng đơn giản như một giao dịch, lại trở thành khởi đầu cho mối tình sâu đậm không ai ngờ tới.'
@@ -126,7 +126,7 @@ const NOVELS = [
   },
   {
     id: 12, slug: 'de-vuong-nghich-thien-chi-ton', title: 'Đế Vương Nghịch Thiên Chí Tôn',
-    author: 'Thiên Tuyệt', genres: ['tien-hiep'], tags: ['Tu tiên', 'Nghịch thiên'],
+    author: 'Thiên Tuyệt', genres: ['tien-hiep','hien-dai'], tags: ['Tu tiên', 'Nghịch thiên'],
     status: 'full', chapterCount: 500, rating: 4.9, hot: true, cover: 4, initials: 'ĐN',
     views: 8100000, dayViews: 12000, weekViews: 68000, monthViews: 250000, nominations: 9200,
     updatedMinutesAgo: 15,
@@ -143,7 +143,7 @@ const NOVELS = [
   {
     id: 14, slug: 'tham-tu-lung-danh-va-vu-an-mat-tich', title: 'Thám Tử Lừng Danh Và Vụ Án Mất Tích',
     author: 'Kha Nam', genres: ['trinh-tham'], tags: ['Trinh thám', 'Phá án'],
-    status: 'ongoing', chapterCount: 24, rating: 4.6, hot: false, cover: 6, initials: 'TT',
+    status: 'ongoing', chapterCount: 24, rating: 4.6, hot: true, cover: 6, initials: 'TT',
     views: 410000, dayViews: 1900, weekViews: 9500, monthViews: 35000, nominations: 650,
     updatedMinutesAgo: 130,
     description: 'Một vụ mất tích bí ẩn kéo vị thám tử tài ba vào chuỗi manh mối rối ren, nơi mỗi nhân chứng đều che giấu một bí mật riêng.'
@@ -159,7 +159,7 @@ const NOVELS = [
   {
     id: 16, slug: 'tu-tien-vong-ky', title: 'Tu Tiên Vong Kỷ',
     author: 'Vong Ngữ', genres: ['tien-hiep'], tags: ['Tu tiên', 'Phiêu lưu'],
-    status: 'full', chapterCount: 260, rating: 4.7, hot: false, cover: 8, initials: 'TT',
+    status: 'full', chapterCount: 260, rating: 4.7, hot: true, cover: 8, initials: 'TT',
     views: 2700000, dayViews: 3200, weekViews: 16000, monthViews: 60000, nominations: 1800,
     updatedMinutesAgo: 2600,
     description: 'Mất hết ký ức, chàng trai trẻ bắt đầu lại con đường tu luyện từ con số không, dần khám phá ra thân thế thực sự đầy chấn động của bản thân.'
@@ -174,7 +174,7 @@ const NOVELS = [
   },
   {
     id: 18, slug: 'hoc-vien-ma-phap-bong-toi', title: 'Học Viện Ma Pháp Bóng Tối',
-    author: 'Hắc Việt', genres: ['huyen-huyen'], tags: ['Ma pháp', 'Học viện'],
+    author: 'Hắc Việt', genres: ['huyen-huyen','co-trang'], tags: ['Ma pháp', 'Học viện'],
     status: 'full', chapterCount: 120, rating: 4.5, hot: false, cover: 2, initials: 'HM',
     views: 1200000, dayViews: 2600, weekViews: 13000, monthViews: 48000, nominations: 1300,
     updatedMinutesAgo: 900,
@@ -230,7 +230,7 @@ const NOVELS = [
   },
   {
     id: 25, slug: 'kiem-dao-doc-ton', title: 'Kiếm Đạo Độc Tôn',
-    author: 'Cuồng Đao', genres: ['tien-hiep'], tags: ['Kiếm tu', 'Phục thù'],
+    author: 'Cuồng Đao', genres: ['tien-hiep','hien-dai'], tags: ['Kiếm tu', 'Phục thù'],
     status: 'full', chapterCount: 620, rating: 4.8, hot: true, cover: 1, initials: 'KĐ',
     views: 6700000, dayViews: 10500, weekViews: 58000, monthViews: 220000, nominations: 7800,
     updatedMinutesAgo: 10,
@@ -633,11 +633,11 @@ function setBreadcrumb(parts) {
    ============================================================= */
 
 function initHomePage() {
-  const hotList = [...NOVELS].filter(n => n.hot).sort((a, b) => b.views - a.views);
-  const latestList = [...NOVELS].sort((a, b) => a.updatedMinutesAgo - b.updatedMinutesAgo).slice(0, 8);
-  const modernList = NOVELS.filter(n => n.genres.includes('hien-dai'));
-  const ancientList = NOVELS.filter(n => n.genres.includes('co-trang'));
-  const otherList = NOVELS.filter(n => !n.genres.includes('hien-dai') && !n.genres.includes('co-trang'));
+  const hotList = [...NOVELS].filter(n => n.hot).sort((a, b) => b.views - a.views).slice(0, 12);
+  const latestList = [...NOVELS].sort((a, b) => a.updatedMinutesAgo - b.updatedMinutesAgo).slice(0, 12);
+  const modernList = NOVELS.filter(n => n.genres.includes('hien-dai')).slice(0, 12);
+  const ancientList = NOVELS.filter(n => n.genres.includes('co-trang')).slice(0, 12);
+  const otherList = NOVELS.filter(n => !n.genres.includes('hien-dai') && !n.genres.includes('co-trang')).slice(0, 12);
 
   const completedList = [...NOVELS].filter(n => n.status === 'full').sort((a, b) => b.views - a.views).slice(0, 12);
 

@@ -22,7 +22,7 @@
   --color-border: #e5e2ea;
 
   /* Kích thước & bố cục */
-  --container-w: 1200px;
+  --container-w: 1240px;
   --radius-sm: 6px;
   --radius-md: 12px;
   --radius-lg: 18px;
@@ -293,6 +293,12 @@ p {
 }
 .nav-icon {
   font-size: 0.95em;
+  display: inline-flex;
+}
+.nav-icon-svg {
+  width: 16px;
+  height: 16px;
+  flex-shrink: 0;
 }
 .chevron {
   font-size: 0.7em;
@@ -354,7 +360,6 @@ p {
   width: 100%;
   padding: 10px 40px 10px 16px;
   border: 1px solid var(--color-border);
-  border-radius: 20px;
   background: var(--color-bg);
   color: var(--color-text);
 }
@@ -624,10 +629,10 @@ p {
   color: var(--color-primary);
 }
 
-/* Lưới thẻ truyện */
+/* Lưới thẻ truyện — auto-fill tự co số cột theo bề rộng màn hình, thẻ giữ nguyên 182px */
 .novel-grid {
   display: grid;
-  grid-template-columns: repeat(6, 182px);
+  grid-template-columns: repeat(auto-fill, 182px);
   gap: 18px;
 }
 .novel-grid.grid-4col {
@@ -713,7 +718,7 @@ p {
 
 /* Thẻ truyện khung "Truyện Đã Hoàn Thành": ảnh bìa riêng, tiêu đề nằm dưới ảnh */
 .novel-grid-completed {
-  grid-template-columns: repeat(6, 174px);
+  grid-template-columns: repeat(auto-fill, 174px);
 }
 .novel-card-completed {
   width: 167px;
@@ -886,7 +891,7 @@ p {
   padding: 20px;
 }
 
-.side-panel.hot-panel{
+.side-panel.hot-panel {
   background: none;
   border: none;
   padding: 0;
@@ -906,25 +911,62 @@ p {
 .detail-cover {
   position: relative;
   aspect-ratio: 3 / 4;
-  border-radius: 4px 8px 8px 4px;
-  box-shadow: 8px 8px 24px rgba(42, 38, 51, 0.22);
+  background: #fff;
+  padding: 50px;
 }
-.detail-cover .cover-img {
-  border-radius: 4px 8px 8px 4px;
+
+/* Quyển sách 3D dựng bằng CSS: bìa đen bọc khung quanh ảnh + gáy giấy phải (vân dọc) */
+.book {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  box-sizing: border-box;
+  padding: 2px 3px 2px 5px; /* viền bìa đen 6px + 1px đệm để ảnh bìa nằm thụt vào trong */
+  background: #0a0a0a;
+  transform: perspective(1000px) rotateY(-14deg);
+  box-shadow: 16px 20px 32px rgba(0, 0, 0, 0.35);
+  border-radius: 4px;
 }
-.detail-cover::after {
-  content: "";
+
+.book-cover {
   position: absolute;
-  top: 5px;
-  bottom: 5px;
-  right: -6px;
-  width: 6px;
-  border-radius: 0 4px 4px 0;
-  background: linear-gradient(
+  width: 100%;
+  height: 93%;
+  box-sizing: border-box;
+  padding: 7px;
+  background: #0a0a0a;
+  transform: perspective(1000px) rotateY(-14deg);
+  box-shadow: 16px 20px 32px rgba(0, 0, 0, 0.35);
+  top: 10px;
+  left: 20px;
+  z-index: -1;
+  border-radius: 4px;
+}
+
+.book .cover-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+.book-pages {
+  position: absolute;
+  right: -15px;
+  top: 11px;
+  bottom: 12px;
+  width: 14px;
+  border-radius: 0 3px 3px 0;
+  background: repeating-linear-gradient(
     to right,
-    rgba(0, 0, 0, 0.18),
-    rgba(0, 0, 0, 0.04)
+    #f4f1ea 0,
+    #f4f1ea 2px,
+    #dcd7c9 2px,
+    #dcd7c9 3px
   );
+  box-shadow:
+    inset 2px 0 3px rgba(0, 0, 0, 0.15),
+    inset -2px 0 3px rgba(0, 0, 0, 0.15);
+  clip-path: polygon(0 0, 100% 1%, 100% 98%, 0 100%);
 }
 .detail-summary {
   display: flex;
@@ -1531,11 +1573,11 @@ p {
   box-shadow: var(--shadow-hover);
   z-index: 50;
 }
-.btn-prev-chapter{
+.btn-prev-chapter {
   border-top-left-radius: 4px;
   border-bottom-left-radius: 4px;
 }
-.btn-next-chapter{
+.btn-next-chapter {
   border-top-right-radius: 4px;
   border-bottom-right-radius: 4px;
 }
@@ -1850,10 +1892,9 @@ p {
 
 .auth-card {
   width: 100%;
-  max-width: 420px;
+  max-width: 576px;
   background: var(--color-card-bg);
-  border: 1px solid var(--color-border);
-  border-radius: var(--radius-lg);
+  border-radius: 0;
   padding: 36px 32px;
   box-shadow: var(--shadow-hover);
 }
@@ -1882,6 +1923,50 @@ p {
   margin-bottom: 26px;
 }
 
+/* Tiêu đề trang đăng nhập: icon + chữ, gạch chân theo chiều rộng nội dung */
+.auth-heading {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 1.4rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  color: var(--color-text);
+  margin-bottom: 16px;
+}
+.auth-heading-icon {
+  font-weight: 700;
+  color: var(--color-text-muted);
+}
+.auth-divider {
+  height: 1px;
+  background: var(--color-border);
+  margin-bottom: 20px;
+}
+
+/* Tab chuyển Đăng nhập / Đăng ký */
+.auth-tabs {
+  display: flex;
+  margin-bottom: 24px;
+}
+.auth-tab {
+  flex: 1;
+  text-align: center;
+  padding: 14px;
+  font-weight: 700;
+  font-size: 0.95rem;
+  color: var(--color-text-muted);
+  background: var(--color-bg);
+}
+.auth-tab.is-active {
+  background: #ede9f3;
+  color: var(--color-text);
+}
+:root[data-theme="dark"] .auth-tab.is-active {
+  background: #362f47;
+  color: var(--color-text);
+}
+
 .form-group {
   margin-bottom: 16px;
 }
@@ -1894,12 +1979,17 @@ p {
 .form-group input {
   width: 100%;
   padding: 11px 14px;
-  border: 1px solid var(--color-border);
-  border-radius: var(--radius-sm);
+  border: none;
+  border-radius: 0;
   background: var(--color-bg);
 }
 .form-group input:focus {
-  outline: 2px solid var(--color-highlight);
+  outline: 2px solid var(--color-primary-light);
+}
+.form-hint {
+  font-size: 0.82rem;
+  color: var(--color-text-muted);
+  margin-top: 6px;
 }
 .password-field {
   position: relative;
@@ -1912,13 +2002,14 @@ p {
   background: none;
   border: none;
   color: var(--color-text-muted);
-  font-size: 0.8rem;
+  font-size: 1.1rem;
+  line-height: 1;
 }
 .toggle-password::after {
-  content: "Hiện";
+  content: "👁";
 }
 .toggle-password.is-visible::after {
-  content: "Ẩn";
+  content: "🙈";
 }
 
 .form-row-between {
@@ -1931,6 +2022,16 @@ p {
 .form-row-between a:hover {
   color: var(--color-primary);
 }
+.form-row-end {
+  display: flex;
+  justify-content: flex-end;
+  font-size: 0.85rem;
+  margin-bottom: 20px;
+}
+.form-row-end a {
+  color: var(--color-primary);
+  font-weight: 600;
+}
 .checkbox-line {
   display: flex;
   align-items: center;
@@ -1941,6 +2042,22 @@ p {
   width: 100%;
   padding: 13px;
   margin-bottom: 14px;
+}
+.auth-submit-btn {
+  background: #ede9f3;
+  color: var(--color-text);
+  font-weight: 700;
+  border-radius: 0;
+}
+.auth-submit-btn:hover {
+  background: #ddd6e8;
+}
+:root[data-theme="dark"] .auth-submit-btn {
+  background: #362f47;
+  color: var(--color-text);
+}
+:root[data-theme="dark"] .auth-submit-btn:hover {
+  background: #423a56;
 }
 .form-feedback {
   font-size: 0.85rem;
@@ -2074,5 +2191,29 @@ p {
   }
   .category-row-chapter {
     font-size: 0.78rem;
+  }
+
+  /* Thu nhỏ thẻ truyện trên di động để vừa 2 cột trên màn hình hẹp (~360-430px) */
+  .novel-grid {
+    grid-template-columns: repeat(auto-fill, 150px);
+    gap: 12px;
+  }
+  .novel-card {
+    width: 150px;
+  }
+  .novel-cover {
+    width: 150px;
+    height: 225px;
+  }
+  .novel-grid-completed {
+    grid-template-columns: repeat(auto-fill, 140px);
+  }
+  .novel-card-completed {
+    width: 140px;
+    height: 252px;
+  }
+  .novel-card-completed .novel-cover {
+    width: 140px;
+    height: 184px;
   }
 }

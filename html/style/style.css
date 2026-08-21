@@ -808,7 +808,7 @@ p {
   margin-bottom: 48px;
 }
 .content-final {
-  background: #fafafa;
+  background: var(--color-card-bg);
   border: 1px solid var(--color-border);
   padding: 16px;
 }
@@ -826,12 +826,12 @@ p {
 .top-week-table {
   width: 100%;
   border-collapse: collapse;
-  background-color: #ffffff;
+  background-color: var(--color-card-bg);
 }
 
 .top-week-table > thead {
-  background-color: #fafafa;
-  border-bottom: 1px solid;
+  background-color: var(--color-bg);
+  border-bottom: 1px solid var(--color-border);
 }
 
 .top-week-table th {

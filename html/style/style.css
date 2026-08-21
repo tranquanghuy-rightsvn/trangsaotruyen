@@ -872,7 +872,7 @@ p {
 }
 .top-week-genres {
   font-size: 0.8rem;
-  color: var(--color-text-muted);
+  color: var(--color-text);
   line-height: 1.5;
 }
 
@@ -884,7 +884,7 @@ p {
 .genre-tag-grid span {
   display: block;
   font-size: 0.87rem;
-  color: var(--color-text-muted);
+  color: var(--color-text);
 }
 
 /* -------------------------------------------------------------

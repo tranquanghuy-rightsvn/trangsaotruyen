@@ -490,7 +490,7 @@ p {
   display: grid;
   grid-template-columns: 1.4fr 1fr 1fr 1.2fr;
   gap: 32px;
-  padding: 48px 20px;
+  padding: 0 20px 48px;
   max-width: var(--container-w);
   margin: 0 auto;
 }
@@ -525,6 +525,37 @@ p {
   font-weight: 700;
   font-size: 1.05rem;
   color: #fff;
+}
+.footer-contact-top {
+  text-align: center;
+  padding: 18px 20px;
+  font-size: 20px;
+  color: #dcd7e6;
+}
+.footer-contact-top strong {
+  color: #fff;
+}
+.footer-contact-top a:hover {
+  color: var(--color-highlight);
+}
+.footer-legal-btn {
+  display: inline-flex;
+  align-items: center;
+  margin-top: 16px;
+  padding: 8px 18px;
+  border-radius: var(--radius-sm);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  font-size: 0.85rem;
+  font-weight: 500;
+  color: #fff !important;
+  transition:
+    background 0.15s ease,
+    border-color 0.15s ease;
+}
+.footer-legal-btn:hover {
+  background: var(--color-highlight);
+  border-color: var(--color-highlight);
+  color: #423a12 !important;
 }
 .footer-bottom {
   border-top: 1px solid rgba(255, 255, 255, 0.15);
@@ -2254,5 +2285,57 @@ p {
   }
   .novel-card-completed {
     flex-basis: 140px;
+  }
+}
+
+/* -------------------------------------------------------------
+   TRANG PHÁP LÝ
+   ------------------------------------------------------------- */
+.legal-page {
+  padding-bottom: 60px;
+}
+/* .legal-card {
+  max-width: 860px;
+  margin: 0 auto;
+  background: var(--color-card-bg);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-card);
+  padding: 36px 40px;
+} */
+.legal-title {
+  font-size: 1.6rem;
+  font-weight: 700;
+  color: var(--color-primary);
+  padding-bottom: 18px;
+  margin-bottom: 24px;
+  border-bottom: 1px solid var(--color-border);
+}
+:root[data-theme="dark"] .legal-title {
+  color: var(--color-highlight);
+}
+.legal-section {
+  margin-bottom: 24px;
+}
+.legal-section:last-child {
+  margin-bottom: 0;
+}
+.legal-section h2 {
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: var(--color-text);
+  margin-bottom: 8px;
+}
+.legal-section p {
+  color: var(--color-text-muted);
+  line-height: 1.8;
+}
+
+@media (max-width: 640px) {
+  /* .legal-card {
+    padding: 24px 20px;
+  } */
+  .legal-title {
+    font-size: 1.35rem;
   }
 }

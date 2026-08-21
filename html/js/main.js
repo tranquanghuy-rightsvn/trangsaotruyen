@@ -398,7 +398,7 @@ function getQueryParam(name) {
 function getChapters(novel) {
   const pool = CHAPTER_TITLE_POOL[novel.genres[0]] || CHAPTER_TITLE_POOL['hien-dai'];
   const chapters = [];
-  for (let i = novel.chapterCount; i >= 1; i--) {
+  for (let i = 1; i <= novel.chapterCount; i++) {
     const title = pool[i % pool.length];
     const minutesAgo = novel.updatedMinutesAgo + (novel.chapterCount - i) * 180;
     chapters.push({ num: i, title: `Chương ${i}: ${title}`, minutesAgo });

@@ -364,7 +364,8 @@ function renderStars(rating) {
   const half = rating - full >= 0.5;
   let html = '';
   for (let i = 0; i < full; i++) html += '★';
-  if (half) html += '⯨';
+  // Nửa sao dựng bằng CSS (ký tự unicode nửa sao ⯨ không hiển thị đúng trên nhiều font)
+  if (half) html += '<span class="star-half"><span class="star-half-bg">☆</span><span class="star-half-fg">★</span></span>';
   for (let i = full + (half ? 1 : 0); i < 5; i++) html += '☆';
   return html;
 }
@@ -760,7 +761,7 @@ function initDetailPage() {
   detailCoverImg.src = coverImgURL(novel, 440, 587);
   detailCoverImg.alt = novel.title;
   document.querySelector('.detail-title').textContent = novel.title;
-  document.querySelector('.detail-rating-stars').textContent = renderStars(novel.rating);
+  document.querySelector('.detail-rating-stars').innerHTML = renderStars(novel.rating);
   document.querySelector('.detail-rating-text').textContent = `Đánh giá: ${novel.rating.toFixed(1)}/5 từ ${formatViews(novel.nominations)} lượt`;
   document.querySelector('.detail-views').textContent = formatViews(novel.views);
   document.querySelector('.detail-author').textContent = novel.author;

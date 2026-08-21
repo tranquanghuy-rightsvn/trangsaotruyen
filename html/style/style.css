@@ -374,6 +374,11 @@ p {
   font-size: 0.95rem;
   color: var(--color-text-muted);
   pointer-events: none;
+  display: inline-flex;
+}
+.search-icon-svg {
+  width: 16px;
+  height: 16px;
 }
 .search-results {
   display: none;
@@ -445,6 +450,9 @@ p {
 
 /* Thanh breadcrumb dưới header */
 .breadcrumb-bar {
+  position: sticky;
+  top: var(--header-h);
+  z-index: 90;
   background: var(--color-bg);
   border-bottom: 1px solid var(--color-border);
 }
@@ -535,6 +543,27 @@ p {
 .content-section:first-of-type {
   margin-top: 32px;
 }
+
+/* Nút "Xem tất cả" nằm ở góc phải dưới mỗi khung truyện */
+.section-view-all {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 18px;
+}
+.btn-view-all {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--color-text);
+}
+.btn-view-all:hover {
+  color: var(--color-primary);
+}
+.chevron-right {
+  font-weight: 700;
+}
 .section-header {
   display: flex;
   align-items: baseline;
@@ -554,6 +583,15 @@ p {
 }
 .section-title .icon {
   font-size: 2rem;
+}
+.icon-fire svg {
+  width: 24px;
+  height: 24px;
+  color: var(--color-primary);
+  fill: var(--color-primary);
+}
+:root[data-theme="dark"] .icon-fire svg {
+  color: var(--color-highlight);
 }
 .btn-more {
   font-size: 0.85rem;
@@ -629,10 +667,10 @@ p {
   color: var(--color-primary);
 }
 
-/* Lưới thẻ truyện — auto-fill tự co số cột theo bề rộng màn hình, thẻ giữ nguyên 182px */
+/* Lưới thẻ truyện — flexbox tự bọc dòng và giãn đều thẻ trên mỗi hàng để không dư khoảng trống */
 .novel-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, 182px);
+  display: flex;
+  flex-wrap: wrap;
   gap: 18px;
 }
 .novel-grid.grid-4col {
@@ -642,7 +680,7 @@ p {
 /* Thẻ truyện (novel-card) */
 .novel-card {
   display: block;
-  width: 182px;
+  flex: 1 1 182px;
   overflow: hidden;
 }
 .novel-title:hover {
@@ -650,8 +688,8 @@ p {
 }
 .novel-cover {
   position: relative;
-  width: 182px;
-  height: 273px;
+  width: 100%;
+  aspect-ratio: 182 / 273;
   display: block;
   overflow: hidden;
 }
@@ -717,18 +755,14 @@ p {
 }
 
 /* Thẻ truyện khung "Truyện Đã Hoàn Thành": ảnh bìa riêng, tiêu đề nằm dưới ảnh */
-.novel-grid-completed {
-  grid-template-columns: repeat(auto-fill, 174px);
-}
 .novel-card-completed {
-  width: 167px;
-  height: 300px;
+  flex: 1 1 167px;
   display: flex;
   flex-direction: column;
 }
 .novel-card-completed .novel-cover {
-  width: 167px;
-  height: 220px;
+  width: 100%;
+  aspect-ratio: 167 / 220;
 }
 
 .novel-title-oneline {
@@ -991,6 +1025,20 @@ p {
   color: var(--color-highlight-dark);
   letter-spacing: 1px;
 }
+
+/* Nửa sao dựng từ 2 lớp ★/☆ chồng nhau, không phụ thuộc font hệ thống */
+.star-half {
+  position: relative;
+  display: inline-block;
+}
+.star-half-fg {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 50%;
+  overflow: hidden;
+  white-space: nowrap;
+}
 .detail-rating-text {
   font-size: 0.85rem;
   color: var(--color-text-muted);
@@ -1000,6 +1048,11 @@ p {
   font-size: 0.9rem;
   color: var(--color-text-muted);
   margin-bottom: 18px;
+}
+.detail-views-icon {
+  width: 15px;
+  height: 15px;
+  vertical-align: -2px;
 }
 .detail-actions {
   display: flex;
@@ -1792,7 +1845,7 @@ p {
 }
 .category-sidebar {
   position: sticky;
-  top: calc(var(--header-h) + 20px);
+  top: calc(var(--header-h) + 50px);
 }
 
 .category-list {
@@ -1884,7 +1937,6 @@ p {
   align-items: center;
   justify-content: center;
   padding: 40px 20px;
-  background: linear-gradient(160deg, var(--color-bg) 0%, #ece7f2 100%);
 }
 :root[data-theme="dark"] .auth-page {
   background: linear-gradient(160deg, var(--color-bg) 0%, #24202e 100%);
@@ -2195,25 +2247,12 @@ p {
 
   /* Thu nhỏ thẻ truyện trên di động để vừa 2 cột trên màn hình hẹp (~360-430px) */
   .novel-grid {
-    grid-template-columns: repeat(auto-fill, 150px);
     gap: 12px;
   }
   .novel-card {
-    width: 150px;
-  }
-  .novel-cover {
-    width: 150px;
-    height: 225px;
-  }
-  .novel-grid-completed {
-    grid-template-columns: repeat(auto-fill, 140px);
+    flex-basis: 150px;
   }
   .novel-card-completed {
-    width: 140px;
-    height: 252px;
-  }
-  .novel-card-completed .novel-cover {
-    width: 140px;
-    height: 184px;
+    flex-basis: 140px;
   }
 }

@@ -985,12 +985,19 @@ p {
   position: relative;
   width: 100%;
   height: 100%;
+}
+
+.book-img {
+  width: 100%;
+  height: 100%;
   box-sizing: border-box;
   padding: 2px 3px 2px 5px; /* viền bìa đen 6px + 1px đệm để ảnh bìa nằm thụt vào trong */
   background: #0a0a0a;
   transform: perspective(1000px) rotateY(-14deg);
   box-shadow: 16px 20px 32px rgba(0, 0, 0, 0.35);
   border-radius: 4px;
+  z-index: 99;
+  position: relative;
 }
 
 .book-cover {
@@ -1004,7 +1011,6 @@ p {
   box-shadow: 16px 20px 32px rgba(0, 0, 0, 0.35);
   top: 10px;
   left: 20px;
-  z-index: -1;
   border-radius: 4px;
 }
 
@@ -2239,6 +2245,13 @@ p {
   .detail-hero-left {
     max-width: 200px;
     margin: 0 auto;
+  }
+  .detail-cover {
+    padding: 30px;
+  }
+  .book,
+  .book-cover {
+    transform: none;
   }
 }
 

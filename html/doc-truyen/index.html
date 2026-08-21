@@ -80,15 +80,19 @@
   </nav>
 </div>
 
-<!-- ================= THANH CÔNG CỤ ĐỌC TRUYỆN ================= -->
-<div class="reader-topbar">
-  <div class="container reader-topbar-inner">
+<!-- ================= TIÊU ĐỀ TRUYỆN + ĐIỀU HƯỚNG CHƯƠNG ================= -->
+<div class="reader-hero">
+  <div class="container">
     <a href="#" class="reader-novel-title"></a>
-    <select class="chapter-select" aria-label="Chọn chương"></select>
-    <div class="reader-nav-btns">
-      <a href="#" class="btn btn-outline btn-prev-chapter">‹ Chương trước</a>
-      <a href="#" class="btn btn-outline btn-next-chapter">Chương sau ›</a>
-      <button class="settings-toggle" type="button">⚙ Cài đặt</button>
+    <p class="reader-chapter-title"></p>
+
+    <div class="chapter-nav">
+      <div class="chapter-nav-bar">
+        <a href="#" class="chapter-nav-btn chapter-nav-prev btn-prev-chapter">‹ Chương trước</a>
+        <button type="button" class="chapter-nav-btn chapter-nav-list-toggle chapter-list-toggle" aria-label="Danh sách chương"><span class="chapter-list-icon"><i></i><i></i><i></i></span></button>
+        <a href="#" class="chapter-nav-btn chapter-nav-next btn-next-chapter">Chương tiếp ›</a>
+      </div>
+      <div class="chapter-list-dropdown"></div>
     </div>
   </div>
 </div>
@@ -117,15 +121,29 @@
 
 <!-- ================= NỘI DUNG CHƯƠNG ================= -->
 <main>
-  <h1 class="reader-chapter-title"></h1>
   <div class="reader-content-wrap">
     <div class="reader-content"></div>
   </div>
 
+  <div class="reader-divider" aria-hidden="true">
+    <span class="reader-divider-line"></span>
+    <span class="reader-divider-icon">❦</span>
+    <span class="reader-divider-line"></span>
+  </div>
+
   <div class="reader-bottom-nav">
-    <a href="#" class="btn btn-outline btn-prev-chapter">‹ Chương trước</a>
-    <a href="#" class="btn btn-secondary btn-back-detail">☰ Danh sách chương</a>
-    <a href="#" class="btn btn-outline btn-next-chapter">Chương sau ›</a>
+    <div class="chapter-nav">
+      <div class="chapter-nav-bar">
+        <a href="#" class="chapter-nav-btn chapter-nav-prev btn-prev-chapter">‹ Chương trước</a>
+        <button type="button" class="chapter-nav-btn chapter-nav-list-toggle chapter-list-toggle" aria-label="Danh sách chương"><span class="chapter-list-icon"><i></i><i></i><i></i></span></button>
+        <a href="#" class="chapter-nav-btn chapter-nav-next btn-next-chapter">Chương tiếp ›</a>
+      </div>
+      <div class="chapter-list-dropdown"></div>
+    </div>
+
+    <a href="#" class="btn-comment-jump">💬 Bình luận</a>
+
+    <div class="reader-keyboard-hint">Bạn có thể dùng phím mũi tên (trái / phải) hoặc A / D để lùi/sang chương.</div>
   </div>
 </main>
 

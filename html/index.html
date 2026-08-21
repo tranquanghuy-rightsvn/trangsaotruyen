@@ -1,192 +1,302 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="vi">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Trăng Sao Truyện - Đọc Truyện Online Miễn Phí</title>
-<meta name="description" content="Trăng Sao Truyện - Kho truyện ngôn tình, tiên hiệp, huyền huyễn, trinh thám, kinh dị cập nhật mỗi ngày.">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="style/style.css">
-</head>
-<body data-root="" data-page="home">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Trăng Sao Truyện - Đọc Truyện Online Miễn Phí</title>
+    <meta
+      name="description"
+      content="Trăng Sao Truyện - Kho truyện ngôn tình, tiên hiệp, huyền huyễn, trinh thám, kinh dị cập nhật mỗi ngày."
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="style/style.css" />
+  </head>
+  <body data-root="" data-page="home">
+    <!-- ================= HEADER ================= -->
+    <header class="site-header">
+      <div class="header-top">
+        <a href="index.html" class="logo">
+          <img src="assets/image.png" alt="Trăng Sao Truyện" />
+          <span class="logo-text">Trăng Sao Truyện</span>
+        </a>
 
-<!-- ================= HEADER ================= -->
-<header class="site-header">
-  <div class="header-top">
-    <a href="index.html" class="logo">
-      <img src="assets/image.png" alt="Trăng Sao Truyện">
-      <span class="logo-text">Trăng Sao Truyện</span>
-    </a>
+        <nav class="main-nav">
+          <ul class="nav-list">
+            <li class="nav-dropdown">
+              <button class="nav-dropdown-toggle" type="button">
+                <span class="nav-icon">☰</span>Danh sách<span class="chevron"
+                  >▾</span
+                >
+              </button>
+              <div class="nav-dropdown-menu">
+                <a href="phan-loai/index.html?the-loai=hien-dai"
+                  >Ngôn Tình Hiện Đại</a
+                >
+                <a href="phan-loai/index.html?the-loai=co-trang"
+                  >Ngôn Tình Cổ Trang</a
+                >
+                <a href="phan-loai/index.html?the-loai=tien-hiep">Tiên Hiệp</a>
+                <a href="phan-loai/index.html?the-loai=huyen-huyen"
+                  >Huyền Huyễn</a
+                >
+                <a href="phan-loai/index.html?the-loai=trinh-tham"
+                  >Trinh Thám</a
+                >
+                <a href="phan-loai/index.html?the-loai=kinh-di">Kinh Dị</a>
+              </div>
+            </li>
+            <li class="nav-dropdown">
+              <button class="nav-dropdown-toggle" type="button">
+                <span class="nav-icon">🗂️</span>Phân loại theo chương<span
+                  class="chevron"
+                  >▾</span
+                >
+              </button>
+              <div class="nav-dropdown-menu">
+                <a href="phan-loai/index.html?so-chuong=under20"
+                  >Dưới 20 chương</a
+                >
+                <a href="phan-loai/index.html?so-chuong=20to50"
+                  >20 - 50 chương</a
+                >
+                <a href="phan-loai/index.html?so-chuong=over100"
+                  >Trên 100 chương</a
+                >
+                <a href="phan-loai/index.html">Tất cả</a>
+              </div>
+            </li>
+            <li class="nav-dropdown">
+              <button class="nav-dropdown-toggle" type="button">
+                <span class="nav-icon">⚙️</span>Tùy chỉnh<span class="chevron"
+                  >▾</span
+                >
+              </button>
+              <div class="nav-dropdown-menu">
+                <button type="button" class="theme-toggle-item">
+                  <span class="theme-toggle-icon"></span
+                  ><span class="theme-toggle-label"></span>
+                </button>
+              </div>
+            </li>
+            <li class="nav-dropdown">
+              <button class="nav-dropdown-toggle" type="button">
+                <span class="nav-icon">👤</span>Tài khoản<span class="chevron"
+                  >▾</span
+                >
+              </button>
+              <div class="nav-dropdown-menu">
+                <a href="login/index.html">Đăng nhập</a>
+                <a href="signup/index.html">Đăng ký</a>
+              </div>
+            </li>
+          </ul>
+        </nav>
 
-    <nav class="main-nav">
-      <ul class="nav-list">
-        <li class="nav-dropdown">
-          <button class="nav-dropdown-toggle" type="button"><span class="nav-icon">☰</span>Danh sách<span class="chevron">▾</span></button>
-          <div class="nav-dropdown-menu">
-            <a href="phan-loai/index.html?the-loai=hien-dai">Ngôn Tình Hiện Đại</a>
-            <a href="phan-loai/index.html?the-loai=co-trang">Ngôn Tình Cổ Trang</a>
-            <a href="phan-loai/index.html?the-loai=tien-hiep">Tiên Hiệp</a>
-            <a href="phan-loai/index.html?the-loai=huyen-huyen">Huyền Huyễn</a>
-            <a href="phan-loai/index.html?the-loai=trinh-tham">Trinh Thám</a>
-            <a href="phan-loai/index.html?the-loai=kinh-di">Kinh Dị</a>
-          </div>
-        </li>
-        <li class="nav-dropdown">
-          <button class="nav-dropdown-toggle" type="button"><span class="nav-icon">🗂️</span>Phân loại theo chương<span class="chevron">▾</span></button>
-          <div class="nav-dropdown-menu">
-            <a href="phan-loai/index.html?so-chuong=under20">Dưới 20 chương</a>
-            <a href="phan-loai/index.html?so-chuong=20to50">20 - 50 chương</a>
-            <a href="phan-loai/index.html?so-chuong=over100">Trên 100 chương</a>
-            <a href="phan-loai/index.html">Tất cả</a>
-          </div>
-        </li>
-        <li class="nav-dropdown">
-          <button class="nav-dropdown-toggle" type="button"><span class="nav-icon">⚙️</span>Tùy chỉnh<span class="chevron">▾</span></button>
-          <div class="nav-dropdown-menu">
-            <button type="button" class="theme-toggle-item">
-              <span class="theme-toggle-icon"></span><span class="theme-toggle-label"></span>
+        <div class="search-box">
+          <form role="search">
+            <input
+              type="text"
+              class="search-input"
+              placeholder="Tìm kiếm truyện, tác giả..."
+            />
+            <span class="search-icon">🔍</span>
+          </form>
+          <div class="search-results"></div>
+        </div>
+
+        <div class="header-actions">
+          <button class="menu-toggle" type="button" aria-label="Mở menu">
+            <span></span><span></span><span></span>
+          </button>
+        </div>
+      </div>
+    </header>
+
+    <!-- ================= NỘI DUNG CHÍNH ================= -->
+    <main class="container">
+      <!-- Khung 1: Truyện Hot -->
+      <section class="content-section">
+        <div class="section-header">
+          <h2 class="section-title section-title-underline">
+            <span class="section-title-text">Truyện Hot</span>
+            <span class="icon">🔥</span>
+          </h2>
+          <div class="section-filter">
+            <button class="section-filter-toggle" type="button">
+              <span class="section-filter-label">Tất cả</span>
+              <span class="chevron">▾</span>
             </button>
+            <div class="section-filter-menu">
+              <a href="phan-loai/index.html?sort=hot">Tất cả</a>
+              <a href="phan-loai/index.html?sort=hot&the-loai=hien-dai"
+                >Ngôn Tình Hiện Đại</a
+              >
+              <a href="phan-loai/index.html?sort=hot&the-loai=co-trang"
+                >Ngôn Tình Cổ Trang</a
+              >
+              <a href="phan-loai/index.html?sort=hot&the-loai=tien-hiep"
+                >Tiên Hiệp</a
+              >
+              <a href="phan-loai/index.html?sort=hot&the-loai=huyen-huyen"
+                >Huyền Huyễn</a
+              >
+              <a href="phan-loai/index.html?sort=hot&the-loai=trinh-tham"
+                >Trinh Thám</a
+              >
+              <a href="phan-loai/index.html?sort=hot&the-loai=kinh-di"
+                >Kinh Dị</a
+              >
+            </div>
           </div>
-        </li>
-        <li class="nav-dropdown">
-          <button class="nav-dropdown-toggle" type="button"><span class="nav-icon">👤</span>Tài khoản<span class="chevron">▾</span></button>
-          <div class="nav-dropdown-menu">
-            <a href="login/index.html">Đăng nhập</a>
-            <a href="signup/index.html">Đăng ký</a>
-          </div>
-        </li>
-      </ul>
-    </nav>
-
-    <div class="search-box">
-      <form role="search">
-        <input type="text" class="search-input" placeholder="Tìm kiếm truyện, tác giả...">
-        <span class="search-icon">🔍</span>
-      </form>
-      <div class="search-results"></div>
-    </div>
-
-    <div class="header-actions">
-      <button class="menu-toggle" type="button" aria-label="Mở menu"><span></span><span></span><span></span></button>
-    </div>
-  </div>
-</header>
-
-<!-- ================= NỘI DUNG CHÍNH ================= -->
-<main class="container">
-
-    <!-- Khung 1: Truyện Hot -->
-    <section class="content-section">
-      <div class="section-header">
-        <h2 class="section-title"><span class="icon">🔥</span>Truyện Hot</h2>
-        <a class="btn-more" href="phan-loai/index.html?sort=hot">Xem thêm →</a>
-      </div>
-      <div class="novel-grid" id="grid-hot"></div>
-    </section>
-
-    <!-- Khung 2: Truyện Mới Cập Nhật -->
-    <section class="content-section">
-      <div class="section-header">
-        <h2 class="section-title"><span class="icon">🆕</span>Truyện Mới Cập Nhật</h2>
-        <a class="btn-more" href="phan-loai/index.html?sort=new">Xem thêm →</a>
-      </div>
-      <div class="novel-grid" id="grid-latest"></div>
-    </section>
-
-    <!-- Khung 3: Truyện Ngôn Tình Hiện Đại -->
-    <section class="content-section">
-      <div class="section-header">
-        <h2 class="section-title"><span class="icon">🏙️</span>Truyện Ngôn Tình Hiện Đại</h2>
-        <a class="btn-more" href="phan-loai/index.html?the-loai=hien-dai">Xem thêm →</a>
-      </div>
-      <div class="novel-grid" id="grid-modern"></div>
-    </section>
-
-    <!-- Khung 4: Truyện Ngôn Tình Cổ Trang -->
-    <section class="content-section">
-      <div class="section-header">
-        <h2 class="section-title"><span class="icon">🏮</span>Truyện Ngôn Tình Cổ Trang</h2>
-        <a class="btn-more" href="phan-loai/index.html?the-loai=co-trang">Xem thêm →</a>
-      </div>
-      <div class="novel-grid" id="grid-ancient"></div>
-    </section>
-
-    <!-- Khung 5: Truyện Khác -->
-    <section class="content-section">
-      <div class="section-header">
-        <h2 class="section-title"><span class="icon">✨</span>Truyện Khác</h2>
-        <a class="btn-more" href="phan-loai/index.html">Xem thêm →</a>
-      </div>
-      <div class="novel-grid" id="grid-other"></div>
-    </section>
-
-    <!-- Khung dưới cùng: Top tuần + Thể loại truyện -->
-    <div class="home-bottom">
-      <section class="top-week-panel">
-        <h2 class="section-title panel-title">Top Truyện Nhiều Lượt Xem Trong Tuần</h2>
-        <table class="top-week-table">
-          <thead>
-            <tr><th>Truyện</th><th>Thể loại</th></tr>
-          </thead>
-          <tbody></tbody>
-        </table>
+        </div>
+        <div class="novel-grid" id="grid-hot"></div>
       </section>
 
-      <section class="genre-panel">
-        <h2 class="section-title panel-title">Thể Loại Truyện</h2>
-        <div class="genre-tag-grid"></div>
+      <!-- Khung 2: Truyện Mới Cập Nhật -->
+      <section class="content-section">
+        <div class="section-header">
+          <h2 class="section-title section-title-underline">
+            <span class="section-title-text">Truyện Mới Cập Nhật</span>
+            <span class="icon icon-arrow">&rsaquo;</span>
+          </h2>
+        </div>
+        <div class="novel-grid" id="grid-latest"></div>
       </section>
-    </div>
 
-    <!-- Khung: Truyện Đã Hoàn Thành -->
-    <section class="content-section">
-      <div class="section-header">
-        <h2 class="section-title"><span class="icon">✅</span>Truyện Đã Hoàn Thành</h2>
-        <a class="btn-more" href="phan-loai/index.html?sort=full">Xem thêm →</a>
+      <!-- Khung 3: Truyện Ngôn Tình Hiện Đại -->
+      <section class="content-section">
+        <div class="section-header">
+          <h2 class="section-title section-title-underline">
+            <span class="section-title-text">Truyện Ngôn Tình Hiện Đại</span>
+            <span class="icon icon-arrow">&rsaquo;</span>
+          </h2>
+        </div>
+        <div class="novel-grid" id="grid-modern"></div>
+      </section>
+
+      <!-- Khung 4: Truyện Ngôn Tình Cổ Trang -->
+      <section class="content-section">
+        <div class="section-header">
+          <h2 class="section-title section-title-underline">
+            <span class="section-title-text">Truyện Ngôn Tình Cổ Trang</span>
+            <span class="icon icon-arrow">&rsaquo;</span>
+          </h2>
+        </div>
+        <div class="novel-grid" id="grid-ancient"></div>
+      </section>
+
+      <!-- Khung 5: Truyện Khác -->
+      <section class="content-section">
+        <div class="section-header">
+          <h2 class="section-title section-title-underline">
+            <span class="section-title-text">Truyện Khác</span>
+            <span class="icon icon-arrow">&rsaquo;</span>
+          </h2>
+        </div>
+        <div class="novel-grid" id="grid-other"></div>
+      </section>
+
+      <div class="content-final">
+        <!-- Khung dưới cùng: Top tuần + Thể loại truyện -->
+        <div class="home-bottom">
+          <section class="top-week-panel">
+            <h2 class="section-title panel-title">
+              Top Truyện Nhiều Lượt Xem Trong Tuần
+            </h2>
+            <table class="top-week-table">
+              <thead>
+                <tr>
+                  <th>Truyện</th>
+                  <th>Thể loại</th>
+                </tr>
+              </thead>
+              <tbody></tbody>
+            </table>
+          </section>
+
+          <section class="genre-panel">
+            <h2 class="section-title panel-title">Thể Loại Truyện</h2>
+            <div class="genre-tag-grid"></div>
+          </section>
+        </div>
+
+        <!-- Khung: Truyện Đã Hoàn Thành -->
+        <section class="content-section">
+          <div class="section-header">
+            <h2 class="section-title section-title-underline">
+              <span class="section-title-text">Truyện Đã Hoàn Thành</span>
+              <span class="icon icon-arrow">&rsaquo;</span>
+            </h2>
+          </div>
+          <div class="novel-grid novel-grid-completed" id="grid-completed"></div>
+        </section>
       </div>
-      <div class="novel-grid" id="grid-completed"></div>
-    </section>
+    </main>
 
-</main>
-
-<!-- ================= FOOTER ================= -->
-<footer class="site-footer">
-  <div class="footer-grid">
-    <div class="footer-col">
-      <div class="footer-logo">
-        <img src="assets/image.png" alt="Trăng Sao Truyện">
-        <span>Trăng Sao Truyện</span>
+    <!-- ================= FOOTER ================= -->
+    <footer class="site-footer">
+      <div class="footer-grid">
+        <div class="footer-col">
+          <div class="footer-logo">
+            <img src="assets/image.png" alt="Trăng Sao Truyện" />
+            <span>Trăng Sao Truyện</span>
+          </div>
+          <p>
+            Kho tàng truyện chữ đa thể loại: ngôn tình hiện đại, cổ trang, tiên
+            hiệp, huyền huyễn, trinh thám, kinh dị... cập nhật mỗi ngày.
+          </p>
+        </div>
+        <div class="footer-col">
+          <h4>Thể loại</h4>
+          <ul>
+            <li>
+              <a href="phan-loai/index.html?the-loai=hien-dai"
+                >Ngôn Tình Hiện Đại</a
+              >
+            </li>
+            <li>
+              <a href="phan-loai/index.html?the-loai=co-trang"
+                >Ngôn Tình Cổ Trang</a
+              >
+            </li>
+            <li>
+              <a href="phan-loai/index.html?the-loai=tien-hiep">Tiên Hiệp</a>
+            </li>
+            <li>
+              <a href="phan-loai/index.html?the-loai=huyen-huyen"
+                >Huyền Huyễn</a
+              >
+            </li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>Liên kết</h4>
+          <ul>
+            <li><a href="index.html">Trang chủ</a></li>
+            <li><a href="phan-loai/index.html">Phân loại truyện</a></li>
+            <li><a href="login/index.html">Đăng nhập</a></li>
+            <li><a href="signup/index.html">Đăng ký</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>Về chúng tôi</h4>
+          <p>
+            Trăng Sao Truyện là trang đọc truyện online miễn phí, giao diện thân
+            thiện, cập nhật nhanh chóng. Đây là bản demo tĩnh phục vụ mục đích
+            minh họa giao diện.
+          </p>
+        </div>
       </div>
-      <p>Kho tàng truyện chữ đa thể loại: ngôn tình hiện đại, cổ trang, tiên hiệp, huyền huyễn, trinh thám, kinh dị... cập nhật mỗi ngày.</p>
-    </div>
-    <div class="footer-col">
-      <h4>Thể loại</h4>
-      <ul>
-        <li><a href="phan-loai/index.html?the-loai=hien-dai">Ngôn Tình Hiện Đại</a></li>
-        <li><a href="phan-loai/index.html?the-loai=co-trang">Ngôn Tình Cổ Trang</a></li>
-        <li><a href="phan-loai/index.html?the-loai=tien-hiep">Tiên Hiệp</a></li>
-        <li><a href="phan-loai/index.html?the-loai=huyen-huyen">Huyền Huyễn</a></li>
-      </ul>
-    </div>
-    <div class="footer-col">
-      <h4>Liên kết</h4>
-      <ul>
-        <li><a href="index.html">Trang chủ</a></li>
-        <li><a href="phan-loai/index.html">Phân loại truyện</a></li>
-        <li><a href="login/index.html">Đăng nhập</a></li>
-        <li><a href="signup/index.html">Đăng ký</a></li>
-      </ul>
-    </div>
-    <div class="footer-col">
-      <h4>Về chúng tôi</h4>
-      <p>Trăng Sao Truyện là trang đọc truyện online miễn phí, giao diện thân thiện, cập nhật nhanh chóng. Đây là bản demo tĩnh phục vụ mục đích minh họa giao diện.</p>
-    </div>
-  </div>
-  <div class="footer-bottom">© 2026 Trăng Sao Truyện. Bản demo tĩnh — dữ liệu minh họa.</div>
-</footer>
+      <div class="footer-bottom">
+        © 2026 Trăng Sao Truyện. Bản demo tĩnh — dữ liệu minh họa.
+      </div>
+    </footer>
 
-<script src="js/main.js"></script>
-</body>
+    <script src="js/main.js"></script>
+  </body>
 </html>

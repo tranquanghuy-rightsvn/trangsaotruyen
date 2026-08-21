@@ -1,224 +1,318 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="vi">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Chi Tiết Truyện - Trăng Sao Truyện</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="../style/style.css">
-</head>
-<body data-root="../" data-page="detail">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Chi Tiết Truyện - Trăng Sao Truyện</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="../style/style.css" />
+  </head>
+  <body data-root="../" data-page="detail">
+    <!-- ================= HEADER ================= -->
+    <header class="site-header">
+      <div class="header-top">
+        <a href="../index.html" class="logo">
+          <img src="../assets/image.png" alt="Trăng Sao Truyện" />
+          <span class="logo-text">Trăng Sao Truyện</span>
+        </a>
 
-<!-- ================= HEADER ================= -->
-<header class="site-header">
-  <div class="header-top">
-    <a href="../index.html" class="logo">
-      <img src="../assets/image.png" alt="Trăng Sao Truyện">
-      <span class="logo-text">Trăng Sao Truyện</span>
-    </a>
+        <nav class="main-nav">
+          <ul class="nav-list">
+            <li class="nav-dropdown">
+              <button class="nav-dropdown-toggle" type="button">
+                <span class="nav-icon">☰</span>Danh sách<span class="chevron"
+                  >▾</span
+                >
+              </button>
+              <div class="nav-dropdown-menu">
+                <a href="../phan-loai/index.html?the-loai=hien-dai"
+                  >Ngôn Tình Hiện Đại</a
+                >
+                <a href="../phan-loai/index.html?the-loai=co-trang"
+                  >Ngôn Tình Cổ Trang</a
+                >
+                <a href="../phan-loai/index.html?the-loai=tien-hiep"
+                  >Tiên Hiệp</a
+                >
+                <a href="../phan-loai/index.html?the-loai=huyen-huyen"
+                  >Huyền Huyễn</a
+                >
+                <a href="../phan-loai/index.html?the-loai=trinh-tham"
+                  >Trinh Thám</a
+                >
+                <a href="../phan-loai/index.html?the-loai=kinh-di">Kinh Dị</a>
+              </div>
+            </li>
+            <li class="nav-dropdown">
+              <button class="nav-dropdown-toggle" type="button">
+                <span class="nav-icon">🗂️</span>Phân loại theo chương<span
+                  class="chevron"
+                  >▾</span
+                >
+              </button>
+              <div class="nav-dropdown-menu">
+                <a href="../phan-loai/index.html?so-chuong=under20"
+                  >Dưới 20 chương</a
+                >
+                <a href="../phan-loai/index.html?so-chuong=20to50"
+                  >20 - 50 chương</a
+                >
+                <a href="../phan-loai/index.html?so-chuong=over100"
+                  >Trên 100 chương</a
+                >
+                <a href="../phan-loai/index.html">Tất cả</a>
+              </div>
+            </li>
+            <li class="nav-dropdown">
+              <button class="nav-dropdown-toggle" type="button">
+                <span class="nav-icon">⚙️</span>Tùy chỉnh<span class="chevron"
+                  >▾</span
+                >
+              </button>
+              <div class="nav-dropdown-menu">
+                <button type="button" class="theme-toggle-item">
+                  <span class="theme-toggle-icon"></span
+                  ><span class="theme-toggle-label"></span>
+                </button>
+              </div>
+            </li>
+            <li class="nav-dropdown">
+              <button class="nav-dropdown-toggle" type="button">
+                <span class="nav-icon">👤</span>Tài khoản<span class="chevron"
+                  >▾</span
+                >
+              </button>
+              <div class="nav-dropdown-menu">
+                <a href="../login/index.html">Đăng nhập</a>
+                <a href="../signup/index.html">Đăng ký</a>
+              </div>
+            </li>
+          </ul>
+        </nav>
 
-    <nav class="main-nav">
-      <ul class="nav-list">
-        <li class="nav-dropdown">
-          <button class="nav-dropdown-toggle" type="button"><span class="nav-icon">☰</span>Danh sách<span class="chevron">▾</span></button>
-          <div class="nav-dropdown-menu">
-            <a href="../phan-loai/index.html?the-loai=hien-dai">Ngôn Tình Hiện Đại</a>
-            <a href="../phan-loai/index.html?the-loai=co-trang">Ngôn Tình Cổ Trang</a>
-            <a href="../phan-loai/index.html?the-loai=tien-hiep">Tiên Hiệp</a>
-            <a href="../phan-loai/index.html?the-loai=huyen-huyen">Huyền Huyễn</a>
-            <a href="../phan-loai/index.html?the-loai=trinh-tham">Trinh Thám</a>
-            <a href="../phan-loai/index.html?the-loai=kinh-di">Kinh Dị</a>
+        <div class="search-box">
+          <form role="search">
+            <input
+              type="text"
+              class="search-input"
+              placeholder="Tìm kiếm truyện, tác giả..."
+            />
+            <span class="search-icon">🔍</span>
+          </form>
+          <div class="search-results"></div>
+        </div>
+
+        <div class="header-actions">
+          <button class="menu-toggle" type="button" aria-label="Mở menu">
+            <span></span><span></span><span></span>
+          </button>
+        </div>
+      </div>
+    </header>
+
+    <div class="breadcrumb-bar">
+      <nav class="breadcrumb" aria-label="breadcrumb">
+        <a href="../index.html">🏠 Trang chủ</a>
+        <span class="breadcrumb-extra"></span>
+      </nav>
+    </div>
+
+    <!-- ================= NỘI DUNG CHÍNH ================= -->
+    <main class="container">
+      <!-- Khối thông tin tổng quan truyện + Truyện cùng tác giả -->
+      <section class="detail-top-layout">
+        <div class="detail-info-block">
+          <h2 class="block-title underline-title">Thông Tin Truyện</h2>
+
+          <div class="detail-hero">
+            <div class="detail-hero-left">
+              <div class="detail-cover">
+                <img class="cover-img" alt="" />
+              </div>
+              <ul class="detail-meta-list">
+                <li>
+                  <span class="meta-label">Tác giả:</span>
+                  <span class="detail-author"></span>
+                </li>
+                <li>
+                  <span class="meta-label">Thể loại:</span>
+                  <span class="detail-genres"></span>
+                </li>
+                <li>
+                  <span class="meta-label">Trạng thái:</span>
+                  <span class="detail-status"></span>
+                </li>
+              </ul>
+            </div>
+            <div class="detail-summary">
+              <h1 class="detail-title"></h1>
+
+              <div class="detail-rating-line">
+                <span class="detail-rating-stars"></span>
+              </div>
+              <div class="detail-rating-text"></div>
+              <div class="detail-views-line">
+                👁 <span class="detail-views"></span> lượt xem
+              </div>
+
+              <div class="detail-actions">
+                <button class="btn btn-outline btn-favorite" type="button">
+                  ♡ Yêu thích truyện
+                </button>
+              </div>
+
+              <hr class="detail-summary-divider" />
+
+              <p class="detail-description"></p>
+              <button class="detail-desc-toggle" type="button">
+                Xem thêm »
+              </button>
+            </div>
           </div>
-        </li>
-        <li class="nav-dropdown">
-          <button class="nav-dropdown-toggle" type="button"><span class="nav-icon">🗂️</span>Phân loại theo chương<span class="chevron">▾</span></button>
-          <div class="nav-dropdown-menu">
-            <a href="../phan-loai/index.html?so-chuong=under20">Dưới 20 chương</a>
-            <a href="../phan-loai/index.html?so-chuong=20to50">20 - 50 chương</a>
-            <a href="../phan-loai/index.html?so-chuong=over100">Trên 100 chương</a>
-            <a href="../phan-loai/index.html">Tất cả</a>
+        </div>
+
+        <aside class="side-panel detail-same-author">
+          <h2 class="block-title underline-title">Truyện Cùng Tác Giả</h2>
+          <ul class="side-link-list"></ul>
+        </aside>
+      </section>
+
+      <!-- Danh sách chương & sidebar -->
+      <section class="detail-body">
+        <div class="detail-main">
+          <h2 class="block-title underline-title">Danh Sách Chương</h2>
+          <ul class="chapter-bullet-list"></ul>
+          <div class="chapter-pagination"></div>
+        </div>
+
+        <aside class="detail-sidebar">
+          <div class="side-panel hot-panel">
+            <h2 class="block-title underline-title">Truyện Đang Hot</h2>
+            <div class="hot-tabs">
+              <button class="hot-tab is-active" data-period="day">Ngày</button>
+              <button class="hot-tab" data-period="month">Tháng</button>
+              <button class="hot-tab" data-period="alltime">All Time</button>
+            </div>
+            <ul class="hot-rank-list"></ul>
           </div>
-        </li>
-        <li class="nav-dropdown">
-          <button class="nav-dropdown-toggle" type="button"><span class="nav-icon">⚙️</span>Tùy chỉnh<span class="chevron">▾</span></button>
-          <div class="nav-dropdown-menu">
-            <button type="button" class="theme-toggle-item">
-              <span class="theme-toggle-icon"></span><span class="theme-toggle-label"></span>
+        </aside>
+      </section>
+
+      <!-- Bình luận truyện (chỉ chiếm cột trái, giống độ rộng khối Thông tin truyện) -->
+      <div class="detail-content-row">
+        <section class="comment-section" id="comment-section">
+          <h2 class="block-title underline-title">Bình Luận Truyện</h2>
+
+          <div class="comment-panel-head">
+            <div>
+              <h3 class="comment-panel-title">Bình luận</h3>
+              <p class="comment-summary"></p>
+            </div>
+            <button type="button" class="btn btn-outline comment-refresh-btn">
+              ⟳ Làm mới
             </button>
           </div>
-        </li>
-        <li class="nav-dropdown">
-          <button class="nav-dropdown-toggle" type="button"><span class="nav-icon">👤</span>Tài khoản<span class="chevron">▾</span></button>
-          <div class="nav-dropdown-menu">
-            <a href="../login/index.html">Đăng nhập</a>
-            <a href="../signup/index.html">Đăng ký</a>
+
+          <div class="comment-form-card">
+            <div class="comment-form-header">
+              <p class="comment-login-note">
+                Bình luận bằng tài khoản đang đăng nhập.
+              </p>
+
+              <div class="comment-star-picker" data-rating="5">
+                <button type="button" class="star-btn" data-value="1">★</button>
+                <button type="button" class="star-btn" data-value="2">★</button>
+                <button type="button" class="star-btn" data-value="3">★</button>
+                <button type="button" class="star-btn" data-value="4">★</button>
+                <button type="button" class="star-btn" data-value="5">★</button>
+              </div>
+            </div>
+
+            <label class="comment-form-label" for="comment-textarea"
+              >Bình luận</label
+            >
+            <textarea
+              id="comment-textarea"
+              class="comment-textarea"
+              maxlength="500"
+              placeholder="Nhập cảm nhận của bạn về truyện..."
+            ></textarea>
+            <div class="comment-char-count">0/500</div>
+
+            <button type="button" class="btn btn-primary comment-submit-btn">
+              ➤ Gửi bình luận
+            </button>
           </div>
-        </li>
-      </ul>
-    </nav>
 
-    <div class="search-box">
-      <form role="search">
-        <input type="text" class="search-input" placeholder="Tìm kiếm truyện, tác giả...">
-        <span class="search-icon">🔍</span>
-      </form>
-      <div class="search-results"></div>
-    </div>
+          <ul class="comment-list"></ul>
+        </section>
+      </div>
+    </main>
 
-    <div class="header-actions">
-      <button class="menu-toggle" type="button" aria-label="Mở menu"><span></span><span></span><span></span></button>
-    </div>
-  </div>
-</header>
-
-<div class="breadcrumb-bar">
-  <nav class="breadcrumb" aria-label="breadcrumb">
-    <a href="../index.html">🏠 Trang chủ</a>
-    <span class="breadcrumb-extra"></span>
-  </nav>
-</div>
-
-<!-- ================= NỘI DUNG CHÍNH ================= -->
-<main class="container">
-
-  <!-- Khối thông tin tổng quan truyện + Truyện cùng tác giả -->
-  <section class="detail-top-layout">
-    <div class="detail-info-block">
-      <h2 class="block-title underline-title">Thông Tin Truyện</h2>
-
-      <div class="detail-hero">
-        <div class="detail-cover">
-          <img class="cover-img" alt="">
-        </div>
-        <div class="detail-summary">
-          <h1 class="detail-title"></h1>
-
-          <div class="detail-rating-line">
-            <span class="detail-rating-stars"></span>
-            <span class="detail-rating-text"></span>
+    <!-- ================= FOOTER ================= -->
+    <footer class="site-footer">
+      <div class="footer-grid">
+        <div class="footer-col">
+          <div class="footer-logo">
+            <img src="../assets/image.png" alt="Trăng Sao Truyện" />
+            <span>Trăng Sao Truyện</span>
           </div>
-          <div class="detail-views-line">👁 <span class="detail-views"></span> lượt xem</div>
-
-          <p class="detail-description"></p>
-          <button class="detail-desc-toggle" type="button">Xem thêm »</button>
-
-          <div class="detail-actions">
-            <a href="#" class="btn btn-primary btn-read-first">Đọc từ đầu</a>
-            <a href="#" class="btn btn-secondary btn-read-continue">Đọc tiếp</a>
-            <button class="btn btn-outline btn-favorite" type="button">♡ Yêu thích truyện</button>
-          </div>
+          <p>
+            Kho tàng truyện chữ đa thể loại: ngôn tình hiện đại, cổ trang, tiên
+            hiệp, huyền huyễn, trinh thám, kinh dị... cập nhật mỗi ngày.
+          </p>
+        </div>
+        <div class="footer-col">
+          <h4>Thể loại</h4>
+          <ul>
+            <li>
+              <a href="../phan-loai/index.html?the-loai=hien-dai"
+                >Ngôn Tình Hiện Đại</a
+              >
+            </li>
+            <li>
+              <a href="../phan-loai/index.html?the-loai=co-trang"
+                >Ngôn Tình Cổ Trang</a
+              >
+            </li>
+            <li>
+              <a href="../phan-loai/index.html?the-loai=tien-hiep">Tiên Hiệp</a>
+            </li>
+            <li>
+              <a href="../phan-loai/index.html?the-loai=huyen-huyen"
+                >Huyền Huyễn</a
+              >
+            </li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>Liên kết</h4>
+          <ul>
+            <li><a href="../index.html">Trang chủ</a></li>
+            <li><a href="../phan-loai/index.html">Phân loại truyện</a></li>
+            <li><a href="../login/index.html">Đăng nhập</a></li>
+            <li><a href="../signup/index.html">Đăng ký</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>Về chúng tôi</h4>
+          <p>
+            Trăng Sao Truyện là trang đọc truyện online miễn phí, giao diện thân
+            thiện, cập nhật nhanh chóng. Đây là bản demo tĩnh phục vụ mục đích
+            minh họa giao diện.
+          </p>
         </div>
       </div>
-
-      <ul class="detail-meta-list">
-        <li><span class="meta-label">Tác giả:</span> <span class="detail-author"></span></li>
-        <li><span class="meta-label">Thể loại:</span> <span class="detail-genres"></span></li>
-        <li><span class="meta-label">Trạng thái:</span> <span class="detail-status"></span></li>
-      </ul>
-    </div>
-
-    <aside class="side-panel detail-same-author">
-      <h2 class="block-title underline-title">Truyện Cùng Tác Giả</h2>
-      <ul class="side-link-list"></ul>
-    </aside>
-  </section>
-
-  <!-- Danh sách chương & sidebar -->
-  <section class="detail-body">
-    <div class="detail-main">
-      <h2 class="block-title underline-title">Danh Sách Chương</h2>
-      <ul class="chapter-bullet-list"></ul>
-      <div class="chapter-pagination"></div>
-    </div>
-
-    <aside class="detail-sidebar">
-      <div class="side-panel">
-        <h2 class="block-title underline-title">Truyện Đang Hot</h2>
-        <div class="hot-tabs">
-          <button class="hot-tab is-active" data-period="day">Ngày</button>
-          <button class="hot-tab" data-period="month">Tháng</button>
-          <button class="hot-tab" data-period="alltime">All Time</button>
-        </div>
-        <ul class="hot-rank-list"></ul>
+      <div class="footer-bottom">
+        © 2026 Trăng Sao Truyện. Bản demo tĩnh — dữ liệu minh họa.
       </div>
-    </aside>
-  </section>
+    </footer>
 
-  <!-- Bình luận truyện (chỉ chiếm cột trái, giống độ rộng khối Thông tin truyện) -->
-  <div class="detail-content-row">
-  <section class="comment-section">
-    <h2 class="block-title underline-title">Bình Luận Truyện</h2>
-
-    <div class="comment-panel-head">
-      <div>
-        <h3 class="comment-panel-title">Bình luận</h3>
-        <p class="comment-summary"></p>
-      </div>
-      <button type="button" class="btn btn-outline comment-refresh-btn">⟳ Làm mới</button>
-    </div>
-
-    <div class="comment-form-card">
-      <p class="comment-login-note">Bình luận bằng tài khoản đang đăng nhập.</p>
-
-      <div class="comment-star-picker" data-rating="5">
-        <button type="button" class="star-btn" data-value="1">★</button>
-        <button type="button" class="star-btn" data-value="2">★</button>
-        <button type="button" class="star-btn" data-value="3">★</button>
-        <button type="button" class="star-btn" data-value="4">★</button>
-        <button type="button" class="star-btn" data-value="5">★</button>
-      </div>
-
-      <label class="comment-form-label" for="comment-textarea">Bình luận</label>
-      <textarea id="comment-textarea" class="comment-textarea" maxlength="500" placeholder="Nhập cảm nhận của bạn về truyện..."></textarea>
-      <div class="comment-char-count">0/500</div>
-
-      <button type="button" class="btn btn-primary comment-submit-btn">➤ Gửi bình luận</button>
-    </div>
-
-    <ul class="comment-list"></ul>
-  </section>
-  </div>
-
-</main>
-
-<!-- ================= FOOTER ================= -->
-<footer class="site-footer">
-  <div class="footer-grid">
-    <div class="footer-col">
-      <div class="footer-logo">
-        <img src="../assets/image.png" alt="Trăng Sao Truyện">
-        <span>Trăng Sao Truyện</span>
-      </div>
-      <p>Kho tàng truyện chữ đa thể loại: ngôn tình hiện đại, cổ trang, tiên hiệp, huyền huyễn, trinh thám, kinh dị... cập nhật mỗi ngày.</p>
-    </div>
-    <div class="footer-col">
-      <h4>Thể loại</h4>
-      <ul>
-        <li><a href="../phan-loai/index.html?the-loai=hien-dai">Ngôn Tình Hiện Đại</a></li>
-        <li><a href="../phan-loai/index.html?the-loai=co-trang">Ngôn Tình Cổ Trang</a></li>
-        <li><a href="../phan-loai/index.html?the-loai=tien-hiep">Tiên Hiệp</a></li>
-        <li><a href="../phan-loai/index.html?the-loai=huyen-huyen">Huyền Huyễn</a></li>
-      </ul>
-    </div>
-    <div class="footer-col">
-      <h4>Liên kết</h4>
-      <ul>
-        <li><a href="../index.html">Trang chủ</a></li>
-        <li><a href="../phan-loai/index.html">Phân loại truyện</a></li>
-        <li><a href="../login/index.html">Đăng nhập</a></li>
-        <li><a href="../signup/index.html">Đăng ký</a></li>
-      </ul>
-    </div>
-    <div class="footer-col">
-      <h4>Về chúng tôi</h4>
-      <p>Trăng Sao Truyện là trang đọc truyện online miễn phí, giao diện thân thiện, cập nhật nhanh chóng. Đây là bản demo tĩnh phục vụ mục đích minh họa giao diện.</p>
-    </div>
-  </div>
-  <div class="footer-bottom">© 2026 Trăng Sao Truyện. Bản demo tĩnh — dữ liệu minh họa.</div>
-</footer>
-
-<script src="../js/main.js"></script>
-</body>
+    <script src="../js/main.js"></script>
+  </body>
 </html>

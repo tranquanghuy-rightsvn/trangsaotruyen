@@ -2244,6 +2244,8 @@ p {
   }
   .detail-hero-left {
     max-width: 200px;
+    width: 100%;
+    justify-self: center;
     margin: 0 auto;
     justify-content: center;
   }

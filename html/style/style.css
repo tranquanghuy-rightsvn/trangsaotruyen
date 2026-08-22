@@ -60,6 +60,7 @@ html,
 body {
   margin: 0;
   padding: 0;
+  overflow-x: hidden;
 }
 body {
   font-family: var(--font-main);
@@ -2243,11 +2244,12 @@ p {
     grid-template-columns: 1fr;
   }
   .detail-hero-left {
-    max-width: 200px;
+    align-items: center;
+  }
+  .detail-cover,
+  .detail-meta-list {
     width: 100%;
-    justify-self: center;
-    margin: 0 auto;
-    justify-content: center;
+    max-width: 200px;
   }
   .detail-cover {
     padding: 30px;

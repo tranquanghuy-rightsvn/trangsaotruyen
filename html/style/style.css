@@ -2245,6 +2245,7 @@ p {
   .detail-hero-left {
     max-width: 200px;
     margin: 0 auto;
+    justify-content: center;
   }
   .detail-cover {
     padding: 30px;

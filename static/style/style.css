@@ -712,7 +712,11 @@ p {
 /* Thẻ truyện (novel-card) */
 .novel-card {
   display: block;
-  flex: 1 1 182px;
+  /* flex-grow PHAI la 0. Voi `flex: 1 1 182px` (grow=1), mot hang chi co 1-2 truyen se
+     gian tung the ra lap het chieu ngang -> anh bia bi keo to meo mo, khac hoan toan voi
+     the trong hang day. Grow=0 giu the luon dung 182px du hang co 1 hay 6 truyen; shrink
+     van la 1 de man hinh hep co the co lai (mobile override chi doi flex-basis). */
+  flex: 0 1 182px;
   overflow: hidden;
 }
 .novel-title:hover {
@@ -788,7 +792,8 @@ p {
 
 /* Thẻ truyện khung "Truyện Đã Hoàn Thành": ảnh bìa riêng, tiêu đề nằm dưới ảnh */
 .novel-card-completed {
-  flex: 1 1 167px;
+  /* grow=0, cung ly do nhu .novel-card o tren */
+  flex: 0 1 167px;
   display: flex;
   flex-direction: column;
 }

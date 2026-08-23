@@ -4,6 +4,8 @@
   "title": "test",
   "author": "Abc",
   "genres": [
+    "hien-dai",
+    "co-trang",
     "tien-hiep"
   ],
   "tags": [
@@ -15,5 +17,5 @@
   "hot": true,
   "chapter_count": 2,
   "created_at": "2026-08-23T19:19:27+07:00",
-  "updated_at": "2026-08-23T19:28:01+07:00"
+  "updated_at": "2026-08-23T19:29:35+07:00"
 }

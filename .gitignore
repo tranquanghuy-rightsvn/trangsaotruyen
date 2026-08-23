@@ -10,3 +10,5 @@ html/
 .claude
 excute.md
 .DS_Store
+# Dependency cua wrangler - cai lai bang `npm ci` (CI dung package-lock.json).
+node_modules/

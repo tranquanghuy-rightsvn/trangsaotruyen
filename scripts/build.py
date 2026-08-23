@@ -550,8 +550,10 @@ def build_sitemaps(config, stories):
               '<sitemapindex xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n'
               + "\n".join("  <sitemap><loc>%s/%s</loc></sitemap>" % (domain, f) for f in files)
               + "\n</sitemapindex>\n")
+    # Disallow /admin/: trang chuyen huong sang CMS, khong co gi cho Google. Trang do cung
+    # co the noindex - dung ca hai cho chac.
     write(OUT / "robots.txt",
-          "User-agent: *\nAllow: /\n\nSitemap: %s/sitemap.xml\n" % domain)
+          "User-agent: *\nAllow: /\nDisallow: /admin/\n\nSitemap: %s/sitemap.xml\n" % domain)
     return len(urls), len(files)
 
 

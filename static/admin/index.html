@@ -1,0 +1,75 @@
+<!doctype html>
+<html lang="vi">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <!--
+      Trang chuyển hướng sang CMS (Google Apps Script web app).
+
+      ĐÂY LÀ FILE TĨNH, SỬA TAY — cố ý KHÔNG cho scripts/build.py generate.
+      Lý do: nội dung nó chỉ đổi khi tạo một deployment GAS MỚI (rất hiếm, và luôn là hành
+      động thủ công), chứ không đổi theo dữ liệu bình thường của pipeline. Viết một hàm
+      generate cho nó là thêm phức tạp vô ích (playbook gotcha #21).
+
+      ⚠️ KHI NÀO PHẢI SỬA FILE NÀY:
+      Chỉ khi URL /exec đổi. URL đổi khi bạn dùng "New deployment" trong Apps Script.
+      Nếu chỉ "Manage deployments → Edit → New version" thì URL GIỮ NGUYÊN và không cần
+      sửa gì ở đây — đó cũng là cách deploy đúng (playbook gotcha #4).
+
+      File nằm ở static/ nên build.py copy y nguyên sang html/admin/index.html.
+      KHÔNG sửa trong html/ — lần build kế tiếp xoá sạch thư mục đó.
+    -->
+
+    <title>Đang chuyển tới trang quản trị…</title>
+
+    <!-- Không cho Google thu thập trang này. robots.txt cũng có Disallow: /admin/ -->
+    <meta name="robots" content="noindex, nofollow" />
+
+    <!-- Chuyển hướng chính: hoạt động cả khi JS bị tắt -->
+    <meta
+      http-equiv="refresh"
+      content="0; url=https://script.google.com/macros/s/AKfycby0J2Xd3Se0E1YA-h-Fw4fJ-ReIhu15wq0VpXVvNfiJXTmq1sLw8wlRwUmxbiD5p2I1/exec"
+    />
+
+    <link rel="icon" type="image/png" href="/assets/image.png" />
+    <style>
+      body {
+        font-family: -apple-system, "Segoe UI", Roboto, sans-serif;
+        display: flex; align-items: center; justify-content: center;
+        min-height: 100vh; margin: 0; background: #faf9f7; color: #2a2633;
+      }
+      .box { text-align: center; padding: 32px; max-width: 460px; }
+      .spinner {
+        width: 34px; height: 34px; margin: 0 auto 18px;
+        border: 3px solid rgba(0, 0, 0, 0.1); border-top-color: #6c4ce0;
+        border-radius: 50%; animation: spin 0.7s linear infinite;
+      }
+      @keyframes spin { to { transform: rotate(360deg); } }
+      p { margin: 0 0 6px; }
+      .muted { color: #888; font-size: 14px; }
+      a { color: #6c4ce0; }
+    </style>
+  </head>
+  <body>
+    <div class="box">
+      <div class="spinner"></div>
+      <p>Đang chuyển tới trang quản trị…</p>
+      <p class="muted">
+        Không tự chuyển?
+        <a
+          id="fallback"
+          href="https://script.google.com/macros/s/AKfycby0J2Xd3Se0E1YA-h-Fw4fJ-ReIhu15wq0VpXVvNfiJXTmq1sLw8wlRwUmxbiD5p2I1/exec"
+          >Bấm vào đây</a
+        >
+      </p>
+    </div>
+
+    <script>
+      // Chuyển ngay bằng JS cho nhanh hơn meta refresh. Dùng replace() chứ không phải
+      // assign(): để trang này KHÔNG nằm trong history, bấm Back từ CMS sẽ về đúng trang
+      // trước đó thay vì rơi lại vào đây rồi bị đẩy sang CMS lần nữa (vòng lặp).
+      location.replace(document.getElementById("fallback").href);
+    </script>
+  </body>
+</html>

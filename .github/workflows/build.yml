@@ -67,12 +67,18 @@ jobs:
         with:
           node-version: "20"
 
-      # Deploy Worker + Static Assets. Cần 2 secret trong repo Settings > Secrets:
+      # `npm ci` (không phải `npm install`) để CI dùng ĐÚNG bản wrangler trong
+      # package-lock.json — cùng bản đã test trên máy. Dùng cloudflare/wrangler-action sẽ tự
+      # tải bản mới nhất, tức deploy bằng một bản wrangler chưa ai chạy thử.
+      - name: Cài wrangler đúng bản đã khoá
+        run: npm ci
+
+      # Deploy Worker + Static Assets. Cần 2 secret trong repo Settings > Secrets and
+      # variables > Actions:
       #   CLOUDFLARE_API_TOKEN  (quyền Account > Workers Scripts > Edit)
       #   CLOUDFLARE_ACCOUNT_ID
       - name: Deploy lên Cloudflare
-        uses: cloudflare/wrangler-action@v3
-        with:
-          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
-          accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
-          command: deploy
+        run: npx wrangler deploy
+        env:
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}

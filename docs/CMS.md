@@ -75,12 +75,17 @@ ra 600.000 URL chương. Không thể để JS render runtime. File nhẹ (~18KB
 dung** chương ở D1.
 
 ### Hệ quả: thêm chương vẫn kéo theo 1 lần build
-| | Có ngay | Chờ CI (~2 phút) |
+| | Có ngay | Chờ CI (~40 giây) |
 |---|---|---|
 | Trang chương `/truyen/x/chuong-42` | ✓ ghi D1 là sống | |
 | Danh sách chương trên `/truyen/x/` | | ✓ HTML tĩnh, phải build lại |
 
-CMS nói đúng điều này (`showChapterSyncAlert`), không hứa "xong ngay" chung chung. Muốn bỏ độ
+**Đã đo thật:** một lần CI (checkout → build.py → npm ci → wrangler deploy) mất **22 giây**;
+cộng lan truyền Cloudflare thì ~40 giây. Con số này quan trọng vì nó là thứ quyết định
+việc chọn repo public/private (xem mục 11).
+
+CMS nói điều này với người dùng (`showChapterSyncAlert`) là "~2 phút" — nói quá lên so với
+số đo thật, nhưng cố ý: thà hứa dè còn hơn hứa 30 giây rồi người dùng F5 liên tục. Muốn bỏ độ
 trễ: cho Worker inject danh sách chương bằng `HTMLRewriter` — quyết định ở bước dựng template.
 
 ## 2. Lượt xem và đánh giá — đếm thật, không gõ tay
@@ -459,8 +464,14 @@ mãi mãi; `build.py` đọc index qua `/_api/stories`. Đổi lại: index khô
 
 ### Hai điều phải nói rõ
 
-- **Không giảm số lần build.** Trang chi tiết vẫn phải build lại khi có chương mới, nên số build
-  (~22/ngày với repo private) không đổi. Việc này chỉ bỏ được 2,9 MB chuyển mỗi lần đăng chương.
+- **Không giảm số lần build.** Trang chi tiết vẫn phải build lại khi có chương mới, nên số
+  build không đổi. Việc này chỉ bỏ được 2,9 MB chuyển mỗi lần đăng chương.
+
+  Ghi chú sửa lại: trước đây tôi ước lượng mỗi build ~3 phút → ~22 build/ngày là chạm trần
+  2.000 phút/tháng của repo private. **Số đo thật là 22 giây/build** — GitHub tính tròn lên
+  1 phút, nên repo private chịu được ~2.000 build/tháng (~66/ngày), không phải 22. Ước lượng
+  của tôi sai ~8 lần. Repo hiện đã public nên Actions không giới hạn phút, quyết định vẫn
+  đúng — nhưng con số thì đừng dùng lại.
 - **`chapter_count` chưa có lời giải gọn.** Nó là số dẫn xuất, nhưng bảng truyện trong CMS cần
   nó *ngay* — không chờ được sync hằng ngày, cũng không thể đọc 2.000 file `chapters.json`. Phải
   nghĩ thêm khi làm thật.

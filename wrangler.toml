@@ -23,9 +23,12 @@ binding = "ASSETS"
 # CO Y khong dua ca "/truyen/*": trang chi tiet truyen la file TINH, cho no di qua Worker
 # nghia la moi luot xem trang truyen cung tinh 1 request Worker (free tier 100k/ngay).
 run_worker_first = ["/_api/*", "/truyen/*/chuong-*"]
-# Giu nguyen URL co duoi .html: mac dinh Static Assets tu redirect "/x.html" -> "/x", doi
-# URL da duoc index la mat traffic. "none" = serve dung nguyen path nhu file that.
-html_handling = "none"
+# MOI URL cua site nay ket thuc bang "/" (/truyen/<slug>/, /phan-loai/<the-loai>/) va noi
+# dung nam o <thu-muc>/index.html - nen BAT BUOC phai co phan giai index thu muc.
+# "none" (copy tu codebase mau, noi URL la file .html phang) tat han viec do: "/" tra 404.
+# Bug that da gap ngay lan deploy dau tien.
+# "force-trailing-slash" khop dung canonical URL: "/phan-loai/kinh-di" -> redirect ve co "/".
+html_handling = "force-trailing-slash"
 # Site nhieu trang tinh (khong phai SPA): 404 THAT (khac SPA fallback tra 200 lam Google
 # index noi dung trang chu o URL sai).
 not_found_handling = "404-page"

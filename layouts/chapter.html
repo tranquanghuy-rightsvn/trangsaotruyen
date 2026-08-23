@@ -1,0 +1,93 @@
+<!doctype html>
+<html lang="vi">
+  <head>
+    {{HEAD}}
+  </head>
+  <!-- class="reader-page" BAT BUOC: CSS mau nen doc truyen la
+         `.reader-page[data-reader-bg="..."] .reader-content-wrap` - thieu class nay thi
+         3 nut mau nen bam khong an gi. -->
+  <body class="reader-page" data-page="reader" data-slug="{{SLUG}}" data-chuong="{{CHAPTER_N}}">
+    {{HEADER}}
+    <div class="breadcrumb-bar">
+      <nav class="breadcrumb" aria-label="breadcrumb">
+        <a href="/">🏠 Trang chủ</a>
+        <span class="breadcrumb-extra">{{BREADCRUMB}}</span>
+      </nav>
+    </div>
+
+    <!-- ================= TIÊU ĐỀ TRUYỆN + ĐIỀU HƯỚNG CHƯƠNG ================= -->
+    <div class="reader-hero">
+      <div class="container">
+        <a href="/truyen/{{SLUG}}/" class="reader-novel-title">{{NOVEL_TITLE}}</a>
+        <h1 class="reader-chapter-title">{{CHAPTER_TITLE}}</h1>
+
+        <div class="chapter-nav">
+          <div class="chapter-nav-bar">
+            <a href="{{PREV_HREF}}" class="chapter-nav-btn chapter-nav-prev btn-prev-chapter{{PREV_DISABLED}}">‹ Chương trước</a>
+            <button type="button" class="chapter-nav-btn chapter-nav-list-toggle chapter-list-toggle" aria-label="Danh sách chương"><span class="chapter-list-icon"><i></i><i></i><i></i></span></button>
+            <a href="{{NEXT_HREF}}" class="chapter-nav-btn chapter-nav-next btn-next-chapter{{NEXT_DISABLED}}">Chương tiếp ›</a>
+          </div>
+          <div class="chapter-list-dropdown" data-chapters-src="/truyen/{{SLUG}}/chapters.json"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Nút mở thanh cài đặt. Bản gốc có JS xử lý `.settings-toggle` nhưng HTML không có nút
+         nào, nên cỡ chữ/màu nền không bao giờ mở được. CSS cho class này đã có sẵn. -->
+    <div class="container" style="padding:10px 20px 0;text-align:right">
+      <button type="button" class="settings-toggle">⚙ Cỡ chữ &amp; màu nền</button>
+    </div>
+
+    <!-- Thanh cài đặt đọc: cỡ chữ / màu nền -->
+    <div class="settings-panel">
+      <div class="container settings-panel-inner">
+        <div class="settings-group">
+          <span class="settings-group-label">Cỡ chữ</span>
+          <div class="font-size-control">
+            <button class="font-decrease" type="button" aria-label="Giảm cỡ chữ">A-</button>
+            <span class="font-size-label">18px</span>
+            <button class="font-increase" type="button" aria-label="Tăng cỡ chữ">A+</button>
+          </div>
+        </div>
+        <div class="settings-group">
+          <span class="settings-group-label">Màu nền</span>
+          <div class="bg-option-group">
+            <button class="bg-option" type="button" data-bg="white" aria-label="Nền trắng"></button>
+            <button class="bg-option" type="button" data-bg="cream" aria-label="Nền vàng kem"></button>
+            <button class="bg-option" type="button" data-bg="dark" aria-label="Nền tối xám"></button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ================= NỘI DUNG CHƯƠNG ================= -->
+    <main>
+      <div class="reader-content-wrap">
+        <div class="reader-content">{{CONTENT}}</div>
+      </div>
+
+      <div class="reader-divider" aria-hidden="true">
+        <span class="reader-divider-line"></span>
+        <span class="reader-divider-icon">❦</span>
+        <span class="reader-divider-line"></span>
+      </div>
+
+      <div class="reader-bottom-nav">
+        <div class="chapter-nav">
+          <div class="chapter-nav-bar">
+            <a href="{{PREV_HREF}}" class="chapter-nav-btn chapter-nav-prev btn-prev-chapter{{PREV_DISABLED}}">‹ Chương trước</a>
+            <button type="button" class="chapter-nav-btn chapter-nav-list-toggle chapter-list-toggle" aria-label="Danh sách chương"><span class="chapter-list-icon"><i></i><i></i><i></i></span></button>
+            <a href="{{NEXT_HREF}}" class="chapter-nav-btn chapter-nav-next btn-next-chapter{{NEXT_DISABLED}}">Chương tiếp ›</a>
+          </div>
+          <div class="chapter-list-dropdown" data-chapters-src="/truyen/{{SLUG}}/chapters.json"></div>
+        </div>
+
+        <a href="/truyen/{{SLUG}}/#comment-section" class="btn-comment-jump">💬 Bình luận</a>
+
+        <div class="reader-keyboard-hint">Bạn có thể dùng phím mũi tên (trái / phải) hoặc A / D để lùi/sang chương.</div>
+      </div>
+    </main>
+    {{FOOTER}}
+    <script src="/js/main.js?v={{ASSET_V}}"></script>
+  </body>
+</html>

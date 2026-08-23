@@ -1,0 +1,993 @@
+{
+ "NOVELS": [
+  {
+   "id": 1,
+   "slug": "tieng-noi-chua-lanh-cua-sep-tong",
+   "title": "Tiếng Nói Chữa Lành Của Sếp Tổng",
+   "author": "Lam Tử Nhược",
+   "genres": [
+    "hien-dai"
+   ],
+   "tags": [
+    "Tổng tài",
+    "Chữa lành",
+    "Đô thị"
+   ],
+   "status": "full",
+   "chapterCount": 42,
+   "rating": 4.8,
+   "hot": false,
+   "cover": 1,
+   "initials": "CL",
+   "coverImage": "assets/truyen/tieng-noi-chua-lanh-cua-sep-tong-500x750.webp",
+   "views": 1520000,
+   "dayViews": 8200,
+   "weekViews": 41000,
+   "monthViews": 152000,
+   "nominations": 3300,
+   "updatedMinutesAgo": 12,
+   "description": "Một CEO lạnh lùng mang trong mình vết thương lòng sâu kín, tình cờ gặp gỡ cô trợ lý có giọng nói dịu dàng như liều thuốc chữa lành. Giữa những deal làm ăn căng thẳng và bí mật gia tộc, liệu tình yêu có thể hàn gắn những vết nứt trong tim họ?"
+  },
+  {
+   "id": 2,
+   "slug": "giam-doc-lanh-lung-va-co-vo-nho",
+   "title": "Giám Đốc Lạnh Lùng Và Cô Vợ Nhỏ",
+   "author": "Diệp Chi Thu",
+   "genres": [
+    "hien-dai",
+    "co-trang"
+   ],
+   "tags": [
+    "Tổng tài",
+    "Hôn nhân trước yêu sau"
+   ],
+   "status": "full",
+   "chapterCount": 156,
+   "rating": 4.6,
+   "hot": false,
+   "cover": 2,
+   "initials": "GĐ",
+   "views": 2100000,
+   "dayViews": 6100,
+   "weekViews": 33000,
+   "monthViews": 121000,
+   "nominations": 2100,
+   "updatedMinutesAgo": 340,
+   "description": "Một cuộc hôn nhân sắp đặt tưởng chừng chỉ là hợp đồng, nhưng càng ở gần nhau, trái tim băng giá của vị giám đốc quyền lực càng dần tan chảy vì cô vợ nhỏ bé nhưng đầy nghị lực."
+  },
+  {
+   "id": 3,
+   "slug": "tong-tai-bi-ban-gai-cu-tan-cong",
+   "title": "Tổng Tài Bị Bạn Gái Cũ Tấn Công",
+   "author": "Mộc Tiểu Hề",
+   "genres": [
+    "hien-dai"
+   ],
+   "tags": [
+    "Tổng tài",
+    "Ngược tâm",
+    "Đô thị"
+   ],
+   "status": "ongoing",
+   "chapterCount": 18,
+   "rating": 4.3,
+   "hot": true,
+   "cover": 3,
+   "initials": "TT",
+   "views": 890000,
+   "dayViews": 5200,
+   "weekViews": 24000,
+   "monthViews": 88000,
+   "nominations": 1500,
+   "updatedMinutesAgo": 25,
+   "description": "Khi bạn gái cũ quay trở lại tìm cách chia rẽ, vị tổng tài lạnh lùng phải chứng minh trái tim mình đã thuộc về ai. Một câu chuyện tình yêu đầy sóng gió chốn thương trường."
+  },
+  {
+   "id": 4,
+   "slug": "chua-lanh-trai-tim-lanh-gia",
+   "title": "Chữa Lành Trái Tim Lạnh Giá",
+   "author": "Hạ Vũ Thần",
+   "genres": [
+    "hien-dai"
+   ],
+   "tags": [
+    "Chữa lành",
+    "Đô thị"
+   ],
+   "status": "ongoing",
+   "chapterCount": 35,
+   "rating": 4.5,
+   "hot": true,
+   "cover": 4,
+   "initials": "CT",
+   "views": 610000,
+   "dayViews": 2900,
+   "weekViews": 15000,
+   "monthViews": 55000,
+   "nominations": 900,
+   "updatedMinutesAgo": 1450,
+   "description": "Cô bác sĩ tâm lý nhận nhiệm vụ đặc biệt: chữa lành cho vị doanh nhân trẻ tuổi tưởng chừng vô cảm. Nhưng chính cô cũng cần một ai đó chữa lành cho mình."
+  },
+  {
+   "id": 5,
+   "slug": "hon-nhan-chi-la-hop-dong",
+   "title": "Hôn Nhân Chỉ Là Hợp Đồng",
+   "author": "Tô Tiểu Mạn",
+   "genres": [
+    "hien-dai"
+   ],
+   "tags": [
+    "Tổng tài",
+    "Hôn nhân hợp đồng"
+   ],
+   "status": "full",
+   "chapterCount": 210,
+   "rating": 4.7,
+   "hot": true,
+   "cover": 5,
+   "initials": "HN",
+   "views": 3300000,
+   "dayViews": 4100,
+   "weekViews": 21000,
+   "monthViews": 79000,
+   "nominations": 4200,
+   "updatedMinutesAgo": 4320,
+   "description": "Một bản hợp đồng hôn nhân ba năm, tưởng chừng đơn giản như một giao dịch, lại trở thành khởi đầu cho mối tình sâu đậm không ai ngờ tới."
+  },
+  {
+   "id": 6,
+   "slug": "yeu-lai-tu-dau-voi-ceo",
+   "title": "Yêu Lại Từ Đầu Với CEO",
+   "author": "Vân Dịch",
+   "genres": [
+    "hien-dai"
+   ],
+   "tags": [
+    "Tổng tài",
+    "Thanh mai trúc mã"
+   ],
+   "status": "ongoing",
+   "chapterCount": 12,
+   "rating": 4.1,
+   "hot": false,
+   "cover": 6,
+   "initials": "YL",
+   "views": 210000,
+   "dayViews": 1800,
+   "weekViews": 9000,
+   "monthViews": 30000,
+   "nominations": 400,
+   "updatedMinutesAgo": 60,
+   "description": "Sau năm năm xa cách, cô trở về và tình cờ trở thành nhân viên dưới quyền người yêu cũ — nay đã là CEO quyền lực nhất thành phố."
+  },
+  {
+   "id": 7,
+   "slug": "hoang-hau-mot-minh-chuyen-quyen",
+   "title": "Hoàng Hậu Một Mình Chuyên Quyền",
+   "author": "Cố Vãn Thư",
+   "genres": [
+    "co-trang"
+   ],
+   "tags": [
+    "Cung đấu",
+    "Nữ cường"
+   ],
+   "status": "full",
+   "chapterCount": 320,
+   "rating": 4.9,
+   "hot": true,
+   "cover": 7,
+   "initials": "HH",
+   "views": 5200000,
+   "dayViews": 9800,
+   "weekViews": 52000,
+   "monthViews": 198000,
+   "nominations": 6100,
+   "updatedMinutesAgo": 8,
+   "description": "Từ một tú nữ vô danh, nàng từng bước vươn lên trở thành hoàng hậu nắm quyền chuyên chính hậu cung, khiến bao kẻ địch phải run sợ."
+  },
+  {
+   "id": 8,
+   "slug": "xuyen-khong-lam-dai-tieu-thu",
+   "title": "Xuyên Không Làm Đại Tiểu Thư",
+   "author": "Nguyệt Hạ Ca",
+   "genres": [
+    "co-trang"
+   ],
+   "tags": [
+    "Xuyên không",
+    "Nữ cường"
+   ],
+   "status": "ongoing",
+   "chapterCount": 45,
+   "rating": 4.4,
+   "hot": false,
+   "cover": 8,
+   "initials": "XK",
+   "views": 780000,
+   "dayViews": 3300,
+   "weekViews": 17000,
+   "monthViews": 63000,
+   "nominations": 1100,
+   "updatedMinutesAgo": 200,
+   "description": "Xuyên không vào thân xác đại tiểu thư bị ghẻ lạnh, cô quyết tâm dùng trí tuệ hiện đại để lật ngược thế cờ, sống một đời huy hoàng."
+  },
+  {
+   "id": 9,
+   "slug": "cung-dau-thien-ha-de-vuong-so-huu",
+   "title": "Cung Đấu Thiên Hạ Đế Vương Sở Hữu",
+   "author": "Tần Vũ Lăng",
+   "genres": [
+    "co-trang"
+   ],
+   "tags": [
+    "Cung đấu",
+    "Đế vương"
+   ],
+   "status": "full",
+   "chapterCount": 178,
+   "rating": 4.6,
+   "hot": false,
+   "cover": 1,
+   "initials": "CD",
+   "views": 1950000,
+   "dayViews": 4700,
+   "weekViews": 23000,
+   "monthViews": 85000,
+   "nominations": 2600,
+   "updatedMinutesAgo": 720,
+   "description": "Chốn hậu cung ngàn năm sóng gió, nơi một câu nói có thể đổi cả vận mệnh. Nàng phải học cách sinh tồn giữa vòng xoáy quyền lực của bậc đế vương."
+  },
+  {
+   "id": 10,
+   "slug": "dien-van-nu-phu-song-lai",
+   "title": "Điền Văn: Nữ Phụ Sống Lại",
+   "author": "Lục Y Nhi",
+   "genres": [
+    "co-trang"
+   ],
+   "tags": [
+    "Điền văn",
+    "Trọng sinh"
+   ],
+   "status": "ongoing",
+   "chapterCount": 29,
+   "rating": 4.5,
+   "hot": false,
+   "cover": 2,
+   "initials": "ĐV",
+   "views": 430000,
+   "dayViews": 2100,
+   "weekViews": 11000,
+   "monthViews": 41000,
+   "nominations": 700,
+   "updatedMinutesAgo": 95,
+   "description": "Sống lại sau một kiếp bi kịch, nữ phụ quyết định buông bỏ oán hận, về quê làm ruộng, buôn bán nhỏ, sống một cuộc đời điền viên an nhàn hạnh phúc."
+  },
+  {
+   "id": 11,
+   "slug": "vuong-phi-tai-thuong-thien-ha",
+   "title": "Vương Phi Tài Thượng Thiên Hạ",
+   "author": "Bạch Dạ Vi",
+   "genres": [
+    "co-trang"
+   ],
+   "tags": [
+    "Xuyên không",
+    "Cung đấu"
+   ],
+   "status": "ongoing",
+   "chapterCount": 15,
+   "rating": 4.2,
+   "hot": false,
+   "cover": 3,
+   "initials": "VP",
+   "views": 150000,
+   "dayViews": 1200,
+   "weekViews": 6000,
+   "monthViews": 22000,
+   "nominations": 300,
+   "updatedMinutesAgo": 1900,
+   "description": "Một vị vương phi tài trí hơn người, dùng mưu lược của mình để bảo vệ vương phủ trước sóng gió triều đình."
+  },
+  {
+   "id": 12,
+   "slug": "de-vuong-nghich-thien-chi-ton",
+   "title": "Đế Vương Nghịch Thiên Chí Tôn",
+   "author": "Thiên Tuyệt",
+   "genres": [
+    "tien-hiep",
+    "hien-dai"
+   ],
+   "tags": [
+    "Tu tiên",
+    "Nghịch thiên"
+   ],
+   "status": "full",
+   "chapterCount": 500,
+   "rating": 4.9,
+   "hot": true,
+   "cover": 4,
+   "initials": "ĐN",
+   "views": 8100000,
+   "dayViews": 12000,
+   "weekViews": 68000,
+   "monthViews": 250000,
+   "nominations": 9200,
+   "updatedMinutesAgo": 15,
+   "description": "Một thiếu niên bình phàm mang trong mình huyết mạch cổ xưa, bước trên con đường tu tiên nghịch thiên cải mệnh, chinh phục cửu giới."
+  },
+  {
+   "id": 13,
+   "slug": "than-y-cuong-phi",
+   "title": "Thần Y Cuồng Phi",
+   "author": "Ngôn Tang",
+   "genres": [
+    "co-trang"
+   ],
+   "tags": [
+    "Xuyên không",
+    "Y thuật"
+   ],
+   "status": "ongoing",
+   "chapterCount": 33,
+   "rating": 4.3,
+   "hot": false,
+   "cover": 5,
+   "initials": "TY",
+   "views": 320000,
+   "dayViews": 1600,
+   "weekViews": 8000,
+   "monthViews": 29000,
+   "nominations": 500,
+   "updatedMinutesAgo": 500,
+   "description": "Thần y hiện đại xuyên không thành vương phi bị phế, mang theo y thuật thần kỳ, từng bước chữa bệnh cứu người, khẳng định vị thế của mình."
+  },
+  {
+   "id": 14,
+   "slug": "tham-tu-lung-danh-va-vu-an-mat-tich",
+   "title": "Thám Tử Lừng Danh Và Vụ Án Mất Tích",
+   "author": "Kha Nam",
+   "genres": [
+    "trinh-tham"
+   ],
+   "tags": [
+    "Trinh thám",
+    "Phá án"
+   ],
+   "status": "ongoing",
+   "chapterCount": 24,
+   "rating": 4.6,
+   "hot": true,
+   "cover": 6,
+   "initials": "TT",
+   "views": 410000,
+   "dayViews": 1900,
+   "weekViews": 9500,
+   "monthViews": 35000,
+   "nominations": 650,
+   "updatedMinutesAgo": 130,
+   "description": "Một vụ mất tích bí ẩn kéo vị thám tử tài ba vào chuỗi manh mối rối ren, nơi mỗi nhân chứng đều che giấu một bí mật riêng."
+  },
+  {
+   "id": 15,
+   "slug": "ngoi-nha-am-anh-cuoi-pho",
+   "title": "Ngôi Nhà Ám Ảnh Cuối Phố",
+   "author": "Đêm Trắng",
+   "genres": [
+    "kinh-di"
+   ],
+   "tags": [
+    "Kinh dị",
+    "Bí ẩn"
+   ],
+   "status": "ongoing",
+   "chapterCount": 16,
+   "rating": 4.4,
+   "hot": false,
+   "cover": 7,
+   "initials": "NN",
+   "views": 260000,
+   "dayViews": 1400,
+   "weekViews": 7000,
+   "monthViews": 26000,
+   "nominations": 480,
+   "updatedMinutesAgo": 45,
+   "description": "Căn nhà cuối con phố nhỏ mang một lời nguyền từ nhiều năm trước. Những ai chuyển đến đó đều không tránh khỏi những hiện tượng rùng rợn không lời giải thích."
+  },
+  {
+   "id": 16,
+   "slug": "tu-tien-vong-ky",
+   "title": "Tu Tiên Vong Kỷ",
+   "author": "Vong Ngữ",
+   "genres": [
+    "tien-hiep"
+   ],
+   "tags": [
+    "Tu tiên",
+    "Phiêu lưu"
+   ],
+   "status": "full",
+   "chapterCount": 260,
+   "rating": 4.7,
+   "hot": true,
+   "cover": 8,
+   "initials": "TT",
+   "views": 2700000,
+   "dayViews": 3200,
+   "weekViews": 16000,
+   "monthViews": 60000,
+   "nominations": 1800,
+   "updatedMinutesAgo": 2600,
+   "description": "Mất hết ký ức, chàng trai trẻ bắt đầu lại con đường tu luyện từ con số không, dần khám phá ra thân thế thực sự đầy chấn động của bản thân."
+  },
+  {
+   "id": 17,
+   "slug": "yeu-thu-dai-nhan-xin-dung-qua",
+   "title": "Yêu Thú Đại Nhân Xin Đừng Qua",
+   "author": "Miêu Nhi",
+   "genres": [
+    "huyen-huyen"
+   ],
+   "tags": [
+    "Dị giới",
+    "Huyền huyễn"
+   ],
+   "status": "ongoing",
+   "chapterCount": 38,
+   "rating": 4.3,
+   "hot": false,
+   "cover": 1,
+   "initials": "YT",
+   "views": 350000,
+   "dayViews": 1700,
+   "weekViews": 8500,
+   "monthViews": 31000,
+   "nominations": 520,
+   "updatedMinutesAgo": 300,
+   "description": "Lạc vào dị giới, cô gái nhỏ vô tình trở thành khắc tinh của các yêu thú đại nhân đầy quyền năng, cuộc sống từ đây rẽ sang hướng không tưởng."
+  },
+  {
+   "id": 18,
+   "slug": "hoc-vien-ma-phap-bong-toi",
+   "title": "Học Viện Ma Pháp Bóng Tối",
+   "author": "Hắc Việt",
+   "genres": [
+    "huyen-huyen",
+    "co-trang"
+   ],
+   "tags": [
+    "Ma pháp",
+    "Học viện"
+   ],
+   "status": "full",
+   "chapterCount": 120,
+   "rating": 4.5,
+   "hot": false,
+   "cover": 2,
+   "initials": "HM",
+   "views": 1200000,
+   "dayViews": 2600,
+   "weekViews": 13000,
+   "monthViews": 48000,
+   "nominations": 1300,
+   "updatedMinutesAgo": 900,
+   "description": "Ngôi học viện ma pháp danh tiếng ẩn giấu một bí mật hắc ám tồn tại hàng trăm năm, chỉ chờ những học viên mới đến khám phá."
+  },
+  {
+   "id": 19,
+   "slug": "ban-gai-ao-cua-tong-tai",
+   "title": "Bạn Gái Ảo Của Tổng Tài",
+   "author": "Diệp Khinh Hàn",
+   "genres": [
+    "hien-dai"
+   ],
+   "tags": [
+    "Tổng tài",
+    "Giả vờ yêu"
+   ],
+   "status": "ongoing",
+   "chapterCount": 9,
+   "rating": 4,
+   "hot": true,
+   "cover": 3,
+   "initials": "BG",
+   "views": 95000,
+   "dayViews": 2600,
+   "weekViews": 12000,
+   "monthViews": 40000,
+   "nominations": 250,
+   "updatedMinutesAgo": 5,
+   "description": "Chỉ vì một lời hứa giúp đỡ, cô trở thành \"bạn gái ảo\" của vị tổng tài lạnh lùng nhất công ty. Nhưng ranh giới giữa giả và thật ngày càng mong manh."
+  },
+  {
+   "id": 20,
+   "slug": "de-nhat-si-nu-o-co-dai",
+   "title": "Đệ Nhất Sĩ Nữ Ở Cổ Đại",
+   "author": "Quỳnh Chi",
+   "genres": [
+    "co-trang"
+   ],
+   "tags": [
+    "Xuyên không",
+    "Điền văn"
+   ],
+   "status": "ongoing",
+   "chapterCount": 47,
+   "rating": 4.6,
+   "hot": false,
+   "cover": 4,
+   "initials": "ĐN",
+   "views": 680000,
+   "dayViews": 2400,
+   "weekViews": 12500,
+   "monthViews": 46000,
+   "nominations": 950,
+   "updatedMinutesAgo": 180,
+   "description": "Mang kiến thức của người hiện đại, nàng xuyên về cổ đại trở thành sĩ nữ tài hoa, dùng thơ ca và trí tuệ tạo dựng một cuộc đời khác cho chính mình."
+  },
+  {
+   "id": 21,
+   "slug": "nguoi-yeu-cu-la-sep-moi",
+   "title": "Người Yêu Cũ Là Sếp Mới",
+   "author": "Hàn Tuyết Ly",
+   "genres": [
+    "hien-dai"
+   ],
+   "tags": [
+    "Tổng tài",
+    "Oan gia ngõ hẹp"
+   ],
+   "status": "ongoing",
+   "chapterCount": 27,
+   "rating": 4.4,
+   "hot": false,
+   "cover": 5,
+   "initials": "NY",
+   "views": 240000,
+   "dayViews": 1500,
+   "weekViews": 7600,
+   "monthViews": 27000,
+   "nominations": 410,
+   "updatedMinutesAgo": 240,
+   "description": "Chuyển việc để tránh mặt người yêu cũ, cô không ngờ vị sếp mới đầy quyền lực lại chính là anh. Từ đồng nghiệp gượng gạo đến những rung động khó gọi tên."
+  },
+  {
+   "id": 22,
+   "slug": "bac-si-va-co-y-ta-nho",
+   "title": "Bác Sĩ Và Cô Y Tá Nhỏ",
+   "author": "Đông Phương Vy",
+   "genres": [
+    "hien-dai"
+   ],
+   "tags": [
+    "Bệnh viện",
+    "Chữa lành"
+   ],
+   "status": "full",
+   "chapterCount": 130,
+   "rating": 4.5,
+   "hot": false,
+   "cover": 6,
+   "initials": "BS",
+   "views": 1350000,
+   "dayViews": 2200,
+   "weekViews": 11000,
+   "monthViews": 42000,
+   "nominations": 1150,
+   "updatedMinutesAgo": 3200,
+   "description": "Giữa những ca trực đêm căng thẳng nơi bệnh viện, vị bác sĩ ngoại khoa lạnh lùng dần bị cô y tá nhỏ vô tư làm tan chảy lớp vỏ bọc nghiêm nghị của mình."
+  },
+  {
+   "id": 23,
+   "slug": "phe-hau-tai-xuat-giang-ho",
+   "title": "Phế Hậu Tái Xuất Giang Hồ",
+   "author": "Tạ Y Nhược",
+   "genres": [
+    "co-trang"
+   ],
+   "tags": [
+    "Trọng sinh",
+    "Cung đấu"
+   ],
+   "status": "ongoing",
+   "chapterCount": 14,
+   "rating": 4.6,
+   "hot": true,
+   "cover": 7,
+   "initials": "PH",
+   "views": 510000,
+   "dayViews": 3900,
+   "weekViews": 19000,
+   "monthViews": 71000,
+   "nominations": 1400,
+   "updatedMinutesAgo": 20,
+   "description": "Bị phế truất và hãm hại đến chết, nàng trọng sinh trở lại thời điểm còn là hoàng hậu tại vị. Lần này, nàng sẽ không để bi kịch cũ lặp lại."
+  },
+  {
+   "id": 24,
+   "slug": "thu-nu-nghich-tap",
+   "title": "Thứ Nữ Nghịch Tập",
+   "author": "Chu Tiểu Uyển",
+   "genres": [
+    "co-trang"
+   ],
+   "tags": [
+    "Thứ nữ",
+    "Mưu kế"
+   ],
+   "status": "ongoing",
+   "chapterCount": 48,
+   "rating": 4.3,
+   "hot": false,
+   "cover": 8,
+   "initials": "TN",
+   "views": 290000,
+   "dayViews": 1400,
+   "weekViews": 7000,
+   "monthViews": 26000,
+   "nominations": 380,
+   "updatedMinutesAgo": 620,
+   "description": "Sinh ra là thứ nữ bị khinh rẻ trong phủ, nàng âm thầm học hỏi mưu kế, từng bước giành lại vị thế xứng đáng cho bản thân và mẹ ruột."
+  },
+  {
+   "id": 25,
+   "slug": "kiem-dao-doc-ton",
+   "title": "Kiếm Đạo Độc Tôn",
+   "author": "Cuồng Đao",
+   "genres": [
+    "tien-hiep",
+    "hien-dai"
+   ],
+   "tags": [
+    "Kiếm tu",
+    "Phục thù"
+   ],
+   "status": "full",
+   "chapterCount": 620,
+   "rating": 4.8,
+   "hot": true,
+   "cover": 1,
+   "initials": "KĐ",
+   "views": 6700000,
+   "dayViews": 10500,
+   "weekViews": 58000,
+   "monthViews": 220000,
+   "nominations": 7800,
+   "updatedMinutesAgo": 10,
+   "description": "Gia tộc bị diệt môn, thiếu niên duy nhất sống sót mang theo một thanh kiếm gãy, bước lên con đường kiếm đạo đẫm máu để rửa hận cho người thân."
+  },
+  {
+   "id": 26,
+   "slug": "pham-nhan-nghich-thien-luc",
+   "title": "Phàm Nhân Nghịch Thiên Lục",
+   "author": "Vong Ngữ Nhị",
+   "genres": [
+    "tien-hiep"
+   ],
+   "tags": [
+    "Phàm nhân",
+    "Tu tiên"
+   ],
+   "status": "ongoing",
+   "chapterCount": 18,
+   "rating": 4.1,
+   "hot": false,
+   "cover": 2,
+   "initials": "PN",
+   "views": 88000,
+   "dayViews": 900,
+   "weekViews": 4400,
+   "monthViews": 16000,
+   "nominations": 210,
+   "updatedMinutesAgo": 400,
+   "description": "Không tiên tư, không kỳ ngộ, chỉ có ý chí kiên định — một phàm nhân bình thường quyết tâm bước những bước đầu tiên trên con đường tu tiên nghịch thiên."
+  },
+  {
+   "id": 27,
+   "slug": "long-toc-truyen-nhan",
+   "title": "Long Tộc Truyền Nhân",
+   "author": "Tinh Vũ",
+   "genres": [
+    "huyen-huyen"
+   ],
+   "tags": [
+    "Long tộc",
+    "Huyết mạch cổ"
+   ],
+   "status": "full",
+   "chapterCount": 210,
+   "rating": 4.6,
+   "hot": false,
+   "cover": 3,
+   "initials": "LT",
+   "views": 1900000,
+   "dayViews": 2500,
+   "weekViews": 12500,
+   "monthViews": 47000,
+   "nominations": 1600,
+   "updatedMinutesAgo": 1800,
+   "description": "Mang trong mình huyết mạch long tộc thất truyền, chàng trai trẻ dần thức tỉnh sức mạnh cổ xưa giữa lúc đại lục đứng trước nguy cơ diệt vong."
+  },
+  {
+   "id": 28,
+   "slug": "nu-phu-thuy-nho",
+   "title": "Nữ Phù Thủy Nhỏ",
+   "author": "Miêu Miêu Tử",
+   "genres": [
+    "huyen-huyen"
+   ],
+   "tags": [
+    "Phù thủy",
+    "Dị giới"
+   ],
+   "status": "ongoing",
+   "chapterCount": 22,
+   "rating": 4.2,
+   "hot": false,
+   "cover": 4,
+   "initials": "PT",
+   "views": 160000,
+   "dayViews": 1100,
+   "weekViews": 5600,
+   "monthViews": 21000,
+   "nominations": 300,
+   "updatedMinutesAgo": 540,
+   "description": "Cô phù thủy nhỏ vụng về nhất học viện lại vô tình sở hữu năng lực bị nguyền rủa từ ngàn năm trước, cuộc sống bình yên của cô chính thức đảo lộn."
+  },
+  {
+   "id": 29,
+   "slug": "ke-giau-mat-trong-bong-toi",
+   "title": "Kẻ Giấu Mặt Trong Bóng Tối",
+   "author": "Kha Nam Nhị",
+   "genres": [
+    "trinh-tham"
+   ],
+   "tags": [
+    "Trinh thám",
+    "Tâm lý tội phạm"
+   ],
+   "status": "ongoing",
+   "chapterCount": 40,
+   "rating": 4.5,
+   "hot": false,
+   "cover": 5,
+   "initials": "KG",
+   "views": 370000,
+   "dayViews": 1600,
+   "weekViews": 8000,
+   "monthViews": 30000,
+   "nominations": 560,
+   "updatedMinutesAgo": 260,
+   "description": "Một chuỗi án mạng liên hoàn không để lại dấu vết khiến cả đội điều tra bối rối, chỉ có nữ thám tử trẻ nhận ra mọi manh mối đều dẫn về một quá khứ bị chôn giấu."
+  },
+  {
+   "id": 30,
+   "slug": "ho-so-vu-an-dong-bang",
+   "title": "Hồ Sơ Vụ Án Đóng Băng",
+   "author": "Lãnh Phong",
+   "genres": [
+    "trinh-tham"
+   ],
+   "tags": [
+    "Án treo",
+    "Phá án"
+   ],
+   "status": "full",
+   "chapterCount": 130,
+   "rating": 4.7,
+   "hot": false,
+   "cover": 6,
+   "initials": "HS",
+   "views": 1100000,
+   "dayViews": 1900,
+   "weekViews": 9500,
+   "monthViews": 36000,
+   "nominations": 900,
+   "updatedMinutesAgo": 2100,
+   "description": "Mười năm sau vụ án bị đóng băng vì thiếu chứng cứ, một manh mối nhỏ bất ngờ xuất hiện, mở lại toàn bộ hồ sơ tưởng chừng đã đi vào quên lãng."
+  },
+  {
+   "id": 31,
+   "slug": "benh-vien-bo-hoang",
+   "title": "Bệnh Viện Bỏ Hoang",
+   "author": "Đêm Trắng Nhị",
+   "genres": [
+    "kinh-di"
+   ],
+   "tags": [
+    "Kinh dị",
+    "Bỏ hoang"
+   ],
+   "status": "ongoing",
+   "chapterCount": 13,
+   "rating": 4.3,
+   "hot": true,
+   "cover": 7,
+   "initials": "BV",
+   "views": 320000,
+   "dayViews": 2900,
+   "weekViews": 14000,
+   "monthViews": 52000,
+   "nominations": 700,
+   "updatedMinutesAgo": 8,
+   "description": "Nhóm sinh viên đột nhập bệnh viện tâm thần bỏ hoang để quay video thử thách, nhưng không ai trong số họ nhận ra mình đã đánh thức thứ gì đó vẫn còn ở lại."
+  },
+  {
+   "id": 32,
+   "slug": "loi-nguyen-bup-be-co",
+   "title": "Lời Nguyền Búp Bê Cổ",
+   "author": "Vực Sâu",
+   "genres": [
+    "kinh-di"
+   ],
+   "tags": [
+    "Lời nguyền",
+    "Đồ vật ám"
+   ],
+   "status": "ongoing",
+   "chapterCount": 33,
+   "rating": 4.4,
+   "hot": false,
+   "cover": 8,
+   "initials": "BB",
+   "views": 280000,
+   "dayViews": 1300,
+   "weekViews": 6500,
+   "monthViews": 24000,
+   "nominations": 450,
+   "updatedMinutesAgo": 700,
+   "description": "Món quà thừa kế từ người bà quá cố là một con búp bê sứ cổ, và kể từ đêm đầu tiên đặt nó trong phòng, những điều bất thường bắt đầu xảy ra liên tiếp."
+  },
+  {
+   "id": 33,
+   "slug": "idol-bi-mat-cua-toi",
+   "title": "Idol Bí Mật Của Tôi",
+   "author": "Lam Vy",
+   "genres": [
+    "hien-dai"
+   ],
+   "tags": [
+    "Giải trí",
+    "Ngôi sao",
+    "Giấu thân phận"
+   ],
+   "status": "ongoing",
+   "chapterCount": 16,
+   "rating": 4.2,
+   "hot": true,
+   "cover": 1,
+   "initials": "ID",
+   "views": 130000,
+   "dayViews": 3100,
+   "weekViews": 15000,
+   "monthViews": 56000,
+   "nominations": 620,
+   "updatedMinutesAgo": 18,
+   "description": "Cô bạn cùng phòng trọ bình thường không hề biết rằng người bạn thân đang giấu một bí mật động trời: cô ấy chính là thần tượng hạng A đang được cả nước săn đón."
+  },
+  {
+   "id": 34,
+   "slug": "nuong-nuong-chi-muon-duong-lao",
+   "title": "Nương Nương Chỉ Muốn Dưỡng Lão",
+   "author": "Điền Điền",
+   "genres": [
+    "co-trang"
+   ],
+   "tags": [
+    "Điền văn",
+    "Xuyên không",
+    "Chữa lành"
+   ],
+   "status": "ongoing",
+   "chapterCount": 39,
+   "rating": 4.5,
+   "hot": false,
+   "cover": 2,
+   "initials": "DL",
+   "views": 310000,
+   "dayViews": 1450,
+   "weekViews": 7200,
+   "monthViews": 27000,
+   "nominations": 480,
+   "updatedMinutesAgo": 460,
+   "description": "Xuyên không thành sủng phi nhưng chẳng màng tranh sủng, nàng chỉ muốn xin xuất cung về một trang viên nhỏ, trồng rau nuôi gà, sống nốt đời an nhàn dưỡng lão."
+  },
+  {
+   "id": 35,
+   "slug": "van-co-chi-ton-quy-lai",
+   "title": "Vạn Cổ Chí Tôn Quy Lai",
+   "author": "Thiên Tuyệt Nhị",
+   "genres": [
+    "tien-hiep"
+   ],
+   "tags": [
+    "Trọng sinh",
+    "Chí tôn"
+   ],
+   "status": "full",
+   "chapterCount": 350,
+   "rating": 4.7,
+   "hot": false,
+   "cover": 3,
+   "initials": "VC",
+   "views": 3900000,
+   "dayViews": 4400,
+   "weekViews": 22000,
+   "monthViews": 83000,
+   "nominations": 3100,
+   "updatedMinutesAgo": 950,
+   "description": "Chí tôn một thời bị đồng môn phản bội, hồn phách trọng sinh trở về vạn năm trước khi còn là một tu sĩ vô danh. Lần này, ân oán sẽ được tính lại từ đầu."
+  }
+ ],
+ "GENRE_LABELS": {
+  "hien-dai": "Ngôn Tình Hiện Đại",
+  "co-trang": "Ngôn Tình Cổ Trang",
+  "tien-hiep": "Tiên Hiệp",
+  "huyen-huyen": "Huyền Huyễn",
+  "trinh-tham": "Trinh Thám",
+  "kinh-di": "Kinh Dị"
+ },
+ "POOL": {
+  "hien-dai": [
+   "Cuộc gặp bất ngờ",
+   "Hợp đồng oan gia",
+   "Bí mật sau nụ cười",
+   "Đêm mưa không ngủ",
+   "Ghen tuông vô cớ",
+   "Lời tỏ tình vụng về",
+   "Hiểu lầm tai hại",
+   "Nắm tay dưới mưa"
+  ],
+  "co-trang": [
+   "Tiến cung",
+   "Mưu kế thâm cung",
+   "Thánh chỉ bất ngờ",
+   "Đêm trăng khuyết",
+   "Lệnh bài hoàng tộc",
+   "Sóng gió hậu viện",
+   "Ám sát bất thành",
+   "Trở về vương phủ"
+  ],
+  "tien-hiep": [
+   "Đột phá cảnh giới",
+   "Kỳ ngộ trong hang sâu",
+   "Đấu pháp trên đài",
+   "Bí cảnh cổ xưa",
+   "Đan dược trân quý",
+   "Thiên kiếp giáng lâm",
+   "Kiếm ý xuất thần",
+   "Cửu giới chấn động"
+  ],
+  "huyen-huyen": [
+   "Yêu thú xuất hiện",
+   "Ma pháp trận pháp",
+   "Bí ẩn học viện",
+   "Sức mạnh thức tỉnh",
+   "Hắc ám tràn về",
+   "Trận chiến sinh tử",
+   "Lời tiên tri cổ",
+   "Ánh sáng cuối đường hầm"
+  ],
+  "trinh-tham": [
+   "Manh mối đầu tiên",
+   "Nhân chứng bí ẩn",
+   "Hiện trường thứ hai",
+   "Nghi phạm mới",
+   "Bằng chứng ngoại phạm",
+   "Sự thật hé lộ",
+   "Đối chất căng thẳng",
+   "Kết thúc bất ngờ"
+  ],
+  "kinh-di": [
+   "Tiếng động lạ ban đêm",
+   "Căn phòng bị khóa",
+   "Bóng người trong gương",
+   "Lời nguyền cổ",
+   "Giấc mơ lặp lại",
+   "Vết máu trên tường",
+   "Cánh cửa không nên mở",
+   "Sự thật kinh hoàng"
+  ]
+ }
+}

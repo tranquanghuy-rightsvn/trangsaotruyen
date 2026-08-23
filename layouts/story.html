@@ -1,0 +1,187 @@
+<!doctype html>
+<html lang="vi">
+  <head>
+    {{HEAD}}
+  </head>
+  <body data-page="detail">
+    {{HEADER}}
+    <div class="breadcrumb-bar">
+          <nav class="breadcrumb" aria-label="breadcrumb">
+            <a href="/">🏠 Trang chủ</a>
+            <span class="breadcrumb-extra">{{BREADCRUMB}}</span>
+          </nav>
+        </div>
+
+        <!-- ================= NỘI DUNG CHÍNH ================= -->
+        <main class="container">
+          <!-- Khối thông tin tổng quan truyện + Truyện cùng tác giả -->
+          <section class="detail-top-layout">
+            <div class="detail-info-block">
+              <h2 class="block-title underline-title">Thông Tin Truyện</h2>
+
+              <div class="detail-hero">
+                <div class="detail-hero-left">
+                  <div class="detail-cover">
+                    <div class="book">
+                      <div class="book-img">
+                        <img class="cover-img" src="{{COVER}}" alt="{{TITLE}}" width="300" height="450" />
+                      </div>
+                      <div class="book-cover"></div>
+                      <div class="book-pages"></div>
+                    </div>
+                  </div>
+                  <ul class="detail-meta-list">
+                    <li>
+                      <span class="meta-label">Tác giả:</span>
+                      <span class="detail-author">{{AUTHOR}}</span>
+                    </li>
+                    <li>
+                      <span class="meta-label">Thể loại:</span>
+                      <span class="detail-genres">{{GENRES}}</span>
+                    </li>
+                    <li>
+                      <span class="meta-label">Trạng thái:</span>
+                      <span class="detail-status">{{STATUS}}</span>
+                    </li>
+                  </ul>
+                </div>
+                <div class="detail-summary">
+                  <h1 class="detail-title">{{TITLE}}</h1>
+
+                  <div class="detail-rating-line">
+                    <span class="detail-rating-stars">{{RATING_STARS}}</span>
+                  </div>
+                  <div class="detail-rating-text">{{RATING_TEXT}}</div>
+                  <div class="detail-views-line">
+                    <svg
+                      class="detail-views-icon"
+                      xmlns="http://www.w3.org/2000/svg"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      stroke-width="2"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      aria-hidden="true"
+                    >
+                      <path d="M21 17v2a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-2"></path>
+                      <path d="M21 7V5a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2v2"></path>
+                      <circle cx="12" cy="12" r="1"></circle>
+                      <path
+                        d="M18.944 12.33a1 1 0 0 0 0-.66 7.5 7.5 0 0 0-13.888 0 1 1 0 0 0 0 .66 7.5 7.5 0 0 0 13.888 0"
+                      ></path>
+                    </svg>
+                    <span class="detail-views">{{VIEWS}}</span> lượt xem
+                  </div>
+
+                  <div class="detail-actions">
+                    <button class="btn btn-outline btn-favorite" type="button">
+                      ♡ Yêu thích truyện
+                    </button>
+                  </div>
+
+                  <hr class="detail-summary-divider" />
+
+                  <p class="detail-description">{{DESCRIPTION_HTML}}</p>
+                  <button class="detail-desc-toggle" type="button">
+                    Xem thêm »
+                  </button>
+                </div>
+              </div>
+            </div>
+
+            <aside class="side-panel detail-same-author">
+              <h2 class="block-title underline-title">Truyện Cùng Tác Giả</h2>
+              <ul class="side-link-list">{{SAME_AUTHOR}}</ul>
+            </aside>
+          </section>
+
+          <!-- Danh sách chương & sidebar -->
+          <section class="detail-body">
+            <div class="detail-main">
+              <h2 class="block-title underline-title">Danh Sách Chương</h2>
+              <ul class="chapter-bullet-list">{{CHAPTER_LIST}}</ul>
+              <div class="chapter-pagination">{{CHAPTER_PAGINATION}}</div>
+            </div>
+
+            <aside class="detail-sidebar">
+              <div class="side-panel hot-panel">
+                <h2 class="block-title underline-title">Truyện Đang Hot</h2>
+                <div class="hot-tabs">
+                  <button class="hot-tab is-active" data-period="day">Ngày</button>
+                  <button class="hot-tab" data-period="month">Tháng</button>
+                  <button class="hot-tab" data-period="alltime">All Time</button>
+                </div>
+                <ul class="hot-rank-list" data-period="day">{{HOT_RANK_DAY}}</ul>
+            <ul class="hot-rank-list" data-period="month" hidden>{{HOT_RANK_MONTH}}</ul>
+            <ul class="hot-rank-list" data-period="alltime" hidden>{{HOT_RANK_ALLTIME}}</ul>
+              </div>
+            </aside>
+          </section>
+
+          <!-- Bình luận truyện (chỉ chiếm cột trái, giống độ rộng khối Thông tin truyện) -->
+          <div class="detail-content-row">
+            <section class="comment-section" id="comment-section">
+              <h2 class="block-title underline-title">Bình Luận Truyện</h2>
+
+              <div class="comment-panel-head">
+                <div>
+                  <h3 class="comment-panel-title">Bình luận</h3>
+                  <p class="comment-summary">{{COMMENT_SUMMARY}}</p>
+                </div>
+                <button type="button" class="btn btn-outline comment-refresh-btn">
+                  ⟳ Làm mới
+                </button>
+              </div>
+
+              <div class="comment-form-card">
+                <div class="comment-form-header">
+                  <div class="comment-name-field">
+                    <label class="comment-form-label" for="comment-name">Tên của bạn</label>
+                    <input
+                      id="comment-name"
+                      class="comment-name-input"
+                      type="text"
+                      maxlength="60"
+                      placeholder="Nhập tên hiển thị..."
+                    />
+                  </div>
+
+                  <div class="comment-star-picker" data-rating="5">
+                    <button type="button" class="star-btn" data-value="1">★</button>
+                    <button type="button" class="star-btn" data-value="2">★</button>
+                    <button type="button" class="star-btn" data-value="3">★</button>
+                    <button type="button" class="star-btn" data-value="4">★</button>
+                    <button type="button" class="star-btn" data-value="5">★</button>
+                  </div>
+                </div>
+
+                <label class="comment-form-label" for="comment-textarea"
+                  >Bình luận</label
+                >
+                <textarea
+                  id="comment-textarea"
+                  class="comment-textarea"
+                  maxlength="500"
+                  placeholder="Nhập cảm nhận của bạn về truyện..."
+                ></textarea>
+                <div class="comment-char-count">0/500</div>
+
+                <!-- Honeypot chống spam: người thật không bao giờ thấy ô này (CSS ẩn).
+                     ĐỪNG xoá và đừng đổi tên class - Worker lọc theo field "website". -->
+                <input class="comment-hp" type="text" name="website" tabindex="-1"
+                       autocomplete="off" aria-hidden="true" />
+
+                <button type="button" class="btn btn-primary comment-submit-btn">
+                  ➤ Gửi bình luận
+                </button>
+              </div>
+
+              <div class="comment-list"></div>
+            </section>
+          </div>
+        </main>
+    {{FOOTER}}
+    <script src="/js/main.js?v={{ASSET_V}}"></script>
+  </body>
+</html>

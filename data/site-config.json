@@ -1,0 +1,37 @@
+{
+  "site_name": "Trăng Sao Truyện",
+  "site_description": "Kho truyện ngôn tình, tiên hiệp, huyền huyễn, trinh thám, kinh dị cập nhật mỗi ngày.",
+  "site_about": "Trăng Sao Truyện là trang đọc truyện online miễn phí, giao diện thân thiện, cập nhật nhanh chóng.",
+  "domain": "https://trangsaotruyen.com/",
+  "genres": [
+    {
+      "slug": "hien-dai",
+      "name": "Ngôn Tình Hiện Đại"
+    },
+    {
+      "slug": "co-trang",
+      "name": "Ngôn Tình Cổ Trang"
+    },
+    {
+      "slug": "tien-hiep",
+      "name": "Tiên Hiệp"
+    },
+    {
+      "slug": "huyen-huyen",
+      "name": "Huyền Huyễn"
+    },
+    {
+      "slug": "trinh-tham",
+      "name": "Trinh Thám"
+    },
+    {
+      "slug": "kinh-di",
+      "name": "Kinh Dị"
+    }
+  ],
+  "contact": {
+    "email": "bientruyen7@gmail.com",
+    "phone": ""
+  },
+  "ga": ""
+}

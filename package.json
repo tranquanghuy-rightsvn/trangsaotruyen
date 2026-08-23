@@ -1,0 +1,20 @@
+{
+  "name": "trangsaotruyen",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "seed": "python3 scripts/seed_from_mock.py",
+    "build": "python3 scripts/build.py",
+    "preview": "python3 scripts/build.py && python3 -m http.server 8080 --directory html",
+    "dev": "python3 scripts/build.py && wrangler dev",
+    "deploy": "python3 scripts/build.py && wrangler deploy",
+    "db:init": "wrangler d1 execute trangsaotruyen --remote --file=worker/schema.sql",
+    "db:init:local": "wrangler d1 execute trangsaotruyen --local --file=worker/schema.sql"
+  },
+  "devDependencies": {
+    "wrangler": "^4.0.0"
+  },
+  "engines": {
+    "node": ">=20"
+  }
+}

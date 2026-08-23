@@ -1,0 +1,46 @@
+# Cloudflare Worker cho Trang Sao Truyen.
+#
+# Khac codebase mau TrithucWorld (site 100% tinh, khong can Worker script): o day Worker la
+# BAT BUOC, vi 3 thu khong the lam bang file tinh:
+#   1. Noi dung chuong          -> D1  (khong the nam trong 20.000 file cua Static Assets)
+#   2. Dem luot xem             -> D1  (bang xep hang ngay/tuan/thang cua site)
+#   3. Comment + danh gia       -> D1  (rating/nominations tren trang chi tiet)
+#
+# KHONG dung R2 - R2 la thu DUY NHAT trong ca stack nay doi phuong thuc thanh toan (ke ca khi
+# dung trong han muc free 10GB). D1 free 5GB khong doi the, du cho ~238.000 chuong (~790 truyen
+# x 300). Khi that su vuot nguong do thi doi sang R2 (xem docs/CMS.md muc 2).
+name = "trangsaotruyen"
+main = "worker/src/index.js"
+compatibility_date = "2026-08-21"
+
+[assets]
+directory = "./html"
+binding = "ASSETS"
+# Worker phai chay TRUOC tang assets cho DUNG 2 nhom path:
+#   /_api/*                 API (khong co file tinh nao khop, nhung khai tuong minh de khong
+#                           phu thuoc vao hanh vi fall-through cua not_found_handling)
+#   /truyen/*/chuong-*      trang chuong - Worker render tu D1
+# CO Y khong dua ca "/truyen/*": trang chi tiet truyen la file TINH, cho no di qua Worker
+# nghia la moi luot xem trang truyen cung tinh 1 request Worker (free tier 100k/ngay).
+run_worker_first = ["/_api/*", "/truyen/*/chuong-*"]
+# Giu nguyen URL co duoi .html: mac dinh Static Assets tu redirect "/x.html" -> "/x", doi
+# URL da duoc index la mat traffic. "none" = serve dung nguyen path nhu file that.
+html_handling = "none"
+# Site nhieu trang tinh (khong phai SPA): 404 THAT (khac SPA fallback tra 200 lam Google
+# index noi dung trang chu o URL sai).
+not_found_handling = "404-page"
+
+# Noi dung chuong + luot xem + comment. Tao DB: npx wrangler d1 create trangsaotruyen
+# Roi dan database_id that vao day (lenh tren in ra).
+[[d1_databases]]
+binding = "DB"
+database_name = "trangsaotruyen"
+database_id = "PASTE_DATABASE_ID_HERE"
+
+# Gom luot xem hang ngay: chuyen ngay cu (>40 ngay) vao bang tong roi xoa, giu views_daily
+# nho gon. 18:00 UTC = 01:00 gio VN.
+[triggers]
+crons = ["0 18 * * *"]
+
+# Secret (KHONG dat o day - dat bang: npx wrangler secret put <TEN>):
+#   ADMIN_TOKEN  - trung voi Script Property WORKER_API_TOKEN ben GAS

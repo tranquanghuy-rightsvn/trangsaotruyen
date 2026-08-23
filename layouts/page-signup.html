@@ -1,0 +1,58 @@
+<!doctype html>
+<html lang="vi">
+  <head>
+    {{HEAD}}
+  </head>
+  <body data-page="auth">
+    {{HEADER}}
+    <div class="breadcrumb-bar">
+      <nav class="breadcrumb" aria-label="breadcrumb">
+        <a href="/">🏠 Trang chủ</a>
+        <span class="breadcrumb-extra"><span class="crumb-sep">/</span><span class="breadcrumb-current">Đăng ký</span></span>
+      </nav>
+    </div>
+
+    <!-- ================= FORM ĐĂNG KÝ ================= -->
+    <main class="auth-page">
+      <div class="auth-card">
+        <h1 class="auth-heading underline-title"><span class="auth-heading-icon">👤+</span>Đăng ký tài khoản</h1>
+        <div class="auth-divider"></div>
+
+        <div class="auth-tabs">
+          <a href="/login/" class="auth-tab">Đăng nhập</a>
+          <a href="/signup/" class="auth-tab is-active">Đăng ký</a>
+        </div>
+
+        <form class="auth-form">
+          <div class="form-group">
+            <label for="signup-username">Tên hiển thị</label>
+            <input type="text" id="signup-username" name="username" required placeholder="Tên hiển thị">
+          </div>
+          <div class="form-group">
+            <label for="signup-email">Email</label>
+            <input type="email" id="signup-email" name="email" required placeholder="Email">
+          </div>
+          <div class="form-group">
+            <label for="signup-password">Mật khẩu</label>
+            <div class="password-field">
+              <input type="password" id="signup-password" name="password" required minlength="8" placeholder="Tối thiểu 8 ký tự">
+              <button type="button" class="toggle-password" aria-label="Hiện/Ẩn mật khẩu"></button>
+            </div>
+            <p class="form-hint">Mật khẩu đăng ký cần tối thiểu 8 ký tự.</p>
+          </div>
+          <div class="form-group">
+            <label for="signup-password-confirm">Xác nhận mật khẩu</label>
+            <div class="password-field">
+              <input type="password" id="signup-password-confirm" name="password_confirm" required minlength="8" placeholder="Nhập lại mật khẩu">
+              <button type="button" class="toggle-password" aria-label="Hiện/Ẩn mật khẩu"></button>
+            </div>
+          </div>
+          <p class="form-feedback"></p>
+          <button type="submit" class="btn auth-submit-btn">Đăng ký tài khoản</button>
+        </form>
+      </div>
+    </main>
+    {{FOOTER}}
+    <script src="/js/main.js?v={{ASSET_V}}"></script>
+  </body>
+</html>

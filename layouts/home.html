@@ -1,0 +1,91 @@
+<!doctype html>
+<html lang="vi">
+  <head>
+    {{HEAD}}
+  </head>
+  <body data-page="home">
+    {{HEADER}}
+    <div class="breadcrumb-bar">
+          <div class="breadcrumb">
+            <span class="home-tagline">Đọc truyện online, đọc truyện chữ, truyện hay. Tổng hợp đầy đủ và cập nhật liên tục.</span>
+          </div>
+        </div>
+
+        <!-- ================= NỘI DUNG CHÍNH ================= -->
+        <main class="container">
+          <!-- Khung 1: Truyện Hot -->
+          <section class="content-section">
+            <div class="section-header">
+              <h2 class="section-title section-title-underline">
+                <span class="section-title-text">Truyện Hot</span>
+                <span class="icon icon-fire"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3q1 4 4 6.5t3 5.5a1 1 0 0 1-14 0 5 5 0 0 1 1-3 1 1 0 0 0 5 0c0-2-1.5-3-1.5-5q0-2 2.5-4"></path></svg></span>
+              </h2>
+              <div class="section-filter">
+                <button class="section-filter-toggle" type="button">
+                  <span class="section-filter-label">Tất cả</span>
+                  <span class="chevron">▾</span>
+                </button>
+                <div class="section-filter-menu">
+    {{FILTER_GENRES}}
+                </div>
+              </div>
+            </div>
+            <div class="novel-grid">{{GRID_HOT}}</div>
+          </section>
+
+          <!-- Khung 2: Truyện Mới Cập Nhật -->
+          <section class="content-section">
+            <div class="section-header">
+              <h2 class="section-title section-title-underline">
+                <span class="section-title-text">Truyện Mới Cập Nhật</span>
+                <span class="icon icon-arrow">&rsaquo;</span>
+              </h2>
+            </div>
+            <div class="novel-grid">{{GRID_LATEST}}</div>
+            <div class="section-view-all">
+              <a href="/phan-loai/?sort=new" class="btn-view-all">Xem tất cả <span class="chevron-right">&rsaquo;</span></a>
+            </div>
+          </section>
+
+          {{GENRE_SECTIONS}}
+
+          <div class="content-final">
+            <!-- Khung dưới cùng: Top tuần + Thể loại truyện -->
+            <div class="home-bottom">
+              <section class="top-week-panel">
+                <h2 class="section-title panel-title">
+                  Top Truyện Nhiều Lượt Xem Trong Tuần
+                </h2>
+                <table class="top-week-table">
+                  <thead>
+                    <tr>
+                      <th>Truyện</th>
+                      <th>Thể loại</th>
+                    </tr>
+                  </thead>
+                  <tbody>{{TOP_WEEK_ROWS}}</tbody>
+                </table>
+              </section>
+
+              <section class="genre-panel">
+                <h2 class="section-title panel-title">Thể Loại Truyện</h2>
+                <div class="genre-tag-grid">{{GENRE_TAGS}}</div>
+              </section>
+            </div>
+
+            <!-- Khung: Truyện Đã Hoàn Thành -->
+            <section class="content-section">
+              <div class="section-header">
+                <h2 class="section-title section-title-underline">
+                  <span class="section-title-text">Truyện Đã Hoàn Thành</span>
+                  <span class="icon icon-arrow">&rsaquo;</span>
+                </h2>
+              </div>
+              <div class="novel-grid novel-grid-completed">{{GRID_COMPLETED}}</div>
+            </section>
+          </div>
+        </main>
+    {{FOOTER}}
+    <script src="/js/main.js?v={{ASSET_V}}"></script>
+  </body>
+</html>

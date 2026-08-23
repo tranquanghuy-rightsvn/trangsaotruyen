@@ -1,3 +1,12 @@
-excute.md
-.gitignire
+# Code backend CMS (deploy qua clasp, KHONG track git - xem docs/CMS.md).
+# Gitignore ngay tu dau du an theo gotcha #10 cua playbook, khong va lai sau.
+gas/
+
+# html/ la OUTPUT 100% cua scripts/build.py - xoa sach va sinh lai moi lan build.
+# Nguon that: layouts/ (design) + static/ (CSS/JS/anh) + data/ (noi dung).
+# KHONG sua file nao trong html/ - lan build ke tiep se xoa mat.
+html/
+
 .claude
+excute.md
+.DS_Store

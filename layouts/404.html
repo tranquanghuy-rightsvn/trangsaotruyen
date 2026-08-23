@@ -1,0 +1,39 @@
+<!doctype html>
+<html lang="vi">
+  <head>
+    {{HEAD}}
+  </head>
+  <body data-page="notfound">
+    {{HEADER}}
+    <div class="breadcrumb-bar">
+      <nav class="breadcrumb" aria-label="breadcrumb">
+        <a href="/">🏠 Trang chủ</a>
+        <span class="breadcrumb-extra">Không tìm thấy trang</span>
+      </nav>
+    </div>
+
+    <main class="container">
+      <section class="content-section" style="text-align:center;padding:60px 20px">
+        <h1 class="section-title" style="font-size:64px;margin:0">404</h1>
+        <p style="font-size:18px;margin:12px 0 4px">Không tìm thấy trang bạn đang tìm.</p>
+        <p style="color:#888">Truyện có thể đã được đổi tên hoặc xoá.</p>
+        <p style="margin-top:24px">
+          <a href="/" class="btn-view-all">Về trang chủ</a>
+          <a href="/phan-loai/" class="btn-view-all">Xem tất cả truyện</a>
+        </p>
+      </section>
+
+      <section class="content-section">
+        <div class="section-header">
+          <h2 class="section-title section-title-underline">
+            <span class="section-title-text">Truyện Mới Cập Nhật</span>
+            <span class="icon icon-arrow">&rsaquo;</span>
+          </h2>
+        </div>
+        <div class="novel-grid">{{GRID_LATEST}}</div>
+      </section>
+    </main>
+    {{FOOTER}}
+    <script src="/js/main.js?v={{ASSET_V}}"></script>
+  </body>
+</html>

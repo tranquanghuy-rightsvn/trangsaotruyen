@@ -2357,3 +2357,70 @@ p {
     font-size: 1.35rem;
   }
 }
+
+/* ===== Bổ sung sau khi chuyển sang build tĩnh + Worker API ===== */
+
+/* main.js ẩn/hiện phần tử bằng thuộc tính `hidden` (danh sách chương phân trang, 3 bảng xếp
+   hạng ngày/tháng/all-time, dòng bị lọc ở trang phân loại). Mặc định của trình duyệt cho
+   `[hidden]` là `display:none` nhưng ĐỘ ƯU TIÊN THẤP NHẤT — bất kỳ class nào có `display`
+   đều ghi đè nó. Bug thật đã gặp: `.hot-rank-list { display: flex }` làm cả 3 bảng xếp hạng
+   hiện cùng lúc và bấm tab không có tác dụng gì.
+   `!important` ở đây là đúng chỗ: `hidden` nghĩa là "không liên quan", không có ngoại lệ nào. */
+[hidden] { display: none !important; }
+
+/* Màu nền vùng đọc: CSS gốc đặt `color` trên `.reader-content-wrap`, nhưng `.reader-content`
+   (thẻ con) lại có `color: var(--color-text)` — độ ưu tiên cao hơn thừa kế, nên nó ghi đè và
+   chữ vẫn TỐI trên nền TỐI, gần như không đọc được. Lỗi này có sẵn trong CSS gốc nhưng chưa
+   bao giờ lộ ra vì bản gốc không có nút mở thanh cài đặt (xem layouts/chapter.html).
+   Cho `.reader-content` thừa kế lại màu của wrap thay vì sửa vào block CSS gốc. */
+.reader-page[data-reader-bg] .reader-content-wrap .reader-content { color: inherit; }
+
+/* Honeypot chống spam bình luận: PHẢI vô hình với người thật nhưng vẫn tồn tại trong DOM để
+   bot form-filler điền vào. Không dùng display:none — một số bot bỏ qua field bị display:none. */
+.comment-hp {
+  position: absolute !important;
+  left: -9999px !important;
+  width: 1px;
+  height: 1px;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.comment-name-field { display: flex; flex-direction: column; gap: 4px; }
+.comment-name-input {
+  padding: 8px 10px; border: 1px solid var(--border, #ddd); border-radius: 6px;
+  font: inherit; background: var(--card-bg, #fff); color: inherit; min-width: 200px;
+}
+
+.comment-item { padding: 12px 0; border-bottom: 1px solid var(--border, #eee); }
+.comment-item-head { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; font-size: 14px; }
+.comment-author { font-weight: 600; }
+.comment-date { color: #999; font-size: 13px; margin-left: auto; }
+.comment-body { margin: 6px 0 0; line-height: 1.6; white-space: pre-wrap; }
+.comment-empty { color: #999; padding: 16px 0; }
+.comment-star-picker .star-btn { color: #ccc; background: none; border: none; cursor: pointer; font-size: 20px; padding: 0 1px; }
+.comment-star-picker .star-btn.is-on { color: #f5a623; }
+
+/* Kết quả tìm kiếm: main.js dựng bằng .search-result-row (trước đây là markup khác).
+   KHÔNG khai lại `.search-results` / `.search-results.is-open` ở đây — CSS gốc đã có
+   (dòng ~398). Khai lại là hai nguồn chân lý cho cùng một hành vi. */
+.search-result-row { display: flex; flex-direction: column; padding: 8px 12px; text-decoration: none; color: inherit; }
+.search-result-row:hover { background: rgba(0,0,0,.05); }
+.search-result-title { font-weight: 500; }
+.search-result-meta { font-size: 12px; color: #888; }
+.search-empty { padding: 12px; color: #999; font-size: 14px; }
+
+/* Mô tả truyện: thu gọn 4 dòng, bấm "Xem thêm" mới mở hết */
+.detail-description { display: -webkit-box; -webkit-line-clamp: 4; -webkit-box-orient: vertical; overflow: hidden; }
+.detail-description.is-expanded { display: block; -webkit-line-clamp: unset; overflow: visible; }
+
+.grid-empty { grid-column: 1 / -1; color: #999; padding: 24px 4px; margin: 0; }
+
+.chapter-page-ellipsis { padding: 0 6px; color: #999; }
+.chapter-list-empty { padding: 12px; color: #999; font-size: 14px; }
+.btn-favorite.is-active { color: #e0245e; border-color: #e0245e; }
+
+/* Nền đọc truyện: KHÔNG khai lại ở đây. CSS gốc đã có đủ 4 rule
+   `.reader-page[data-reader-bg="white|cream|dark"] .reader-content-wrap` (dòng ~1787) —
+   bản vá tạm trước đây chỉ có 2/4 và thiếu cả rule chung. Cách đúng là trả lại
+   class="reader-page" cho <body> (xem layouts/chapter.html), không phải viết CSS song song. */

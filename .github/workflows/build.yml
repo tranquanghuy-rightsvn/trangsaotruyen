@@ -1,0 +1,78 @@
+name: Build & deploy Trăng Sao Truyện
+
+# Chỉ trigger ở đúng file LUÔN là commit chốt của mỗi thao tác CMS - không trigger theo cả
+# thư mục data/** (sẽ chạy build ngay từ commit dở dang của một thao tác Lưu nhiều commit).
+#   - data/stories.json      chốt của MỌI thao tác truyện/chương (gas/Code.js ghi SAU CÙNG),
+#                            và cũng là nơi trigger đồng bộ lượt xem/đánh giá hằng ngày
+#   - data/site-config.json  chốt của đổi thể loại / cài đặt site
+# layouts/ (design), static/ (CSS/JS/ảnh), scripts/, worker/ là nguồn thật → đổi thì build lại.
+# CỐ Ý không có templates/: đó chỉ là bản gốc để tham khảo, không tham gia build.
+on:
+  push:
+    paths:
+      - "data/stories.json"
+      - "data/site-config.json"
+      - "layouts/**"
+      - "static/**"
+      - "scripts/build.py"
+      - "worker/**"
+      - "wrangler.toml"
+  workflow_dispatch: {}
+
+# CỐ Ý không có `permissions: contents: write`: workflow này KHÔNG commit html/ trở lại repo.
+# html/ đã được gitignore và là output 100% của build.py — commit lại sẽ khiến mỗi lần đồng bộ
+# lượt xem hằng ngày tạo một commit đụng vào 2.030 file, phình repo vô ích. wrangler deploy đẩy
+# thẳng thư mục html/ trong workspace của CI lên Cloudflare, không cần qua git.
+permissions:
+  contents: read
+
+# Hai lần deploy chồng nhau sẽ tranh nhau ghi cùng một Worker; huỷ lần cũ, giữ lần mới nhất.
+concurrency:
+  group: deploy-trangsaotruyen
+  cancel-in-progress: true
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      # build.py không dùng thư viện ngoài -> không có bước pip install nào.
+      - name: Build site tĩnh
+        run: python3 scripts/build.py
+
+      # Nếu build ra HTML còn sót token {{...}} thì build.py đã tự fail ở trên (check_no_tokens).
+      # Ở đây chỉ chốt lại 2 điều kiện hạ tầng mà build.py không biết.
+      - name: Kiểm tra ngưỡng hạ tầng
+        run: |
+          set -e
+          files=$(find html -name '*.html' | wc -l)
+          echo "Số file HTML: $files"
+          if [ "$files" -ge 20000 ]; then
+            echo "::error::$files file HTML — vượt giới hạn 20.000 của Cloudflare Static Assets (free)."
+            exit 1
+          fi
+          if [ ! -f html/_tpl/chapter.html ]; then
+            echo "::error::Thiếu html/_tpl/chapter.html — Worker sẽ không render được trang chương."
+            exit 1
+          fi
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+
+      # Deploy Worker + Static Assets. Cần 2 secret trong repo Settings > Secrets:
+      #   CLOUDFLARE_API_TOKEN  (quyền Account > Workers Scripts > Edit)
+      #   CLOUDFLARE_ACCOUNT_ID
+      - name: Deploy lên Cloudflare
+        uses: cloudflare/wrangler-action@v3
+        with:
+          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          command: deploy

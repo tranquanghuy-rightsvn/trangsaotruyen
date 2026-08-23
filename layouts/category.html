@@ -1,0 +1,37 @@
+<!doctype html>
+<html lang="vi">
+  <head>
+    {{HEAD}}
+  </head>
+  <body data-page="category">
+    {{HEADER}}
+    <div class="breadcrumb-bar">
+      <nav class="breadcrumb" aria-label="breadcrumb">
+        <a href="/">🏠 Trang chủ</a>
+        <span class="breadcrumb-extra">{{BREADCRUMB}}</span>
+      </nav>
+    </div>
+
+    <!-- ================= NỘI DUNG CHÍNH ================= -->
+    <main class="container">
+
+      <div class="category-layout">
+        <div class="category-main">
+          <div class="category-header">
+            <h1>{{CATEGORY_TITLE}}</h1>
+          </div>
+
+          <ul class="category-list">{{ROWS}}</ul>
+        </div>
+
+        <aside class="genre-panel category-sidebar">
+          <h2 class="section-title panel-title">Thể Loại Truyện</h2>
+          <div class="genre-tag-grid">{{GENRE_TAGS}}</div>
+        </aside>
+      </div>
+
+    </main>
+    {{FOOTER}}
+    <script src="/js/main.js?v={{ASSET_V}}"></script>
+  </body>
+</html>

@@ -197,12 +197,6 @@ def nav_genres(config):
         for g in config.get("genres", []))
 
 
-def footer_genres(config):
-    return "\n".join(
-        '            <li><a href="/phan-loai/%s/">%s</a></li>' % (esc(g["slug"]), esc(g["name"]))
-        for g in config.get("genres", []))
-
-
 def filter_genres(config):
     out = ['              <a href="/phan-loai/?sort=hot">Tất cả</a>']
     out += ['              <a href="/phan-loai/%s/?sort=hot">%s</a>' % (esc(g["slug"]), esc(g["name"]))
@@ -251,7 +245,6 @@ def shell(config, page_tpl, mapping, title, description, canonical, og_type="web
     })
     header = render(tpl("_header.html"), {"NAV_GENRES": nav_genres(config)})
     footer = render(tpl("_footer.html"), {
-        "FOOTER_GENRES": footer_genres(config),
         "CONTACT_EMAIL": esc((config.get("contact") or {}).get("email", "")),
         "SITE_NAME": esc(site_name),
         "SITE_ABOUT": esc(config.get("site_about", "")),
@@ -487,7 +480,6 @@ def build_chapter_template(config):
     })
     header = render(tpl("_header.html"), {"NAV_GENRES": nav_genres(config)})
     footer = render(tpl("_footer.html"), {
-        "FOOTER_GENRES": footer_genres(config),
         "CONTACT_EMAIL": esc((config.get("contact") or {}).get("email", "")),
         "SITE_NAME": esc(config.get("site_name") or ""),
         "SITE_ABOUT": esc(config.get("site_about", "")),

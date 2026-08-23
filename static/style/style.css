@@ -489,7 +489,10 @@ p {
 }
 .footer-grid {
   display: grid;
-  grid-template-columns: 1.4fr 1fr 1fr 1.2fr;
+  /* 3 cot: da bo cot "The loai" - the loai da co o nav dropdown (moi trang) va panel
+     "The Loai Truyen" (trang chu + phan loai). Giu o footer nua la lap lai, va se meo han
+     khi so the loai tang (40 the loai = cot cao 1.120px). */
+  grid-template-columns: 1.6fr 1fr 1.4fr;
   gap: 32px;
   padding: 0 20px 48px;
   max-width: var(--container-w);

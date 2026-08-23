@@ -31,11 +31,12 @@ html_handling = "none"
 not_found_handling = "404-page"
 
 # Noi dung chuong + luot xem + comment. Tao DB: npx wrangler d1 create trangsaotruyen
-# Roi dan database_id that vao day (lenh tren in ra).
+# Tao ngay 2026-08-23, region APAC. binding = "DB" (Worker dung env.DB), KHONG phai
+# ten mac dinh ma wrangler goi y.
 [[d1_databases]]
 binding = "DB"
 database_name = "trangsaotruyen"
-database_id = "PASTE_DATABASE_ID_HERE"
+database_id = "863a767c-05ce-453c-82d1-5028e7dcdf0a"
 
 # Gom luot xem hang ngay: chuyen ngay cu (>40 ngay) vao bang tong roi xoa, giu views_daily
 # nho gon. 18:00 UTC = 01:00 gio VN.

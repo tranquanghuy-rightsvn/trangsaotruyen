@@ -12,3 +12,8 @@ excute.md
 .DS_Store
 # Dependency cua wrangler - cai lai bang `npm ci` (CI dung package-lock.json).
 node_modules/
+
+# Token dung chung giua Worker (secret ADMIN_TOKEN) va GAS (Script Property
+# WORKER_API_TOKEN). Sinh cuc bo, KHONG BAO GIO commit. Xoa file sau khi da dan vao GAS.
+ADMIN_TOKEN.txt
+.dev.vars

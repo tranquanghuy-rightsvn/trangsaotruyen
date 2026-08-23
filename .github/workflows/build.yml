@@ -17,6 +17,12 @@ on:
       - "scripts/build.py"
       - "worker/**"
       - "wrangler.toml"
+      # Chinh toolchain deploy cung phai chay lai de kiem: doi ban Node/wrangler ma khong
+      # trigger thi loi chi lo ra o lan push noi dung tiep theo (da gap: CI fail vi Node 20).
+      - ".github/workflows/build.yml"
+      - ".nvmrc"
+      - "package.json"
+      - "package-lock.json"
   workflow_dispatch: {}
 
 # CỐ Ý không có `permissions: contents: write`: workflow này KHÔNG commit html/ trở lại repo.
@@ -63,9 +69,11 @@ jobs:
             exit 1
           fi
 
+      # Doc .nvmrc de CI va may local KHONG BAO GIO lech ban Node. Hard-code "20" o day tung
+      # lam CI fail: wrangler 4.125 doi Node >=22, local dang chay v24 nen loi khong lo ra.
       - uses: actions/setup-node@v4
         with:
-          node-version: "20"
+          node-version-file: ".nvmrc"
 
       # `npm ci` (không phải `npm install`) để CI dùng ĐÚNG bản wrangler trong
       # package-lock.json — cùng bản đã test trên máy. Dùng cloudflare/wrangler-action sẽ tự
@@ -75,8 +83,12 @@ jobs:
 
       # Deploy Worker + Static Assets. Cần 2 secret trong repo Settings > Secrets and
       # variables > Actions:
-      #   CLOUDFLARE_API_TOKEN  (quyền Account > Workers Scripts > Edit)
+      #   CLOUDFLARE_API_TOKEN   quyền: Account > Workers Scripts > Edit
+      #                                 Account > Account Settings > Read
       #   CLOUDFLARE_ACCOUNT_ID
+      # KHÔNG cần quyền D1: đã kiểm bằng WRANGLER_LOG=debug — deploy chỉ gọi endpoint
+      # /accounts/{id}/workers/*, không gọi /d1/ lần nào. Binding D1 chỉ là metadata gửi
+      # kèm script settings. Chỉ cần D1 > Edit nếu sau này thêm bước `wrangler d1 ...` vào CI.
       - name: Deploy lên Cloudflare
         run: npx wrangler deploy
         env:

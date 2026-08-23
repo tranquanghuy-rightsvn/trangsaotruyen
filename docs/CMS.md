@@ -344,7 +344,9 @@ năng bắt buộc**, không phải nice-to-have.
 
 ### B. Cloudflare (mở khoá phần chương + lượt xem + bình luận)
 **Không cần phương thức thanh toán** — chỉ dùng Workers + Static Assets + D1, đều là free tier
-không đòi thẻ. Cần **Node ≥ 20** (wrangler 4); máy đang có Node 18 → `nvm install 20 && nvm use 20`.
+không đòi thẻ. Cần **Node ≥ 22** — `wrangler 4.125` khai `engines.node: >=22.0.0`; bản đã
+test là **v24.18.0**, ghi trong `.nvmrc` (CI đọc cùng file này nên không bao giờ lệch).
+Chạy `nvm use` trong thư mục project là đúng bản.
 
 1. `npm install` (cài wrangler cục bộ)
 2. `npx wrangler login`

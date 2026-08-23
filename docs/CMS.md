@@ -511,6 +511,36 @@ Rủi ro thứ hai: đồng bộ vị trí đọc = **+1 D1 write mỗi chương
 1/pageview cho đếm view) → cắt nửa ngân sách 100k/ngày. Giữ vị trí đọc ở localStorage, chỉ sync
 khi đọc xong chương.
 
+## 11c. Bug đã vá: "tắt tab mở lại không thấy truyện"
+
+**Triệu chứng người dùng báo:** đóng tab CMS rồi mở lại thì không thấy truyện nào; đăng nhập
+lại thì thấy.
+
+**Nguyên nhân thật — không phải lỗi dữ liệu:** `applyBootResult_()` từng ghi nhớ tab lần trước
+vào `localStorage` (`tst_cms_last_tab`). Ai vào tab **Cài đặt** (thêm thể loại) rồi đóng tab thì
+lần sau mở lên rơi thẳng vào Cài đặt → tưởng CMS mất truyện. "Đăng nhập lại" chữa được vì
+`logout()` xoá sạch key `tst_cms_*` gồm cả tab đã nhớ → về mặc định tab Truyện.
+
+**Vá:** bỏ hẳn việc ghi nhớ tab, **luôn mở tab Truyện**. Danh sách truyện là màn hình *home* của
+CMS; nhớ tab Cài đặt làm trang đích thì giá trị gần như bằng 0 mà gây nhầm lẫn thì thật.
+
+### Hai bug liên quan vá cùng lúc
+
+**1. Guard "đừng vẽ đè khi đang soạn" chưa bao giờ hoạt động.** `revalidateBootInBackground_()`
+sniff DOM bằng `.tab-panel:not([style*='display:none'])`. Trình duyệt serialize
+`el.style.display = "none"` thành **`display: none;` CÓ khoảng trắng**, nên
+`[style*='display:none']` không bao giờ khớp → `:not()` khớp mọi panel → `querySelector` luôn
+trả về panel đầu tiên. Đã kiểm: `el.matches("[style*='display:none']")` → `false`.
+Vá bằng biến `currentTab` thay vì đoán từ DOM.
+
+**2. Lỗi revalidate bị nuốt im lặng.** `.catch(() => {})` biến mọi lỗi ở đó (token GitHub hết
+hạn, GitHub API lỗi, mất mạng) thành: người dùng xem dữ liệu **cũ** từ cache, không có dấu hiệu
+gì. Đúng loại lỗi khiến không thể chẩn đoán. Giờ có `console.error` + **banner cảnh báo** với
+2 nút *Thử lại* / *Đăng nhập lại*.
+
+`CLIENT_BUILD` bump lên `tst-v2` — mở Console kiểm dòng `[TST CMS] client build: …` để biết chắc
+đã deploy bản mới (Save trong editor là CHƯA đủ, phải New version).
+
 ## 12. Trạng thái hiện tại & việc còn lại
 
 ### Dữ liệu: TRẮNG

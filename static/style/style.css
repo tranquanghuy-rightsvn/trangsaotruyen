@@ -2419,6 +2419,16 @@ p {
 .detail-description { display: -webkit-box; -webkit-line-clamp: 4; -webkit-box-orient: vertical; overflow: hidden; }
 .detail-description.is-expanded { display: block; -webkit-line-clamp: unset; overflow: visible; }
 
+/* Khoi "The Loai Truyen" gio la LINK, khong phai <span> nua. CSS goc chi nham
+   `.genre-tag-grid span` nen the <a> se khong duoc style neu khong them rule nay. */
+.genre-tag-grid a {
+  display: block;
+  font-size: 0.87rem;
+  color: var(--color-text);
+  text-decoration: none;
+}
+.genre-tag-grid a:hover { color: var(--color-primary); text-decoration: underline; }
+
 .grid-empty { grid-column: 1 / -1; color: #999; padding: 24px 4px; margin: 0; }
 
 .chapter-page-ellipsis { padding: 0 6px; color: #999; }

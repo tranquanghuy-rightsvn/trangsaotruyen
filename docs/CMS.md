@@ -479,6 +479,38 @@ mãi mãi; `build.py` đọc index qua `/_api/stories`. Đổi lại: index khô
 **Vì sao không làm bây giờ:** ở 0–500 truyện, một file đơn giản hơn hẳn, `git diff` đọc được
 bằng mắt, mọi bug lộ ngay. Playbook có nguyên tắc "đừng tối ưu sớm" — chỉ nâng khi thực tế chạm.
 
+## 11b. Đã bỏ: tính năng tài khoản người đọc
+
+Giao diện gốc có nav "Tài khoản" + 2 trang `/login/`, `/signup/` — nhưng chỉ là **form trang
+trí**, không có backend. Đã bỏ hẳn khỏi giao diện: nav, link footer, và `build.py` **không sinh**
+2 trang đó nữa (để lại là trang mồ côi, Google vẫn index, người dùng bấm vào một form không làm
+gì cả). Layout gốc còn ở `templates/_ref-login.html` / `_ref-signup.html` nếu cần làm lại.
+
+### Nếu sau này muốn làm thật: dùng OAuth, KHÔNG dùng mật khẩu
+
+Workers free giới hạn **10 ms CPU/request**. Đo thật `PBKDF2-SHA256` (thuật toán bấm mật khẩu duy
+nhất WebCrypto trong Workers có sẵn):
+
+| Số vòng | Thời gian | So với 10 ms |
+|---|---|---|
+| 100.000 | 12,3 ms | 1× — đã vượt |
+| 210.000 (OWASP 2023) | 25,2 ms | **2,5× vượt** |
+| 600.000 (OWASP 2024) | 72,5 ms | **7× vượt** |
+
+Hạ số vòng cho vừa 10 ms nghĩa là một lần lộ DB là mật khẩu bị crack. Nên: **OAuth Google**
+(không lưu mật khẩu, không tốn CPU), hoặc lên Workers Paid. OTP email như CMS thì không dùng lại
+được — Gmail của GAS chỉ 100 mail/ngày, đủ cho 3 editor chứ không đủ cho người đọc.
+
+### Và quy tắc bắt buộc nếu làm
+
+**Trạng thái đăng nhập phải render ở CLIENT.** Nhúng "Xin chào <tên>" vào HTML từ Worker sẽ làm
+mỗi trang chương thành riêng cho từng người → `s-maxage=300` chết → mỗi lượt đọc thành 1 Worker
+request + 1 D1 read thay vì lấy từ cache. Đó mới là lúc site nặng thật.
+
+Rủi ro thứ hai: đồng bộ vị trí đọc = **+1 D1 write mỗi chương đọc**, gấp đôi write hiện tại (đang
+1/pageview cho đếm view) → cắt nửa ngân sách 100k/ngày. Giữ vị trí đọc ở localStorage, chỉ sync
+khi đọc xong chương.
+
 ## 12. Trạng thái hiện tại & việc còn lại
 
 ### Dữ liệu: TRẮNG

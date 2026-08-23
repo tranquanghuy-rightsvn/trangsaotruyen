@@ -220,18 +220,20 @@ def detail_of(slug, fallback=None):
     return _details[slug]
 
 
-def genre_tags(stories):
-    """Cac tag tu do cua truyen (khac the loai co dinh).
+def genre_tags(config, stories):
+    """Khoi "The Loai Truyen" (o trang chu va sidebar trang phan loai).
 
-    Tag nam trong story.json, KHONG nam trong stories.json - index co y khong chua tags de
-    khong phinh to. Doc tu index se ra mang rong va khoi "The Loai Truyen" tren trang chu/
-    trang phan loai se trong tron (bug that da gap).
+    Hien THE LOAI, dang LINK click duoc sang /phan-loai/<slug>/.
 
-    Sort theo alpha de output on dinh - khong duoc phu thuoc thu tu trong stories.json,
-    neu khong build se khong idempotent.
+    Truoc day khoi nay hien TAG tu do dang <span> - lam theo ban goc. Hai loi:
+      1. <span> khong click duoc, nhung nhin y het chip bam duoc -> nguoi dung bam mai
+         khong ra gi (bug that, nguoi dung bao).
+      2. Noi dung la tag ("tong tai") trong khi tieu de la "The Loai Truyen" - lech han.
+    Tag van duoc dung o bang "Top tuan" (ghep cung the loai), khong mat di dau.
     """
-    tags = {t for s in stories for t in detail_of(s["slug"]).get("tags", [])}
-    return "".join("<span>%s</span>" % esc(t) for t in sorted(tags, key=lambda x: x.lower()))
+    return "".join(
+        '<a href="/phan-loai/%s/">%s</a>' % (esc(g["slug"]), esc(g["name"]))
+        for g in config.get("genres", []))
 
 
 # ---------------------------------------------------------------- shell
@@ -294,7 +296,7 @@ def build_home(config, stories, gmap):
         "GRID_COMPLETED": grid(completed, card_completed),
         "GENRE_SECTIONS": "\n".join(sections),
         "TOP_WEEK_ROWS": "".join(row_top_week(s, gmap) for s in top_week),
-        "GENRE_TAGS": genre_tags(stories),
+        "GENRE_TAGS": genre_tags(config, stories),
         "FILTER_GENRES": filter_genres(config),
     },
         title="%s - Đọc Truyện Online Miễn Phí" % (config.get("site_name") or ""),
@@ -347,7 +349,7 @@ def build_category(config, stories, genre=None):
             "BREADCRUMB": crumb,
             "ROWS": "".join(row_category(s) for s in chunk) or
                     '<li class="category-row"><em>Chưa có truyện nào trong mục này.</em></li>',
-            "GENRE_TAGS": genre_tags(stories),
+            "GENRE_TAGS": genre_tags(config, stories),
         },
             title="%s%s | %s" % (title_txt, suffix, config.get("site_name") or ""),
             description=desc,
@@ -446,8 +448,9 @@ def build_story(config, stories, story, gmap):
 def build_static_pages(config):
     n = 0
     for tpl_name, out_dir, title, desc in (
-        ("page-login.html", "login", "Đăng nhập", "Đăng nhập vào %s."),
-        ("page-signup.html", "signup", "Đăng ký", "Tạo tài khoản %s."),
+        # Da bo tinh nang tai khoan khoi giao dien (xem docs/CMS.md). KHONG sinh trang
+        # login/signup nua - de lai la trang mo coi, Google van index, nguoi dung bam vao
+        # mot form khong lam gi ca. Layout goc con o templates/_ref-login.html neu can lam lai.
         ("page-legal.html", "phap-ly", "Pháp lý", "Điều khoản sử dụng và chính sách của %s."),
     ):
         site = config.get("site_name") or ""
@@ -525,7 +528,7 @@ def build_sitemaps(config, stories):
         chapters = load_json(DATA / "truyen" / s["slug"] / "chapters.json", [])
         for c in chapters:
             urls.append(("/truyen/%s/chuong-%d/" % (s["slug"], c["n"]), c.get("updated_at")))
-    for p in ("login", "signup", "phap-ly"):
+    for p in ("phap-ly",):
         urls.append(("/%s/" % p, None))
 
     # Gioi han chuan sitemap la 50.000 URL/file. O quy mo 600.000 chuong se can 12+ file,

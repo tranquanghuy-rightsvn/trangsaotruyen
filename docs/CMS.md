@@ -569,6 +569,45 @@ gì. Đúng loại lỗi khiến không thể chẩn đoán. Giờ có `console.
 `CLIENT_BUILD` bump lên `tst-v2` — mở Console kiểm dòng `[TST CMS] client build: …` để biết chắc
 đã deploy bản mới (Save trong editor là CHƯA đủ, phải New version).
 
+## 11d. Bug đã vá: xuống dòng khác nhau giữa "thêm từng chương" và "nhập hàng loạt"
+
+**Triệu chứng:** thêm chương từng cái và nhập hàng loạt cho ra kiểu xuống dòng khác nhau.
+
+**Nguyên nhân — không phải hai đường xử lý khác nhau.** Cả `saveChapter()` và
+`importChapters()` đều gọi **cùng một** hàm `textToParagraphs_()`. Lỗi nằm trong hàm đó:
+
+```js
+// BẢN CŨ, CÓ BUG
+const blocks = /\n\s*\n/.test(raw) ? raw.split(/\n\s*\n/) : raw.split(/\n/);
+```
+
+Ý định: có dòng trống thì coi dòng trống là ranh đoạn, không thì mỗi dòng là một đoạn. Hậu quả:
+**chỉ cần MỘT dòng trống lạc vào là đổi hẳn hành vi của cả chương.** Đã đo:
+
+```
+"D1\nD2\nD3\nD4\nD5"      →  5 thẻ <p>   (đúng)
+"D1\nD2\n\nD3\nD4\nD5"   →  2 thẻ <p>   (gộp hết thành khối chữ)
+```
+
+Số liệu thật từ D1 của truyện đầu tiên:
+
+| Chương | Ký tự | Số `<p>` | Ký tự/đoạn |
+|---|---|---|---|
+| **1** | 11.713 | **2** | **5.856** ← bị gộp |
+| 2 | 14.843 | 325 | 46 |
+| **3** | 10.526 | **2** | **5.263** ← bị gộp |
+| 4–9 | 9.561–15.600 | 166–259 | 41–70 |
+
+**Vá:** bỏ heuristic, **mỗi dòng không rỗng là một đoạn, dòng trống bị bỏ qua**. Kết quả không
+còn phụ thuộc việc văn bản có dòng trống hay không → hai đường luôn giống nhau. Đã test 6 dạng
+đầu vào (không dòng trống / dòng trống mọi nơi / một dòng trống lạc / nhiều dòng trống liên tiếp
+/ CRLF Windows / khoảng trắng thừa) — tất cả ra cùng số đoạn.
+
+### Dữ liệu cũ không tự sửa được
+Chương **1 và 3** đã lưu sai trong D1 và **không thể phục hồi**: các dấu `\n` gốc đã bị thay
+thành khoảng trắng, thông tin ranh đoạn mất hẳn. Phải **dán lại nội dung 2 chương đó** qua CMS.
+Các chương khác không ảnh hưởng.
+
 ## 12. Trạng thái hiện tại & việc còn lại
 
 ### Dữ liệu: TRẮNG

@@ -513,16 +513,44 @@ khi đọc xong chương.
 
 ## 11c. Bug đã vá: "tắt tab mở lại không thấy truyện"
 
-**Triệu chứng người dùng báo:** đóng tab CMS rồi mở lại thì không thấy truyện nào; đăng nhập
-lại thì thấy.
+**Triệu chứng:** đóng tab CMS rồi mở lại thì không thấy truyện nào; đăng nhập lại thì thấy.
 
-**Nguyên nhân thật — không phải lỗi dữ liệu:** `applyBootResult_()` từng ghi nhớ tab lần trước
-vào `localStorage` (`tst_cms_last_tab`). Ai vào tab **Cài đặt** (thêm thể loại) rồi đóng tab thì
-lần sau mở lên rơi thẳng vào Cài đặt → tưởng CMS mất truyện. "Đăng nhập lại" chữa được vì
-`logout()` xoá sạch key `tst_cms_*` gồm cả tab đã nhớ → về mặc định tab Truyện.
+**Nguyên nhân thật — Temporal Dead Zone.** Lệnh khởi động `if (TOKEN) bootApp();` nằm ở GIỮA
+`js.html` (dòng ~367), nhưng `const STORIES_RENDER_CAP` khai ở dòng ~438 — tức SAU đó.
+`const`/`let` được hoisted nhưng **chưa khởi tạo**, nên đọc trước dòng khai báo là TDZ:
 
-**Vá:** bỏ hẳn việc ghi nhớ tab, **luôn mở tab Truyện**. Danh sách truyện là màn hình *home* của
-CMS; nhớ tab Cài đặt làm trang đích thì giá trị gần như bằng 0 mà gây nhầm lẫn thì thật.
+```
+Uncaught ReferenceError: Cannot access 'STORIES_RENDER_CAP' before initialization
+    at renderStoriesTable
+    at applyBootResult_
+    at bootApp
+```
+
+`applyBootResult_` vỡ giữa đường → bảng truyện không render, và **mọi thứ sau dòng đó cũng
+không chạy**: `renderGenresTable`, `fillConfigForm`, ẩn/hiện nav, `switchTab`.
+
+**Vì sao chỉ vỡ khi mở lại tab, không vỡ khi vừa đăng nhập** — đây là chi tiết quyết định:
+
+| Đường đi | Khi nào | Kết quả |
+|---|---|---|
+| **Có cache** → `applyBootResult_(cached)` | mở lại tab | **ĐỒNG BỘ**, chạy lúc script đang parse → const chưa khởi tạo → **throw** |
+| Không cache → `gasCall("boot").then(...)` | lần đầu / sau khi logout | **ASYNC**, chạy sau khi parse xong → const đã khởi tạo → chạy tốt |
+
+Nên: đăng nhập lần đầu OK (ghi cache) → đóng tab, mở lại → cache có → **vỡ**. Đăng nhập lại
+chữa được vì `logout()` xoá cache → về đường async.
+
+**Vá:** dời lệnh khởi động xuống **cuối file**, sau mọi khai báo. Có 3 biến nữa cùng bẫy này
+(`CHAPTERS_CACHE_MAX`, `lastUsers`, `lastComments`) — dời một lần diệt cả 4 và cả những cái
+phát sinh về sau. Trong file có comment CẤM di chuyển đoạn đó lên trên.
+
+**Đã tái hiện và xác nhận** bằng trang mô phỏng GAS (nạp đúng `js.html`/`app.html`/`css.html`,
+giả lập `google.script.run`): bản cũ throw đúng message + đúng stack trace; bản mới cùng đường
+cache thì chạy sạch, bảng truyện render, và các bước sau `renderStoriesTable` đều chạy.
+
+### Chẩn đoán sai trước đó (giữ lại để không lặp lại)
+Ban đầu tôi kết luận nguyên nhân là "nhớ tab lần trước" (`tst_cms_last_tab`) khiến CMS mở vào
+tab Cài đặt. Sai — nó khớp triệu chứng nhưng không phải nguyên nhân. Việc bỏ nhớ tab vẫn giữ
+(danh sách truyện là *home* của CMS), nhưng nó KHÔNG phải bản vá cho bug này.
 
 ### Hai bug liên quan vá cùng lúc
 

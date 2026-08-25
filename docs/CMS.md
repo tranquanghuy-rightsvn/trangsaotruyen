@@ -608,6 +608,39 @@ Chương **1 và 3** đã lưu sai trong D1 và **không thể phục hồi**: c
 thành khoảng trắng, thông tin ranh đoạn mất hẳn. Phải **dán lại nội dung 2 chương đó** qua CMS.
 Các chương khác không ảnh hưởng.
 
+## 11e. Bug đã vá: nhập hàng loạt làm mất tiền tố "Chương N" trong tiêu đề
+
+**Triệu chứng:** dán `Chương 1: Bắt đầu` / `Chương 2: Tiếp diễn`, sau khi nhập thì tiêu đề chỉ
+còn `Bắt đầu`, `Tiếp diễn` — mất số chương.
+
+**Nguyên nhân:** `splitPastedChapters()` dùng regex bắt 2 nhóm và lấy **nhóm 2** (phần sau dấu
+hai chấm) làm tiêu đề, vứt luôn tiền tố:
+
+```js
+cur = { n: Number(m[1]), title: (m[2] || "").trim(), lines: [] };  // BẢN CŨ
+```
+
+`onImportFilesSelected()` (chế độ tải file `.txt`) mắc y hệt.
+
+**Bằng chứng từ dữ liệu thật** — truyện đầu tiên có cả hai kiểu nhập:
+
+| Chương | Cách thêm | Tiêu đề đã lưu |
+|---|---|---|
+| 1–5 | từng cái | `Chương 1` … `Chương 5` |
+| 6–9 | **hàng loạt** | `GIẤC MƠ KHÔNG THỂ NÓI RA` ← mất `Chương 6:` |
+
+Hậu quả không chỉ là thẩm mỹ: danh sách 620 chương mà không có số thì **không tra được**, và
+tiêu đề khác hẳn giữa hai cách nhập.
+
+**Vá:** giữ **nguyên văn dòng tiêu đề** làm tiêu đề chương, không cắt tiền tố. Đã test 6 dạng —
+`Chương 1: X`, `Chương 3 - X`, `CHƯƠNG 4. X`, `Chuong 5` (không dấu), `Chương 006: X` (số 0 đệm),
+và file `.txt` không có dòng tiêu đề (rơi về `Chương N`). Tất cả đều giữ số chương.
+
+### Dữ liệu cũ
+Chương **6–9** đã lưu thiếu tiền tố. Khác bug xuống dòng (mục 11d), cái này **sửa được**: mở
+từng chương trong CMS, sửa ô *Tiêu đề chương* thành `Chương 6: GIẤC MƠ...` rồi Lưu. Nội dung
+không phải dán lại — CMS tự tải từ D1.
+
 ## 12. Trạng thái hiện tại & việc còn lại
 
 ### Dữ liệu: TRẮNG

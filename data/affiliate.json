@@ -6,7 +6,7 @@
   "rotate_sec": 30,
   "next_chapter_rate": 0,
   "click_delay_sec": 10,
-  "click_cooldown_sec": 600,
+  "click_cooldown_sec": 59,
   "first_visit_delay_sec": 0,
   "first_visit_mode": "banner",
   "max_per_session": 0,

@@ -1,9 +1,11 @@
 {
   "enabled": false,
-  "links": [],
+  "links": [
+    "https://shopee.vn/"
+  ],
   "rotate_sec": 30,
   "next_chapter_rate": 0,
-  "click_delay_sec": 0,
+  "click_delay_sec": 10,
   "click_cooldown_sec": 600,
   "first_visit_delay_sec": 0,
   "first_visit_mode": "banner",
@@ -11,17 +13,17 @@
   "open_in_new_tab": true,
   "chapter_panel": {
     "enabled": true,
-    "title": "Tài trợ nội dung",
-    "message": "Chương tiếp theo sẽ mở ngay sau đây. Ghé xem ưu đãi từ nhà tài trợ để truyện luôn miễn phí nhé!",
+    "title": "",
+    "message": "",
     "image": "",
-    "button_text": "Xem ưu đãi",
+    "button_text": "Xem ngay",
     "skip_text": "Bỏ qua, đọc tiếp",
     "auto_continue_sec": 0
   },
   "banner": {
     "enabled": true,
-    "title": "Ưu đãi hôm nay",
-    "message": "Nội dung được tài trợ.",
+    "title": "",
+    "message": "",
     "image": "",
     "button_text": "Xem ngay",
     "link": "",

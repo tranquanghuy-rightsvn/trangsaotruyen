@@ -1,15 +1,26 @@
 -- Schema D1 cho Trang Sao Truyen.
 -- Ap dung: npx wrangler d1 execute trangsaotruyen --remote --file=worker/schema.sql
+--
+-- MIGRATION 1 LAN (2026-08-26): DB da tao TRUOC cot created_at o bang chapters khong tu co
+-- cot nay khi chay lai file nay (CREATE TABLE IF NOT EXISTS la no-op tren bang da ton tai).
+-- Chay THEM lenh sau, DUY NHAT 1 LAN, tren DB dang chay:
+--   npx wrangler d1 execute trangsaotruyen --remote --command "ALTER TABLE chapters ADD COLUMN created_at TEXT;"
+-- Chay lan 2 se loi "duplicate column" - vo hai, nghia la da co roi, bo qua.
 
 -- Noi dung chuong. Day la thu thay the R2 (R2 doi phuong thuc thanh toan, D1 thi khong).
 -- Khoa chinh (slug, n) khop dung URL cong khai /truyen/<slug>/chuong-<n> -> doc 1 chuong la
 -- DUNG 1 row read, khong can index phu.
+-- created_at: gan 1 LAN luc INSERT (= updated_at tai thoi diem do), KHONG dong lai khi
+-- UPDATE (xem ON CONFLICT trong index.js - cau UPDATE khong dong cham created_at). Dung de
+-- tinh "chuong moi trong ky" o /_api/stats - updated_at doi ca khi SUA chuong cu nen khong
+-- dung duoc cho viec nay.
 CREATE TABLE IF NOT EXISTS chapters (
   slug       TEXT    NOT NULL,
   n          INTEGER NOT NULL,
   title      TEXT    NOT NULL,
   content    TEXT    NOT NULL,   -- chuoi <p>...</p>, DA escape HTML o phia GAS
   updated_at TEXT    NOT NULL,
+  created_at TEXT,
   PRIMARY KEY (slug, n)
 );
 

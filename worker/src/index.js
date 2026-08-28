@@ -73,6 +73,13 @@ function cleanSlug(s) {
   return /^[a-z0-9-]{1,120}$/.test(out) ? out : "";
 }
 
+/** Ngày 'YYYY-MM-DD' do client gửi (bộ lọc "Tùy chỉnh" trên CMS) — ép định dạng chặt để
+ * không lọt chuỗi lạ vào truy vấn D1. Rỗng/sai dạng -> "" (coi như không lọc). */
+function cleanDay_(s) {
+  const out = String(s || "").trim();
+  return /^\d{4}-\d{2}-\d{2}$/.test(out) ? out : "";
+}
+
 // ==================== Admin API (GAS gọi vào) ====================
 
 async function handleAdmin(request, env, parts, method) {
@@ -95,11 +102,13 @@ async function handleAdmin(request, env, parts, method) {
     if (method === "PUT") {
       const body = await request.json().catch(() => null);
       if (!body || !body.content) return err("thiếu content");
+      const ts = body.updated_at || new Date().toISOString();
+      // created_at chi dat luc INSERT (VALUES ?6), ON CONFLICT KHONG dong toi cot nay nen
+      // sua chuong cu giu nguyen created_at goc - xem chu thich trong schema.sql.
       await env.DB.prepare(
-        "INSERT INTO chapters (slug, n, title, content, updated_at) VALUES (?1,?2,?3,?4,?5) " +
+        "INSERT INTO chapters (slug, n, title, content, updated_at, created_at) VALUES (?1,?2,?3,?4,?5,?5) " +
         "ON CONFLICT(slug, n) DO UPDATE SET title=?3, content=?4, updated_at=?5"
-      ).bind(slug, n, body.title || `Chương ${n}`, body.content,
-             body.updated_at || new Date().toISOString()).run();
+      ).bind(slug, n, body.title || `Chương ${n}`, body.content, ts).run();
       return json({ ok: true });
     }
     if (method === "DELETE") {
@@ -129,7 +138,7 @@ async function handleAdmin(request, env, parts, method) {
     // rollback sạch, và nhập lại vẫn idempotent (upsert theo khoá slug+n).
     const now = new Date().toISOString();
     await env.DB.batch(list.map((c) => env.DB.prepare(
-      "INSERT INTO chapters (slug, n, title, content, updated_at) VALUES (?1,?2,?3,?4,?5) " +
+      "INSERT INTO chapters (slug, n, title, content, updated_at, created_at) VALUES (?1,?2,?3,?4,?5,?5) " +
       "ON CONFLICT(slug, n) DO UPDATE SET title=?3, content=?4, updated_at=?5"
     ).bind(slug, Number(c.n), c.title || `Chương ${c.n}`, c.content, c.updated_at || now)));
     return json({ ok: true, written: list.length });
@@ -159,6 +168,9 @@ async function handleAdmin(request, env, parts, method) {
     const d1 = vnDay(new Date(), 1);
     const d7 = vnDay(new Date(), 7);
     const d30 = vnDay(new Date(), 30);
+    const url = new URL(request.url);
+    const rangeFrom = cleanDay_(url.searchParams.get("from"));
+    const rangeTo = cleanDay_(url.searchParams.get("to"));
 
     // Lấy slug từ UNION của CẢ HAI bảng, không chỉ views_daily. Truyện cũ 40 ngày không ai
     // đọc sẽ bị cron dọn hết dòng khỏi views_daily — nếu chỉ JOIN từ đó, nó biến mất khỏi
@@ -210,15 +222,52 @@ async function handleAdmin(request, env, parts, method) {
     const usage = await env.DB.prepare(
       "SELECT COUNT(*) AS chapters, COALESCE(SUM(LENGTH(CAST(content AS BLOB))), 0) AS bytes FROM chapters"
     ).first();
-    return json({
+
+    // Chuong MOI (khong tinh chuong SUA): dua vao created_at, chi dat luc INSERT dau tien -
+    // updated_at doi ca khi sua chuong cu nen khong dung duoc cho so nay. Da la full-table-scan
+    // (nhu usage o tren) nen khong lam nang them dang ke.
+    const chaptersNew = await env.DB.prepare(`
+      SELECT
+        SUM(CASE WHEN substr(created_at,1,10) = ?1 THEN 1 ELSE 0 END)  AS day_new,
+        SUM(CASE WHEN substr(created_at,1,10) >= ?2 THEN 1 ELSE 0 END) AS week_new,
+        SUM(CASE WHEN substr(created_at,1,10) >= ?3 THEN 1 ELSE 0 END) AS month_new
+      FROM chapters
+    `).bind(d1, d7, d30).first();
+
+    const out = {
       as_of: today,
       stories: byslug,
+      chapters_new: {
+        day: (chaptersNew && chaptersNew.day_new) || 0,
+        week: (chaptersNew && chaptersNew.week_new) || 0,
+        month: (chaptersNew && chaptersNew.month_new) || 0,
+      },
       usage: {
         chapters: usage ? usage.chapters : 0,
         bytes: usage ? usage.bytes : 0,
         limit_bytes: 5 * 1024 * 1024 * 1024, // D1 free tier - kiem lai neu Cloudflare doi
       },
-    });
+    };
+
+    // "Tùy chỉnh" tren dashboard CMS: chi tinh khi CA from/to hop le. Chi doc duoc trong
+    // VIEWS_KEEP_DAYS ngay gan nhat - qua nguong do cac ngay cu da bi cron don sang
+    // views_archive (mat do chi tiet theo ngay), CMS tu bao ro thay vi im lang tra so sai.
+    if (rangeFrom && rangeTo && rangeFrom <= rangeTo) {
+      const rangeViews = await env.DB.prepare(
+        "SELECT slug, SUM(n) AS n FROM views_daily WHERE day >= ?1 AND day <= ?2 GROUP BY slug"
+      ).bind(rangeFrom, rangeTo).all();
+      const rangeChapters = await env.DB.prepare(
+        "SELECT COUNT(*) AS n FROM chapters WHERE substr(created_at,1,10) >= ?1 AND substr(created_at,1,10) <= ?2"
+      ).bind(rangeFrom, rangeTo).first();
+      const custom = { from: rangeFrom, to: rangeTo, total_views: 0, stories: {}, chapters_new: (rangeChapters && rangeChapters.n) || 0 };
+      for (const r of rangeViews.results) {
+        custom.stories[r.slug] = r.n || 0;
+        custom.total_views += r.n || 0;
+      }
+      out.custom = custom;
+    }
+
+    return json(out);
   }
 
   // /_api/usage — nhẹ, CMS gọi khi mở tab Cài đặt. Tách khỏi /_api/stats vì stats là truy vấn

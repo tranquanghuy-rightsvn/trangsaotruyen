@@ -5,6 +5,7 @@ name: Build & deploy Trăng Sao Truyện
 #   - data/stories.json      chốt của MỌI thao tác truyện/chương (gas/Code.js ghi SAU CÙNG),
 #                            và cũng là nơi trigger đồng bộ lượt xem/đánh giá hằng ngày
 #   - data/site-config.json  chốt của đổi thể loại / cài đặt site
+#   - data/affiliate.json    cấu hình affiliate (CMS ghi 1 commit duy nhất)
 # layouts/ (design), static/ (CSS/JS/ảnh), scripts/, worker/ là nguồn thật → đổi thì build lại.
 # CỐ Ý không có templates/: đó chỉ là bản gốc để tham khảo, không tham gia build.
 on:
@@ -12,6 +13,7 @@ on:
     paths:
       - "data/stories.json"
       - "data/site-config.json"
+      - "data/affiliate.json"
       - "layouts/**"
       - "static/**"
       - "scripts/build.py"

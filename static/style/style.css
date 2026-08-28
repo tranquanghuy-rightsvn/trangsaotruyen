@@ -2442,3 +2442,110 @@ p {
    `.reader-page[data-reader-bg="white|cream|dark"] .reader-content-wrap` (dòng ~1787) —
    bản vá tạm trước đây chỉ có 2/4 và thiếu cả rule chung. Cách đúng là trả lại
    class="reader-page" cho <body> (xem layouts/chapter.html), không phải viết CSS song song. */
+
+/* -------------------------------------------------------------
+   13. AFFILIATE (bảng chuyển chương + banner) — static/js/affiliate.js
+   Chỉ tồn tại khi JS chèn vào DOM; không có phần tử nào trong HTML tĩnh.
+   ------------------------------------------------------------- */
+
+/* Khoá cuộn nền khi popup mở — đặt ở <html> (không phải <body>) để iOS Safari cũng ăn. */
+.aff-locked { overflow: hidden; }
+
+.aff-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  background: rgba(20, 17, 28, 0.62);
+  animation: aff-fade 0.18s ease-out;
+}
+.aff-overlay-bottom { align-items: flex-end; padding-bottom: 0; }
+
+@keyframes aff-fade { from { opacity: 0; } to { opacity: 1; } }
+
+.aff-box {
+  position: relative;
+  width: 100%;
+  max-width: 420px;
+  padding: 26px 22px 20px;
+  text-align: center;
+  background: var(--color-card-bg);
+  color: var(--color-text);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-hover);
+  animation: aff-pop 0.2s ease-out;
+}
+.aff-overlay-bottom .aff-box {
+  max-width: var(--container-w);
+  border-radius: var(--radius-lg) var(--radius-lg) 0 0;
+  padding: 18px 20px 16px;
+}
+
+@keyframes aff-pop { from { transform: translateY(12px); opacity: 0; } to { transform: none; opacity: 1; } }
+
+.aff-close {
+  position: absolute;
+  top: 6px;
+  right: 10px;
+  width: 32px;
+  height: 32px;
+  font-size: 24px;
+  line-height: 1;
+  color: var(--color-text-muted);
+  background: none;
+  border: 0;
+  cursor: pointer;
+}
+.aff-close:hover { color: var(--color-text); }
+
+.aff-img {
+  display: block;
+  width: 100%;
+  max-height: 220px;
+  object-fit: cover;
+  margin: 0 0 14px;
+  border-radius: var(--radius-md);
+}
+
+.aff-title { font-size: 1.15rem; font-weight: 700; margin-bottom: 8px; }
+.aff-msg { font-size: 0.94rem; line-height: 1.55; color: var(--color-text-muted); margin: 0 0 16px; }
+
+.aff-btn {
+  display: block;
+  padding: 12px 18px;
+  font-size: 1rem;
+  font-weight: 700;
+  color: #fff;
+  text-decoration: none;
+  background: var(--color-primary);
+  border-radius: var(--radius-md);
+  transition: background 0.15s ease;
+}
+.aff-btn:hover { background: var(--color-primary-dark); }
+
+.aff-note { margin-top: 10px; font-size: 0.72rem; color: var(--color-text-muted); }
+
+.aff-skip {
+  display: block;
+  width: 100%;
+  margin-top: 6px;
+  padding: 8px;
+  font-size: 0.88rem;
+  color: var(--color-text-muted);
+  background: none;
+  border: 0;
+  cursor: pointer;
+  text-decoration: underline;
+}
+.aff-skip:hover { color: var(--color-text); }
+
+.aff-countdown { margin-top: 8px; font-size: 0.8rem; color: var(--color-text-muted); }
+
+@media (max-width: 480px) {
+  .aff-box { padding: 22px 16px 16px; }
+  .aff-img { max-height: 160px; }
+}

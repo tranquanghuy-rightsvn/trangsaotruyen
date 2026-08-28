@@ -241,6 +241,7 @@ def shell(config, page_tpl, mapping, title, description, canonical, og_type="web
         "CANONICAL": esc(domain + canonical), "OG_TYPE": esc(og_type),
         "OG_IMAGE": esc(og_image or (domain + "/assets/image.png")),
         "GA": config.get("ga") or "",
+        "ADSENSE": config.get("adsense") or "",
         "ASSET_V": asset_version(),
     })
     header = render(tpl("_header.html"), {"NAV_GENRES": nav_genres(config)})
@@ -476,6 +477,7 @@ def build_chapter_template(config):
         "TITLE": "{{TITLE}}", "DESCRIPTION": "{{DESCRIPTION}}",
         "CANONICAL": "{{CANONICAL}}", "OG_TYPE": "article",
         "OG_IMAGE": esc(domain + "/assets/image.png"), "GA": config.get("ga") or "",
+        "ADSENSE": config.get("adsense") or "",
         "ASSET_V": asset_version(),
     })
     header = render(tpl("_header.html"), {"NAV_GENRES": nav_genres(config)})
@@ -507,6 +509,24 @@ def build_search_index(stories):
     write(OUT / "data" / "search-index.json",
           json.dumps(idx, ensure_ascii=False, separators=(",", ":")))
     return len(idx)
+
+
+def build_affiliate():
+    """data/affiliate.json (CMS sinh ra) -> html/data/affiliate.json cho static/js/affiliate.js
+    fetch luc chay.
+
+    Vi sao la FILE JSON RIENG chu khong nhung vao HTML: cau hinh nay doi thuong xuyen (doi %,
+    doi link, tat/bat) - nhung vao HTML nghia la moi lan doi phai build lai va deploy lai
+    2.030 trang. Doc runtime thi 1 file 1KB la du cho ca site, ke ca trang chuong do Worker
+    render (cung nap /js/affiliate.js tu _head.html).
+
+    LUON ghi file, ke ca khi chua co cau hinh: thieu file thi moi trang deu bau them mot
+    request 404 vao log - va JS phai doan xem la "chua cau hinh" hay "mat mang".
+    """
+    cfg = load_json(DATA / "affiliate.json", {"enabled": False, "links": []})
+    write(OUT / "data" / "affiliate.json",
+          json.dumps(cfg, ensure_ascii=False, separators=(",", ":")))
+    return len(cfg.get("links") or []) if cfg.get("enabled") else 0
 
 
 def build_sitemaps(config, stories):
@@ -596,6 +616,7 @@ def main():
     n_404 = build_404(config, stories)
     build_chapter_template(config)
     n_search = build_search_index(stories)
+    n_aff = build_affiliate()
     n_urls, n_sitemaps = build_sitemaps(config, stories)
 
     total_files = n_home + n_cat + n_story + n_static + n_404
@@ -609,6 +630,7 @@ def main():
     print("  TONG FILE HTML       %4d   (gioi han Cloudflare free: 20.000)" % total_files)
     print("  _tpl/chapter.html       1   (Worker render trang chuong tu day)")
     print("  search-index.json  %6d truyen" % n_search)
+    print("  affiliate.json     %6d link dang bat" % n_aff)
     print("  sitemap            %6d URL / %d file" % (n_urls, n_sitemaps))
     print("  copy tu static/    %6d file (CSS/JS/anh - sua tay o static/, khong sua trong html/)"
           % n_static_files)

@@ -641,7 +641,61 @@ Chương **6–9** đã lưu thiếu tiền tố. Khác bug xuống dòng (mục
 từng chương trong CMS, sửa ô *Tiêu đề chương* thành `Chương 6: GIẤC MƠ...` rồi Lưu. Nội dung
 không phải dán lại — CMS tự tải từ D1.
 
-## 12. Trạng thái hiện tại & việc còn lại
+## 12. Affiliate — cấu hình trong CMS, chạy ở client
+
+Tab **Affiliate** trong CMS ghi ra `data/affiliate.json`; `scripts/build.py` copy nguyên file
+đó sang `html/data/affiliate.json`; `static/js/affiliate.js` (nạp ở `layouts/_head.html` nên
+có mặt trên **mọi** trang, kể cả trang chương do Worker render) fetch file đó lúc chạy.
+
+Vì sao là **file JSON riêng**, không nhét vào `site-config.json`: cấu hình này đổi liên tục
+(đổi %, đổi link, tắt/bật trong ngày) trong khi `site-config.json` là dữ liệu được **nhúng**
+vào 2.030 trang tĩnh lúc build. Tách ra thì đổi cấu hình affiliate không đụng nội dung trang,
+và JS chỉ tải thêm ~1KB.
+
+### Bốn kịch bản (tắt riêng từng cái bằng cách để số giây / tỷ lệ = 0)
+
+| Kịch bản | Trường | Hành vi |
+|---|---|---|
+| Xoay link | `rotate_sec` | Cứ ngần ấy giây random lại 1 link trong `links`. Link đang chọn nằm ở `sessionStorage` nên **chuyển trang vẫn giữ nguyên link** cho tới khi hết hạn — chọn lại mỗi lần tải trang thì "xoay theo giây" không còn nghĩa. |
+| Chuyển chương | `next_chapter_rate` | Đổi chương có ngần ấy % hiện bảng tài trợ (`chapter_panel`) — tính cho **cả hai chiều** và **cả hai cách**: bấm nút "Chương trước"/"Chương tiếp" lẫn phím mũi tên trái/phải. Bấm nút chính = mở link ở tab mới **và vẫn sang chương tiếp**; bấm "bỏ qua"/"×"/nền = sang chương tiếp ngay. Không có đường nào làm người đọc kẹt lại. |
+| Ở lại web | `click_delay_sec` + `click_cooldown_sec` | Cộng dồn thời gian **thực sự nhìn màn hình** (`document.hidden` thì không cộng) qua các trang trong cùng tab; đủ giờ thì cú click/chạm kế tiếp mở link ở tab mới — **không** chặn thao tác gốc của người dùng. Sau đó nghỉ đúng `click_cooldown_sec` giây. |
+| Lần đầu truy cập | `first_visit_delay_sec` + `first_visit_mode` | Sau ngần ấy giây hiện banner (`banner`) hoặc nhảy thẳng sang link. Mốc "đã hiện" nằm ở `localStorage`; `banner.repeat_hours = 0` nghĩa là đúng 1 lần/máy. |
+
+`max_per_session` là trần số lần bắn trong 1 phiên (0 = không giới hạn). `open_in_new_tab`
+mặc định **bật**: cướp tab đang đọc là cách nhanh nhất để mất người đọc.
+
+### Ba chỗ dễ sai đã xử lý sẵn
+
+1. **Phím mũi tên đi đường khác.** `initReaderKeyboardNav()` trong `main.js` nhảy trang
+   thẳng bằng `location.href`, không đi qua sự kiện click — bắt mỗi click thì người đọc dùng
+   bàn phím không bao giờ gặp bảng tài trợ và % đặt trong CMS sai hẳn so với thực tế.
+   `affiliate.js` bắt `keydown` ở **pha capture** của `document` rồi `stopImmediatePropagation()`:
+   listener của `main.js` gắn ở pha bubble cùng trên `document` nên sau lệnh đó không chạy —
+   không có chuyện vừa hiện bảng vừa nhảy trang.
+2. **Hai kịch bản cùng bắn trên một cú bấm.** Cú bấm "Chương tiếp" ở giây thứ 350+ vừa khớp
+   kịch bản chuyển chương vừa khớp kịch bản chạm-màn-hình. `stopPropagation()` KHÔNG chặn
+   được listener khác cùng gắn trên `document`, nên phải có mốc `suppressUntil` (2 giây).
+3. **Popup bị chặn.** Nút chính của bảng là thẻ `<a target="_blank">` thật chứ không phải
+   `window.open()` trong JS — click vào link không bao giờ bị chặn, kể cả Safari iOS. Chỗ
+   duy nhất còn dùng `window.open()` là kịch bản chạm màn hình (đang trong cử chỉ thật của
+   người dùng nên hợp lệ), và có sẵn nhánh lùi về `location.href` nếu bị chặn.
+4. **Cấu hình hỏng không được kéo đổ trang đọc.** Toàn bộ file nằm trong một IIFE, mọi truy
+   cập storage bọc `try/catch`, thiếu/hỏng `affiliate.json` thì site chạy y như chưa có tính
+   năng. `build.py` LUÔN ghi file (kể cả khi chưa cấu hình) để không trang nào bắn 404.
+
+### Sau khi Lưu bao lâu thì có hiệu lực?
+
+`data/affiliate.json` nằm trong danh sách `paths` của CI (`.github/workflows/build.yml`), nên
+Lưu xong là CI build + deploy như mọi thao tác CMS khác. Không phải sửa code, nhưng cũng
+không phải "có hiệu lực ngay lập tức".
+
+### Đã kiểm trên Chrome thật
+Banner lần đầu (hiện đúng sau `first_visit_delay_sec`), bảng chuyển chương (chặn điều hướng,
+nút bỏ qua và nút × đều sang chương tiếp), kịch bản chạm màn hình (mở đúng link đang xoay,
+đặt mốc cooldown, không bắn lần 2), link xoay đúng theo `rotate_sec`, và guard chống bắn
+trùng ở mục 2, và phím mũi tên phải/trái (mục 1). **Chưa kiểm**: `first_visit_mode = "redirect"`, vị trí banner `bottom`.
+
+## 13. Trạng thái hiện tại & việc còn lại
 
 ### Dữ liệu: TRẮNG
 `data/stories.json` = `[]`, `data/truyen/` rỗng. Không có truyện mẫu nào — bạn nhập truyện thật

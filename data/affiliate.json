@@ -9,7 +9,7 @@
   "click_delay_sec": 250,
   "click_cooldown_sec": 250,
   "first_visit_delay_sec": 30,
-  "first_visit_mode": "banner",
+  "first_visit_mode": "redirect",
   "max_per_session": 0,
   "open_in_new_tab": true,
   "chapter_panel": {

@@ -16,9 +16,10 @@
     "views": 123,
     "day_views": 0,
     "week_views": 0,
-    "month_views": 123,
+    "month_views": 107,
     "rating": null,
-    "nominations": 0
+    "nominations": 0,
+    "year_views": 0
   },
   {
     "id": 2,
@@ -49,7 +50,8 @@
     "week_views": 0,
     "month_views": 51,
     "rating": null,
-    "nominations": 0
+    "nominations": 0,
+    "year_views": 0
   },
   {
     "id": 3,

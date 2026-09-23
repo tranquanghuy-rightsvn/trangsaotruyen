@@ -113,5 +113,36 @@
     "year_views": 0,
     "rating": null,
     "nominations": 0
+  },
+  {
+    "id": 5,
+    "slug": "tranh-nguoi-cua-am-ty",
+    "title": "Tranh Người Của Âm Ty",
+    "author": "Ổ Mật Mật",
+    "genres": [
+      "hien-dai",
+      "huyen-huyen"
+    ],
+    "tags": [
+      "Âm giới",
+      "Bắt hồn",
+      "Oán hồn",
+      "HE"
+    ],
+    "work_type": "viet",
+    "status": "full",
+    "chapter_count": 0,
+    "cover": "assets/truyen/tranh-nguoi-cua-am-ty-500x750.webp",
+    "hot": false,
+    "created_at": "2026-09-23T21:24:31+07:00",
+    "updated_at": "2026-09-23T21:24:31+07:00",
+    "created_by": "kimphungft@gmail.com",
+    "views": 0,
+    "day_views": 0,
+    "week_views": 0,
+    "month_views": 0,
+    "year_views": 0,
+    "rating": null,
+    "nominations": 0
   }
 ]

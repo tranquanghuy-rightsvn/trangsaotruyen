@@ -50,7 +50,9 @@
   const SS = { TIME: 'tst_aff_time', COUNT: 'tst_aff_count', PICK: 'tst_aff_pick',
               BN_TIME: 'tst_aff_fv_time', RD_TIME: 'tst_aff_rd_time' };
   // localStorage = theo TRÌNH DUYỆT (đã thấy banner lần đầu chưa, lần chạm gần nhất).
-  const LS = { FIRST: 'tst_aff_first', REDIRECT: 'tst_aff_redirect', TAP: 'tst_aff_tap' };
+  // BANNER dùng key MỚI (không phải 'tst_aff_first' cũ): bản trước ghi 'tst_aff_first' cả khi
+  // NHẢY LINK, nên máy nào vừa bị nhảy link sẽ bị chặn banner suốt `repeat_hours` giờ.
+  const LS = { BANNER: 'tst_aff_banner', REDIRECT: 'tst_aff_redirect', TAP: 'tst_aff_tap' };
 
   // Cửa sổ riêng tư và vài webview ném lỗi ngay ở bước ĐỌC storage — bọc hết như main.js.
   function get(store, k, fallback) {
@@ -425,12 +427,12 @@
   function initBanner() {
     const b = CFG.banner;
     if (!b.enabled || !b.delay_sec) return;
-    if (!dueAgain(LS.FIRST, b.repeat_hours)) return;
+    if (!dueAgain(LS.BANNER, b.repeat_hours)) return;
     afterStaying(SS.BN_TIME, b.delay_sec, () => {
       if (capReached()) return;
       const url = b.link || pickLink();
       if (!url) return;
-      lsSet(LS.FIRST, Date.now());   // chỉ đánh dấu "đã thấy" khi THỰC SỰ hiện
+      lsSet(LS.BANNER, Date.now());  // chỉ đánh dấu "đã thấy" khi THỰC SỰ hiện
       showOverlay({
         title: b.title, message: b.message, image: b.image,
         buttonText: b.button_text, href: url,

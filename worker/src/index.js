@@ -247,12 +247,8 @@ async function handleAdmin(request, env, parts, method) {
       byslug[r.slug].rating = r.rating;
       byslug[r.slug].nominations = r.nominations;
     }
-    // Dung luong da dung: D1 free chi 5GB (thap hon R2 10GB) nen KHONG duoc de cham tran
-    // trong im lang. LENGTH(CAST(x AS BLOB)) moi ra BYTE that - LENGTH() tra so KY TU, voi
-    // tieng Viet co dau se bao thieu ~1/3 dung luong (da test: 37 ky tu = 49 byte).
-    const usage = await env.DB.prepare(
-      "SELECT COUNT(*) AS chapters, COALESCE(SUM(LENGTH(CAST(content AS BLOB))), 0) AS bytes FROM chapters"
-    ).first();
+    // Dung luong da dung: KHONG duoc de cham tran trong im lang (xem d1Usage/d1LimitBytes).
+    const usage = await d1Usage(env);
 
     // Chuong MOI (khong tinh chuong SUA): dua vao created_at, chi dat luc INSERT dau tien -
     // updated_at doi ca khi sua chuong cu nen khong dung duoc cho so nay. Da la full-table-scan
@@ -294,11 +290,7 @@ async function handleAdmin(request, env, parts, method) {
         month: chaptersNew.month, year: chaptersNew.year,
         by_slug: chaptersNewBySlug,
       },
-      usage: {
-        chapters: usage ? usage.chapters : 0,
-        bytes: usage ? usage.bytes : 0,
-        limit_bytes: 5 * 1024 * 1024 * 1024, // D1 free tier - kiem lai neu Cloudflare doi
-      },
+      usage: usage,
     };
 
     // "Tùy chỉnh" tren dashboard CMS: chi tinh khi CA from/to hop le. Chi doc duoc trong
@@ -335,14 +327,7 @@ async function handleAdmin(request, env, parts, method) {
   // /_api/usage — nhẹ, CMS gọi khi mở tab Cài đặt. Tách khỏi /_api/stats vì stats là truy vấn
   // tổng hợp nặng (quét views_daily + comments), không đáng gọi chỉ để xem dung lượng.
   if (resource === "usage" && method === "GET") {
-    const u = await env.DB.prepare(
-      "SELECT COUNT(*) AS chapters, COALESCE(SUM(LENGTH(CAST(content AS BLOB))), 0) AS bytes FROM chapters"
-    ).first();
-    return json({
-      chapters: u ? u.chapters : 0,
-      bytes: u ? u.bytes : 0,
-      limit_bytes: 5 * 1024 * 1024 * 1024,
-    });
+    return json(await d1Usage(env));
   }
 
   // /_api/chapter-views/<slug> — luot xem TUNG CHUONG cua 1 truyen. CMS goi khi admin mo tab
@@ -423,7 +408,7 @@ async function handleAdmin(request, env, parts, method) {
 
 // ==================== Public API (site tĩnh gọi vào) ====================
 
-async function handlePublic(request, env, parts, method) {
+async function handlePublic(request, env, parts, method, ctx) {
   const [resource, a] = parts;
 
   // POST /_api/view  {slug, n} — mỗi pageview ĐÚNG 1 write D1 (upsert 1 dòng). Free tier cho
@@ -433,15 +418,10 @@ async function handlePublic(request, env, parts, method) {
   //   gửi n vẫn đếm được, chỉ không tách được theo chương. Thêm chiều `chap` KHÔNG làm tăng
   //   số write — vẫn là 1 dòng upsert.
   if (resource === "view" && method === "POST") {
-    const body = await request.json().catch(() => null);
-    const slug = cleanSlug(body && body.slug);
-    if (!slug) return err("slug không hợp lệ", 400, CORS_PUBLIC);
-    let chap = Number(body && body.n);
-    if (!Number.isInteger(chap) || chap < 1 || chap > 100000) chap = 0;
-    await env.DB.prepare(
-      "INSERT INTO views_daily (slug, chap, day, n) VALUES (?1, ?2, ?3, 1) " +
-      "ON CONFLICT(slug, chap, day) DO UPDATE SET n = n + 1"
-    ).bind(slug, chap, vnDay()).run();
+    // Từ 2026-09-24 lượt xem được đếm NGAY lúc Worker render trang chương (handleChapterPage)
+    // - bớt 1 request Worker/lượt đọc, tức gấp đôi số chương đọc được trong quota 100k/ngày.
+    // Giữ endpoint trả ok cho trang chương cũ còn trong cache trình duyệt (main.js cũ vẫn
+    // gọi), KHÔNG ghi gì nữa - ghi thì lượt đó bị đếm 2 lần.
     return json({ ok: true }, 200, CORS_PUBLIC);
   }
 
@@ -457,10 +437,15 @@ async function handlePublic(request, env, parts, method) {
       "SELECT COUNT(*) AS nominations, ROUND(AVG(rating), 1) AS rating FROM comments " +
       "WHERE slug = ? AND status = 'ok' AND rating IS NOT NULL"
     ).bind(slug).first();
+    // Kèm tổng lượt xem: trang truyện vốn đã gọi endpoint này để tải bình luận, nên hiện
+    // lượt xem "trực tiếp" không tốn thêm request Worker nào. Lỗi thì trả null -> trang giữ số
+    // tĩnh do build.py ghi sẵn.
+    const views = await storyViews(env, ctx, slug).catch(() => null);
     return json({
       comments: res.results,
       rating: agg ? agg.rating : null,
       nominations: agg ? agg.nominations : 0,
+      views: views,
     }, 200, CORS_PUBLIC);
   }
 
@@ -505,6 +490,83 @@ async function handlePublic(request, env, parts, method) {
   return err("not found", 404, CORS_PUBLIC);
 }
 
+// ==================== Dung lượng D1 ====================
+
+/** Trần dung lượng của MỘT database D1. Free: 500 MB/database (5 GB là tổng của CẢ account,
+ * không phải của 1 database). Workers Paid: 10 GB/database -> lên gói thì đổi D1_LIMIT_MB
+ * trong wrangler.toml thành 10240, không phải sửa code. */
+function d1LimitBytes(env) {
+  const mb = Number(env.D1_LIMIT_MB) || 500;
+  return mb * 1024 * 1024;
+}
+
+/** bytes = kích thước THẬT của file database (meta.size_after) - gồm cả bảng view, bình
+ * luận, index; đó mới là con số Cloudflare so với trần. content_bytes = riêng nội dung chương. */
+async function d1Usage(env) {
+  const r = await env.DB.prepare(
+    "SELECT COUNT(*) AS chapters, COALESCE(SUM(LENGTH(CAST(content AS BLOB))), 0) AS bytes FROM chapters"
+  ).all();
+  const row = (r.results && r.results[0]) || {};
+  const size = r.meta && r.meta.size_after;
+  return {
+    chapters: row.chapters || 0,
+    content_bytes: row.bytes || 0,
+    bytes: Number(size) || row.bytes || 0,
+    limit_bytes: d1LimitBytes(env),
+  };
+}
+
+// ==================== Lượt xem ====================
+
+/** Ghi 1 lượt xem chương. Mỗi pageview = ĐÚNG 1 write D1 (upsert 1 dòng). */
+function recordView(env, slug, chap) {
+  return env.DB.prepare(
+    "INSERT INTO views_daily (slug, chap, day, n) VALUES (?1, ?2, ?3, 1) " +
+    "ON CONFLICT(slug, chap, day) DO UPDATE SET n = n + 1"
+  ).bind(slug, chap, vnDay()).run();
+}
+
+// Bot/crawler/preview link KHÔNG tính là lượt xem. Trước đây view do JS phía client gửi nên
+// bot không chạy JS tự nhiên bị loại; giờ đếm ngay lúc render trang chương thì phải lọc tay.
+const BOT_UA = /bot|crawl|spider|slurp|preview|facebookexternalhit|embedly|whatsapp|telegram|discord|zalo|skype|headless|lighthouse|pagespeed|python|curl|wget|go-http|java\/|okhttp|axios|node-fetch|httpclient|scrapy/i;
+
+function isRealPageview(request) {
+  if (request.method !== "GET") return false;
+  const ua = request.headers.get("user-agent") || "";
+  if (!ua || BOT_UA.test(ua)) return false;
+  // Trình duyệt prefetch/prerender trang (Chrome speculation rules, <link rel=prefetch>) —
+  // người dùng chưa chắc đã mở.
+  const purpose = (request.headers.get("sec-purpose") || request.headers.get("purpose") || "").toLowerCase();
+  return !purpose.includes("prefetch") && !purpose.includes("prerender");
+}
+
+/** Tổng lượt xem all-time của 1 truyện (= cột `total` của /_api/stats). Cache 60s ở edge:
+ * trang truyện nào đông người mở thì D1 cũng chỉ bị hỏi tối đa 1 lần/phút/data center.
+ * Cache API chỉ chạy trên custom domain (không chạy trên *.workers.dev) — lỗi thì bỏ qua cache. */
+async function storyViews(env, ctx, slug) {
+  const key = new Request(`https://views.cache/${slug}`);
+  let cache = null;
+  try { cache = caches.default; } catch (e) {}
+  if (cache) {
+    const hit = await cache.match(key).catch(() => null);
+    if (hit) return Number(await hit.text()) || 0;
+  }
+  // views_daily PK (slug, chap, day) và views_archive PK (slug, chap) đều bắt đầu bằng slug
+  // -> chỉ đọc đúng các dòng của truyện này, không quét bảng.
+  const row = await env.DB.prepare(
+    "SELECT (SELECT COALESCE(SUM(n), 0) FROM views_daily WHERE slug = ?1) + " +
+    "(SELECT COALESCE(SUM(n), 0) FROM views_archive WHERE slug = ?1) AS total"
+  ).bind(slug).first();
+  const total = row ? Number(row.total) || 0 : 0;
+  if (cache) {
+    const put = cache.put(key, new Response(String(total), {
+      headers: { "cache-control": "public, max-age=60" },
+    })).catch(() => {});
+    if (ctx) ctx.waitUntil(put);
+  }
+  return total;
+}
+
 // ==================== Trang chương (HTML, không phải API) ====================
 
 // Template được cache ở module scope: isolate sống qua nhiều request nên hầu hết request
@@ -533,12 +595,18 @@ function escHtml(s) {
 
 /** Trả HTML THẬT, status 200, URL riêng cho từng chương — Google không phân biệt được với
  * trang tĩnh. Đây là cách một route phục vụ 600.000 URL mà không cần 600.000 file. */
-async function handleChapterPage(request, env, slug, n) {
+async function handleChapterPage(request, env, ctx, slug, n) {
   // Đọc bằng đúng khoá chính (slug, n): 1 row read, không quét bảng.
   const row = await env.DB.prepare(
     "SELECT n, title, content FROM chapters WHERE slug = ? AND n = ?"
   ).bind(slug, n).first();
   if (!row) return null;   // để caller trả 404 của site
+
+  // Đếm lượt xem NGAY TẠI ĐÂY thay vì để JS gọi thêm POST /_api/view: request render này đằng
+  // nào cũng tốn, gộp vào thì mỗi lượt đọc chỉ còn 1 request Worker. waitUntil: ghi D1 chạy
+  // sau khi đã trả trang, người đọc không phải chờ. Trình duyệt tải lại trong 60s lấy từ
+  // cache của nó (max-age=60 bên dưới) nên không bị đếm lặp.
+  if (isRealPageview(request)) ctx.waitUntil(recordView(env, slug, n).catch(() => {}));
 
   // Chương trước/sau: lấy số liền kề THẬT trong D1, không giả định n-1/n+1 tồn tại (chương
   // có thể bị xoá ở giữa, hoặc truyện bắt đầu từ số khác 1).
@@ -578,8 +646,9 @@ async function handleChapterPage(request, env, slug, n) {
   return new Response(html, {
     headers: {
       "content-type": "text/html; charset=utf-8",
-      // Cache ở edge 5 phút: chương sửa xong thì chậm nhất 5 phút là thấy bản mới, mà đỡ
-      // được phần lớn lượt đọc lặp lại (mỗi lượt đọc là 1 request Worker + 1 row read D1).
+      // max-age=60: trình duyệt tải lại trong 1 phút lấy từ cache của nó -> không tốn request
+      // Worker, không bị đếm view lặp. LƯU Ý: s-maxage KHÔNG có tác dụng ở đây - route này là
+      // run_worker_first nên mọi request đều chạy Worker (Cloudflare không cache trước Worker).
       "cache-control": "public, max-age=60, s-maxage=300",
     },
   });
@@ -588,7 +657,7 @@ async function handleChapterPage(request, env, slug, n) {
 // ==================== Entrypoint ====================
 
 export default {
-  async fetch(request, env) {
+  async fetch(request, env, ctx) {
     const url = new URL(request.url);
     const parts = url.pathname.split("/").filter(Boolean);
 
@@ -598,7 +667,7 @@ export default {
       const n = Number(parts[2].slice(7));
       if (slug && Number.isInteger(n) && n >= 1) {
         try {
-          const page = await handleChapterPage(request, env, slug, n);
+          const page = await handleChapterPage(request, env, ctx, slug, n);
           if (page) return page;
         } catch (e) {
           return new Response("Lỗi render trang chương: " + (e && e.message), {
@@ -623,7 +692,7 @@ export default {
     const isPublicRoute = PUBLIC[rest[0]] || (rest[0] === "comment" && method === "POST");
 
     try {
-      if (isPublicRoute) return await handlePublic(request, env, rest, method);
+      if (isPublicRoute) return await handlePublic(request, env, rest, method, ctx);
       if (!isAdmin(request, env)) return err("unauthorized", 401);
       return await handleAdmin(request, env, rest, method);
     } catch (e) {

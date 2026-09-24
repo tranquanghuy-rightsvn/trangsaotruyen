@@ -48,3 +48,8 @@ crons = ["0 18 * * *"]
 
 # Secret (KHONG dat o day - dat bang: npx wrangler secret put <TEN>):
 #   ADMIN_TOKEN  - trung voi Script Property WORKER_API_TOKEN ben GAS
+
+# Tran dung luong MOT database D1 (MB). Free = 500 (5 GB la tong ca account, khong phai 1 DB).
+# Len Workers Paid thi doi thanh 10240. Worker dung so nay de CMS canh bao sap day.
+[vars]
+D1_LIMIT_MB = "500"

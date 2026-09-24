@@ -78,10 +78,12 @@ function esc(s) {
   return d.innerHTML;
 }
 
+/** Cùng kiểu với format_count() bên scripts/build.py ("1,2K") - JS ghi đè số tĩnh trên trang
+ * nên hai bên lệch nhau là số tự đổi dạng ngay khi tải xong. */
 function formatCount(n) {
-  n = Number(n) || 0;
-  if (n >= 1e6) return (n / 1e6).toFixed(1).replace('.0', '') + 'M';
-  if (n >= 1e3) return (n / 1e3).toFixed(1).replace('.0', '') + 'K';
+  n = Math.floor(Number(n) || 0);
+  if (n >= 1e6) return (n / 1e6).toFixed(1).replace('.0', '').replace('.', ',') + 'M';
+  if (n >= 1e3) return (n / 1e3).toFixed(1).replace('.0', '').replace('.', ',') + 'K';
   return String(n);
 }
 
@@ -414,6 +416,12 @@ function initCommentSection(slug) {
   }
 
   function render(data) {
+    // Lượt xem "trực tiếp" (Worker cache 60s) đi kèm response bình luận - không tốn thêm
+    // request. Thiếu/lỗi thì giữ số tĩnh build.py đã ghi vào HTML.
+    const viewsEl = document.querySelector('.detail-views');
+    if (viewsEl && typeof data.views === 'number' && data.views >= 0) {
+      viewsEl.textContent = formatCount(data.views);
+    }
     if (summary) {
       summary.textContent = data.nominations
         ? data.nominations + ' bình luận · ' + (data.rating || '—') + '/5'
@@ -494,7 +502,8 @@ function initReaderPage() {
   initChapterListDropdown();
   initReaderKeyboardNav();
   insertChapterWatermark();
-  countView(slug, n);
+  // Lượt xem KHÔNG gửi từ đây nữa: Worker tự đếm lúc render trang chương này (xem
+  // handleChapterPage) - bớt 1 request Worker cho mỗi lượt đọc.
 }
 
 /** Chèn 1 dòng cảnh báo bản quyền vào GIỮA nội dung chương — chỉ ở client, KHÔNG đụng dữ liệu
@@ -533,20 +542,6 @@ function insertChapterWatermark() {
     }
   }
   content.insertBefore(mark, target || paras[Math.min(hi, Math.floor(paras.length / 2))]);
-}
-
-/** Đếm lượt xem: 1 POST cho mỗi trang chương mở ra. Đây là nguồn duy nhất của bảng xếp hạng
- * ngày/tuần/tháng (Worker ghi vào D1, GAS gom mỗi ngày vào data/stories.json).
- * Gửi kèm số chương `n` để D1 tách được lượt xem theo từng chương — tổng của truyện vẫn là
- * tổng số lần mở chương. Thiếu n (n=0) thì Worker vẫn đếm, chỉ không tách theo chương. */
-function countView(slug, n) {
-  if (!slug) return;
-  fetch('/_api/view', {
-    method: 'POST',
-    headers: { 'content-type': 'application/json' },
-    body: JSON.stringify({ slug: slug, n: n || 0 }),
-    keepalive: true
-  }).catch(() => {});
 }
 
 function initReaderSettings() {

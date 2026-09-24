@@ -14,7 +14,7 @@ bỏ mọi phương án 1 tầng:
 | Git (client fetch) | 13,2 GB + 600.000 file | GitHub nên <1GB, mạnh <5GB | ✗ vượt 2,6× ceiling, git bò |
 | Google Sheets | 600.000 dòng | đủ ô, nhưng GAS 6 phút không đọc nổi | ✗ |
 | Cloudflare R2 | 600.000 object | không giới hạn số object | ⚠️ **đòi phương thức thanh toán** |
-| **Cloudflare D1** | ~238.000 chương | 5 GB (free) | ✓ **không cần thẻ** |
+| **Cloudflare D1** | ~50.000 chương (≈10 KB/chương đo thật) | **500 MB / database** (free; 5 GB là tổng cả account) · 10 GB/database (Workers Paid) | ⚠️ không cần thẻ, nhưng trần 500 MB/DB — đổi `D1_LIMIT_MB` khi lên Paid |
 
 ### Vì sao D1 chứ không R2 — ràng buộc "miễn phí hoàn toàn, không cần thẻ"
 

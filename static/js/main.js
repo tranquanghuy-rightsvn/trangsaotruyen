@@ -493,17 +493,58 @@ function initReaderPage() {
   initReaderSettings();
   initChapterListDropdown();
   initReaderKeyboardNav();
-  countView(slug);
+  insertChapterWatermark();
+  countView(slug, n);
+}
+
+/** Chèn 1 dòng cảnh báo bản quyền vào GIỮA nội dung chương — chỉ ở client, KHÔNG đụng dữ liệu
+ * lưu trên D1. Chèn tại ranh giới đoạn (`<p>`) có vị trí GẦN CHÍNH GIỮA chương nhất — đo theo
+ * chiều cao thật đã render, không phải theo số thứ tự đoạn (các đoạn dài ngắn khác nhau).
+ * Chương chỉ có 0–1 đoạn thì in ở cuối. In vừa đậm vừa nghiêng, cách đoạn trên/dưới ~1 dòng. */
+function insertChapterWatermark() {
+  var content = document.querySelector('.reader-content');
+  if (!content || content.querySelector('.chapter-watermark')) return;
+
+  var mark = document.createElement('p');
+  mark.className = 'chapter-watermark';
+  mark.style.margin = '1.95em 0';
+  mark.style.fontStyle = 'italic';
+  mark.style.fontWeight = '700';
+  mark.textContent =
+    'truyện độc quyền nhà trăng sao truyện , các nhà dịch hoặc web khác bớt ăn cắp dùm , thỉnh tự trọng';
+
+  var paras = content.querySelectorAll(':scope > p');
+  if (paras.length < 2) { content.appendChild(mark); return; }
+
+  // Ranh giới ứng viên: TRƯỚC đoạn thứ 1..hi. Bỏ đoạn 0 (luôn còn ≥1 đoạn phía TRÊN dòng
+  // chèn) và bỏ 1 đoạn cuối (luôn còn ≥2 đoạn phía DƯỚI). Với chương ≤3 đoạn thì hi kẹp về 1.
+  // Trong khoảng đó, chọn ranh giới có `top` gần chính giữa chương nhất — đo bằng
+  // getBoundingClientRect nên không phụ thuộc offsetParent. Layout chưa đo được (height 0)
+  // thì lùi về giữa theo số đoạn.
+  var hi = Math.max(1, paras.length - 2);
+  var rect = content.getBoundingClientRect();
+  var midY = rect.height / 2;
+  var target = null;
+  if (midY > 0) {
+    var bestDist = Infinity;
+    for (var i = 1; i <= hi; i++) {
+      var d = Math.abs((paras[i].getBoundingClientRect().top - rect.top) - midY);
+      if (d < bestDist) { bestDist = d; target = paras[i]; }
+    }
+  }
+  content.insertBefore(mark, target || paras[Math.min(hi, Math.floor(paras.length / 2))]);
 }
 
 /** Đếm lượt xem: 1 POST cho mỗi trang chương mở ra. Đây là nguồn duy nhất của bảng xếp hạng
- * ngày/tuần/tháng (Worker ghi vào D1, GAS gom mỗi ngày vào data/stories.json). */
-function countView(slug) {
+ * ngày/tuần/tháng (Worker ghi vào D1, GAS gom mỗi ngày vào data/stories.json).
+ * Gửi kèm số chương `n` để D1 tách được lượt xem theo từng chương — tổng của truyện vẫn là
+ * tổng số lần mở chương. Thiếu n (n=0) thì Worker vẫn đếm, chỉ không tách theo chương. */
+function countView(slug, n) {
   if (!slug) return;
   fetch('/_api/view', {
     method: 'POST',
     headers: { 'content-type': 'application/json' },
-    body: JSON.stringify({ slug: slug }),
+    body: JSON.stringify({ slug: slug, n: n || 0 }),
     keepalive: true
   }).catch(() => {});
 }

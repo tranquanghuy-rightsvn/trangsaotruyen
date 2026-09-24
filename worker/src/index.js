@@ -66,6 +66,11 @@ function vnDay(date = new Date(), offsetDays = 0) {
   return new Date(t).toISOString().slice(0, 10);
 }
 
+/** Nam hien tai theo gio VN, dang 'YYYY'. Dung cho cua so "nam nay" o /_api/stats. */
+function vnYear(date = new Date()) {
+  return vnDay(date).slice(0, 4);
+}
+
 /** Slug do GAS sinh (slugify_) chỉ gồm a-z0-9 và '-'. Ép lại ở đây để một slug méo không
  * bao giờ trở thành khoá D1 lạ hay tham số truy vấn bất thường. */
 function cleanSlug(s) {
@@ -155,6 +160,7 @@ async function handleAdmin(request, env, parts, method) {
       env.DB.prepare("DELETE FROM chapters     WHERE slug = ?").bind(slug),
       env.DB.prepare("DELETE FROM views_daily  WHERE slug = ?").bind(slug),
       env.DB.prepare("DELETE FROM views_archive WHERE slug = ?").bind(slug),
+      env.DB.prepare("DELETE FROM views_monthly WHERE slug = ?").bind(slug),
       env.DB.prepare("DELETE FROM comments     WHERE slug = ?").bind(slug),
     ]);
     return json({ ok: true, deleted: (res[0] && res[0].meta && res[0].meta.changes) || 0 });
@@ -168,34 +174,55 @@ async function handleAdmin(request, env, parts, method) {
     const d1 = vnDay(new Date(), 1);
     const d7 = vnDay(new Date(), 7);
     const d30 = vnDay(new Date(), 30);
+    const year = vnYear();            // 'YYYY'
+    const yearStart = `${year}-01-01`;
     const url = new URL(request.url);
     const rangeFrom = cleanDay_(url.searchParams.get("from"));
     const rangeTo = cleanDay_(url.searchParams.get("to"));
 
-    // Lấy slug từ UNION của CẢ HAI bảng, không chỉ views_daily. Truyện cũ 40 ngày không ai
+    // Lấy slug từ UNION của CẢ BA bảng, không chỉ views_daily. Truyện cũ 40 ngày không ai
     // đọc sẽ bị cron dọn hết dòng khỏi views_daily — nếu chỉ JOIN từ đó, nó biến mất khỏi
     // kết quả, GAS ghi views=0 và xoá sạch lượt xem all-time của truyện đó trên site.
+    // GROUP BY slug o moi bang: views_daily/views_archive gio co NHIEU dong moi slug (1
+    // dong / chuong) - phai gop lai truoc khi JOIN, neu khong COALESCE(a.n,0) chi lay 1 chuong.
+    //   year_views = phan con trong views_daily cua nam nay + phan da bi cron don sang
+    //   views_monthly cua chinh nam do. KHONG cong views_archive vao: archive giu TOAN BO
+    //   lich su khong con chieu thoi gian, cong vao la bien "nam nay" thanh "all-time".
+    //   views_monthly chi nhan dong do cron chuyen ra khoi views_daily, nen hai ve khong
+    //   bao gio dem trung mot luot xem.
     const views = await env.DB.prepare(`
       WITH slugs AS (
-        SELECT slug FROM views_daily UNION SELECT slug FROM views_archive
+        SELECT slug FROM views_daily
+        UNION SELECT slug FROM views_archive
+        UNION SELECT slug FROM views_monthly
       ),
       d AS (
         SELECT slug,
                SUM(n)                                    AS recent,
                SUM(CASE WHEN day  = ?1 THEN n END)       AS day_views,
                SUM(CASE WHEN day >= ?2 THEN n END)       AS week_views,
-               SUM(CASE WHEN day >= ?3 THEN n END)       AS month_views
+               SUM(CASE WHEN day >= ?3 THEN n END)       AS month_views,
+               SUM(CASE WHEN day >= ?4 THEN n END)       AS year_views
         FROM views_daily GROUP BY slug
+      ),
+      a AS (
+        SELECT slug, SUM(n) AS n FROM views_archive GROUP BY slug
+      ),
+      m AS (
+        SELECT slug, SUM(n) AS n FROM views_monthly
+        WHERE substr(month, 1, 4) = ?5 GROUP BY slug
       )
       SELECT s.slug                                AS slug,
              COALESCE(a.n, 0) + COALESCE(d.recent, 0) AS total,
              COALESCE(d.day_views, 0)              AS day_views,
              COALESCE(d.week_views, 0)             AS week_views,
-             COALESCE(d.month_views, 0)            AS month_views
+             COALESCE(d.month_views, 0)            AS month_views,
+             COALESCE(d.year_views, 0) + COALESCE(m.n, 0) AS year_views
       FROM slugs s
-      LEFT JOIN views_archive a ON a.slug = s.slug
-      LEFT JOIN d             ON d.slug = s.slug
-    `).bind(d1, d7, d30).all();
+      LEFT JOIN a ON a.slug = s.slug
+      LEFT JOIN d ON d.slug = s.slug
+      LEFT JOIN m ON m.slug = s.slug
+    `).bind(d1, d7, d30, yearStart, year).all();
 
     const ratings = await env.DB.prepare(`
       SELECT slug, COUNT(*) AS nominations, ROUND(AVG(rating), 1) AS rating
@@ -204,15 +231,19 @@ async function handleAdmin(request, env, parts, method) {
       GROUP BY slug
     `).all();
 
+    const blank = () => ({
+      views: 0, day_views: 0, week_views: 0, month_views: 0, year_views: 0,
+      rating: null, nominations: 0,
+    });
     const byslug = {};
     for (const r of views.results) {
-      byslug[r.slug] = {
+      byslug[r.slug] = Object.assign(blank(), {
         views: r.total, day_views: r.day_views, week_views: r.week_views,
-        month_views: r.month_views, rating: null, nominations: 0,
-      };
+        month_views: r.month_views, year_views: r.year_views,
+      });
     }
     for (const r of ratings.results) {
-      byslug[r.slug] = byslug[r.slug] || { views: 0, day_views: 0, week_views: 0, month_views: 0 };
+      byslug[r.slug] = byslug[r.slug] || blank();
       byslug[r.slug].rating = r.rating;
       byslug[r.slug].nominations = r.nominations;
     }
@@ -226,21 +257,42 @@ async function handleAdmin(request, env, parts, method) {
     // Chuong MOI (khong tinh chuong SUA): dua vao created_at, chi dat luc INSERT dau tien -
     // updated_at doi ca khi sua chuong cu nen khong dung duoc cho so nay. Da la full-table-scan
     // (nhu usage o tren) nen khong lam nang them dang ke.
-    const chaptersNew = await env.DB.prepare(`
-      SELECT
+    //   GROUP BY slug (khong phai 1 dong tong): CMS phai cat duoc con so nay theo chu so huu
+    //   truyen - editor chi duoc thay chuong moi cua CHINH truyen minh tao. Tong toan site
+    //   cong lai o JS ben duoi, admin van co so cu.
+    const chaptersNewRows = await env.DB.prepare(`
+      SELECT slug,
         SUM(CASE WHEN substr(created_at,1,10) = ?1 THEN 1 ELSE 0 END)  AS day_new,
         SUM(CASE WHEN substr(created_at,1,10) >= ?2 THEN 1 ELSE 0 END) AS week_new,
-        SUM(CASE WHEN substr(created_at,1,10) >= ?3 THEN 1 ELSE 0 END) AS month_new
-      FROM chapters
-    `).bind(d1, d7, d30).first();
+        SUM(CASE WHEN substr(created_at,1,10) >= ?3 THEN 1 ELSE 0 END) AS month_new,
+        SUM(CASE WHEN substr(created_at,1,10) >= ?4 THEN 1 ELSE 0 END) AS year_new
+      FROM chapters GROUP BY slug
+    `).bind(d1, d7, d30, yearStart).all();
+
+    const chaptersNew = { day: 0, week: 0, month: 0, year: 0 };
+    const chaptersNewBySlug = {};
+    for (const r of chaptersNewRows.results) {
+      chaptersNew.day += r.day_new || 0;
+      chaptersNew.week += r.week_new || 0;
+      chaptersNew.month += r.month_new || 0;
+      chaptersNew.year += r.year_new || 0;
+      // Chi giu truyen CO chuong moi trong nam - tuyet dai da so truyen cu se la 0000 va
+      // khong dang cho vao payload (GAS ghi map nay xuong site-config.json).
+      if (r.year_new) {
+        chaptersNewBySlug[r.slug] = {
+          day: r.day_new || 0, week: r.week_new || 0,
+          month: r.month_new || 0, year: r.year_new || 0,
+        };
+      }
+    }
 
     const out = {
       as_of: today,
       stories: byslug,
       chapters_new: {
-        day: (chaptersNew && chaptersNew.day_new) || 0,
-        week: (chaptersNew && chaptersNew.week_new) || 0,
-        month: (chaptersNew && chaptersNew.month_new) || 0,
+        day: chaptersNew.day, week: chaptersNew.week,
+        month: chaptersNew.month, year: chaptersNew.year,
+        by_slug: chaptersNewBySlug,
       },
       usage: {
         chapters: usage ? usage.chapters : 0,
@@ -256,13 +308,23 @@ async function handleAdmin(request, env, parts, method) {
       const rangeViews = await env.DB.prepare(
         "SELECT slug, SUM(n) AS n FROM views_daily WHERE day >= ?1 AND day <= ?2 GROUP BY slug"
       ).bind(rangeFrom, rangeTo).all();
+      // GROUP BY slug chu khong COUNT(*) tong: giong chapters_new o tren, CMS phai cat duoc
+      // theo chu so huu truyen thi editor moi xem duoc dung phan cua minh.
       const rangeChapters = await env.DB.prepare(
-        "SELECT COUNT(*) AS n FROM chapters WHERE substr(created_at,1,10) >= ?1 AND substr(created_at,1,10) <= ?2"
-      ).bind(rangeFrom, rangeTo).first();
-      const custom = { from: rangeFrom, to: rangeTo, total_views: 0, stories: {}, chapters_new: (rangeChapters && rangeChapters.n) || 0 };
+        "SELECT slug, COUNT(*) AS n FROM chapters " +
+        "WHERE substr(created_at,1,10) >= ?1 AND substr(created_at,1,10) <= ?2 GROUP BY slug"
+      ).bind(rangeFrom, rangeTo).all();
+      const custom = {
+        from: rangeFrom, to: rangeTo, total_views: 0, stories: {},
+        chapters_new: 0, chapters_new_by_slug: {},
+      };
       for (const r of rangeViews.results) {
         custom.stories[r.slug] = r.n || 0;
         custom.total_views += r.n || 0;
+      }
+      for (const r of rangeChapters.results) {
+        custom.chapters_new_by_slug[r.slug] = r.n || 0;
+        custom.chapters_new += r.n || 0;
       }
       out.custom = custom;
     }
@@ -281,6 +343,52 @@ async function handleAdmin(request, env, parts, method) {
       bytes: u ? u.bytes : 0,
       limit_bytes: 5 * 1024 * 1024 * 1024,
     });
+  }
+
+  // /_api/chapter-views/<slug> — luot xem TUNG CHUONG cua 1 truyen. CMS goi khi admin mo tab
+  // Chuong. KHONG nhet vao /_api/stats (chay moi ngay, commit repo): so nay theo tung chuong
+  // co the len toi hang tram dong/truyen, khong dang commit - lay khi can thi hon.
+  //   chap = 0 trong D1 = luot khong ro chuong (client cu / du lieu truoc migration
+  //   2026-08-29). KHONG tra ve rieng: CHIA DEU vao cac chuong that, phan du don vao cac
+  //   chuong dau (n nho nhat). Tong khong doi.
+  if (resource === "chapter-views" && method === "GET") {
+    const slug = cleanSlug(a);
+    if (!slug) return err("slug không hợp lệ");
+    const [viewRows, chapRows] = await Promise.all([
+      env.DB.prepare(`
+        SELECT chap, SUM(n) AS n FROM (
+          SELECT chap, n FROM views_daily   WHERE slug = ?1
+          UNION ALL
+          SELECT chap, n FROM views_archive WHERE slug = ?1
+        ) GROUP BY chap
+      `).bind(slug).all(),
+      env.DB.prepare("SELECT n FROM chapters WHERE slug = ?1 ORDER BY n").bind(slug).all(),
+    ]);
+
+    const known = new Map();   // chap (>=1) -> luot xem da biet chuong
+    let unknown = 0;           // luot xem chap = 0
+    for (const r of viewRows.results) {
+      if (r.chap === 0) unknown += r.n || 0;
+      else known.set(r.chap, (known.get(r.chap) || 0) + (r.n || 0));
+    }
+
+    // Tap chuong = hop cua (chuong dang co trong bang chapters) va (chuong tung co luot xem
+    // - phong khi chuong da bi xoa nhung van con luot doc lich su).
+    const chapSet = new Set(chapRows.results.map((r) => r.n));
+    for (const k of known.keys()) chapSet.add(k);
+    const chapNums = [...chapSet].sort((x, y) => x - y);
+
+    let total = unknown;
+    let chapters = [];
+    if (chapNums.length) {
+      const base = Math.floor(unknown / chapNums.length);
+      const rem = unknown % chapNums.length;   // don vao `rem` chuong dau tien
+      chapters = chapNums.map((n, i) => {
+        total += known.get(n) || 0;
+        return { n, views: (known.get(n) || 0) + base + (i < rem ? 1 : 0) };
+      });
+    }
+    return json({ slug, chapters, total });
   }
 
   // /_api/moderate — danh sách comment mới nhất để admin soát (CMS gọi).
@@ -318,17 +426,22 @@ async function handleAdmin(request, env, parts, method) {
 async function handlePublic(request, env, parts, method) {
   const [resource, a] = parts;
 
-  // POST /_api/view  {slug} — mỗi pageview ĐÚNG 1 write D1 (upsert 1 dòng). Free tier cho
+  // POST /_api/view  {slug, n} — mỗi pageview ĐÚNG 1 write D1 (upsert 1 dòng). Free tier cho
   // 100k write/ngày; ghi thêm bảng tổng ở đây là tự chia đôi ngân sách đó, nên bảng tổng
   // chỉ được cron ghi (xem scheduled()).
+  //   n = số chương đang đọc. Thiếu / không hợp lệ -> 0 ("không rõ chương"): client cũ chưa
+  //   gửi n vẫn đếm được, chỉ không tách được theo chương. Thêm chiều `chap` KHÔNG làm tăng
+  //   số write — vẫn là 1 dòng upsert.
   if (resource === "view" && method === "POST") {
     const body = await request.json().catch(() => null);
     const slug = cleanSlug(body && body.slug);
     if (!slug) return err("slug không hợp lệ", 400, CORS_PUBLIC);
+    let chap = Number(body && body.n);
+    if (!Number.isInteger(chap) || chap < 1 || chap > 100000) chap = 0;
     await env.DB.prepare(
-      "INSERT INTO views_daily (slug, day, n) VALUES (?1, ?2, 1) " +
-      "ON CONFLICT(slug, day) DO UPDATE SET n = n + 1"
-    ).bind(slug, vnDay()).run();
+      "INSERT INTO views_daily (slug, chap, day, n) VALUES (?1, ?2, ?3, 1) " +
+      "ON CONFLICT(slug, chap, day) DO UPDATE SET n = n + 1"
+    ).bind(slug, chap, vnDay()).run();
     return json({ ok: true }, 200, CORS_PUBLIC);
   }
 
@@ -521,27 +634,45 @@ export default {
   },
 
   /** Cron mỗi ngày 01:00 VN: dồn các ngày quá cũ vào views_archive rồi xoá khỏi views_daily.
-   * Nhờ vậy mỗi pageview vẫn chỉ tốn 1 write, mà views_daily không phình vô hạn
-   * (2.000 truyện x 365 ngày = 730k dòng/năm) và truy vấn xếp hạng luôn quét ít dòng. */
+   * Nhờ vậy mỗi pageview vẫn chỉ tốn 1 write, mà views_daily không phình vô hạn và truy vấn
+   * xếp hạng luôn quét ít dòng. Từ 2026-08-29 mỗi dòng tách theo (slug, chap) nên số dòng
+   * tối đa = (số truyện × số chương từng đọc trong 40 ngày), vẫn bị chặn bởi cửa sổ 40 ngày;
+   * views_archive gộp về (slug, chap) — cỡ tổng số chương của toàn site. */
   async scheduled(event, env, ctx) {
     ctx.waitUntil((async () => {
       const cutoff = vnDay(new Date(), VIEWS_KEEP_DAYS);
-      const old = await env.DB.prepare(
-        "SELECT slug, SUM(n) AS n FROM views_daily WHERE day < ? GROUP BY slug"
-      ).bind(cutoff).all();
+      // Cung mot tap dong sap bi xoa, gop theo HAI chieu khac nhau:
+      //   views_archive  (slug, chap)  -> tong all-time, dung cho "Luot xem" tren site
+      //   views_monthly  (slug, month) -> giu lai chieu THOI GIAN de con tinh duoc "nam nay"
+      // Bo chieu `chap` o bang thang: so dong = so truyen x so thang, thay vi x so chuong.
+      const [old, byMonth] = await Promise.all([
+        env.DB.prepare(
+          "SELECT slug, chap, SUM(n) AS n FROM views_daily WHERE day < ? GROUP BY slug, chap"
+        ).bind(cutoff).all(),
+        env.DB.prepare(
+          "SELECT slug, substr(day,1,7) AS month, SUM(n) AS n FROM views_daily " +
+          "WHERE day < ? GROUP BY slug, month"
+        ).bind(cutoff).all(),
+      ]);
       if (!old.results.length) return;
 
       const stmts = old.results.map((r) =>
         env.DB.prepare(
-          "INSERT INTO views_archive (slug, n) VALUES (?1, ?2) " +
-          "ON CONFLICT(slug) DO UPDATE SET n = n + ?2"
-        ).bind(r.slug, r.n)
+          "INSERT INTO views_archive (slug, chap, n) VALUES (?1, ?2, ?3) " +
+          "ON CONFLICT(slug, chap) DO UPDATE SET n = n + ?3"
+        ).bind(r.slug, r.chap, r.n)
       );
+      for (const r of byMonth.results) {
+        stmts.push(env.DB.prepare(
+          "INSERT INTO views_monthly (slug, month, n) VALUES (?1, ?2, ?3) " +
+          "ON CONFLICT(slug, month) DO UPDATE SET n = n + ?3"
+        ).bind(r.slug, r.month, r.n));
+      }
       // Dồn vào archive TRƯỚC, xoá SAU, trong cùng một batch (D1 batch chạy trong 1
       // transaction) - xoá trước rồi archive lỗi là mất số vĩnh viễn.
       stmts.push(env.DB.prepare("DELETE FROM views_daily WHERE day < ?").bind(cutoff));
       await env.DB.batch(stmts);
-      console.log(`[cron] dồn ${old.results.length} truyện, xoá ngày < ${cutoff}`);
+      console.log(`[cron] dồn ${old.results.length} dòng (${byMonth.results.length} theo tháng), xoá ngày < ${cutoff}`);
     })());
   },
 };

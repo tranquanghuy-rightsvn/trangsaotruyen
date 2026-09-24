@@ -95,17 +95,40 @@ gõ tay thì thực tế không ai cập nhật 2.000 truyện → bảng xếp 
 Nên cả hai đều là **số dẫn xuất**, không có ô nhập trong CMS:
 
 ```
-mỗi pageview  ──► Worker POST /_api/view  ──► D1 views_daily   (ĐÚNG 1 write)
-mỗi comment   ──► Worker POST /_api/comment ─► D1 comments      (rating + nominations)
+mỗi pageview  ──► Worker POST /_api/view {slug,n} ─► D1 views_daily(slug,chap,day)  (ĐÚNG 1 write)
+mỗi comment   ──► Worker POST /_api/comment ──────► D1 comments      (rating + nominations)
                                                     │
      GAS trigger 02:00 ── GET /_api/stats ──────────┘
               └──► ghi data/stories.json (1 commit) ──► 1 lần build/ngày
 ```
 
 **1 write/pageview là ràng buộc thiết kế, không phải tình cờ.** D1 free cho 100k write/ngày;
-ghi thêm một bảng tổng ở mỗi request là tự chia đôi ngân sách đó. Nên bảng tổng
-(`views_archive`) **chỉ cron ghi**. Mốc 100k write/ngày cũng trùng mốc 100k request/ngày của
+ghi thêm một bảng tổng ở mỗi request là tự chia đôi ngân sách đó. Nên các bảng tổng
+(`views_archive`, `views_monthly`) **chỉ cron ghi**. Mốc 100k write/ngày cũng trùng mốc 100k request/ngày của
 Workers free — lên Workers Paid ($5/tháng) kéo cả hai lên cùng lúc, không sinh trần mới.
+
+**Đếm theo chương (2026-08-29).** `views_daily` / `views_archive` tách theo `(slug, chap)` —
+`chap` = số chương đang đọc (`countView(slug, n)` ở `main.js`), `0` = không rõ chương (client cũ
+/ dữ liệu trước migration). Vẫn **1 write/pageview** — chỉ thêm một cột vào khoá, không thêm
+dòng ghi. **Tổng lượt xem 1 truyện = `SUM(n) GROUP BY slug`** (không đổi so với trước — mọi
+query xếp hạng vẫn gộp hết chương). **Lượt xem từng chương** lấy riêng qua
+`GET /_api/chapter-views/<slug>` — CMS gọi khi mở tab Chương; **không** nhét vào `stats` chạy
+hằng ngày vì số theo chương quá nhiều dòng, không đáng commit. Lượt `chap=0` (không rõ chương —
+chủ yếu là 169 lượt trước migration; trang đọc luôn có số chương nên về sau gần như không sinh
+thêm) được endpoint **chia đều** vào các chương thật, phần dư dồn vào các chương đầu — endpoint
+không bao giờ trả `n=0`. **Lượt xem theo tác giả**, tính client-side từ `stories.json` — không có
+bảng D1 riêng, không đẩy vào repo:
+
+- **Tab "Trang của tôi"** (mọi role): lọc `created_by === ME.email` rồi cộng `views` / day / week
+  / month. Với editor là số của đúng 1 bút danh; với admin còn có bảng con **gộp theo chuỗi
+  `author`** (admin đặt tên tự do nên một tài khoản ra nhiều tác giả — xem mục 9b).
+- **Tab "Tác giả"** (admin/root): gộp toàn site theo chuỗi `author`.
+
+Ranh giới sở hữu là `created_by` (bất biến) chứ không phải `author` — xem mục 9c.
+
+Migration 1 lần đổi khoá 2 bảng — lệnh `--command` đầy đủ nằm trong
+`worker/schema-migrate-chapter-views.sql` (row cũ → `chap = 0`). **Không** dùng `--file` +
+`--remote`: nó đi qua D1 import API cần R2, mà account này không bật R2 → lỗi auth `10000`.
 
 **Vì sao ghi vào `stories.json` chứ không từng `story.json`:** cập nhật 2.000 file mỗi ngày =
 2.000 commit/ngày. Ghi 1 file index = 1 commit = 1 build/ngày. `build.py` đọc lượt xem/đánh giá
@@ -267,6 +290,7 @@ Script, rất dễ sai và cực khó debug; Worker có binding sẵn nên GAS c
 | `DELETE` | `/_api/story/<slug>` | — | `{ok,deleted}` — xoá chương **và** views/comments của truyện, trong 1 transaction |
 | `GET` | `/_api/usage` | — | `{chapters,bytes,limit_bytes}` |
 | `GET` | `/_api/stats` | — | `{as_of, stories:{…}, usage:{chapters,bytes,limit_bytes}}` |
+| `GET` | `/_api/chapter-views/<slug>` | — | `{slug, chapters:[{n,views}], total}` — lượt `chap=0` (không rõ chương) chia đều vào các chương, dư dồn vào chương đầu; không trả `n=0` |
 | `GET` | `/_api/moderate?limit=` | — | `{comments:[…]}` |
 | `PATCH` | `/_api/comment/<id>` | `{status:"ok"\|"hidden"}` | `{ok,status}` |
 | `DELETE` | `/_api/comment/<id>` | — | `{ok}` |
@@ -275,7 +299,7 @@ Script, rất dễ sai và cực khó debug; Worker có binding sẵn nên GAS c
 
 | Method | Đường dẫn | Body | Ghi chú |
 |---|---|---|---|
-| `POST` | `/_api/view` | `{slug}` | 1 write D1 |
+| `POST` | `/_api/view` | `{slug, n}` | 1 write D1 — `n` = số chương (thiếu/xấu → 0) |
 | `GET` | `/_api/comments/<slug>` | — | `{comments, rating, nominations}` |
 | `POST` | `/_api/comment` | `{slug,name,rating,body,website}` | `website` = honeypot, để trống |
 
@@ -288,6 +312,21 @@ Script, rất dễ sai và cực khó debug; Worker có binding sẵn nên GAS c
 - `GET /_api/stats` lấy slug từ **UNION** của `views_daily` và `views_archive`: truyện 40 ngày
   không ai đọc bị cron dọn hết dòng khỏi `views_daily`, nếu chỉ JOIN từ đó nó biến mất khỏi kết
   quả → GAS ghi `views=0` và xoá sạch lượt xem all-time. Lỗi này đã được test và vá.
+- Từ 2026-08-29 `views_archive` có nhiều dòng mỗi `slug` (1/chương) → `stats` phải
+  `SUM(n) GROUP BY slug` **trước** khi JOIN (CTE `a`), nếu không `COALESCE(a.n,0)` chỉ lấy đúng
+  1 chương và tổng all-time bị hụt.
+- **Kỳ "Năm nay" (2026-09-22) cần một bảng thứ ba.** `views_daily` chỉ giữ 40 ngày, còn
+  `views_archive` gộp cả lịch sử vào một số — không tách ra theo năm được. Cron vì thế dồn
+  **cùng một tập dòng** vào hai bảng trong **cùng một batch**: `views_archive(slug, chap)` cho
+  tổng all-time và `views_monthly(slug, month)` cho chiều thời gian.
+  `year_views = SUM(views_daily WHERE day >= 'YYYY-01-01') + SUM(views_monthly của năm đó)` —
+  **không** cộng `views_archive` vào (làm thế là biến "năm nay" thành "tất cả thời gian"), và
+  hai vế không đếm trùng vì `views_monthly` chỉ nhận đúng những dòng cron vừa xoá khỏi
+  `views_daily`. Bảng thang bỏ chiều `chap` → số dòng là (số truyện × số tháng), không phải
+  × số chương.
+  **Không backfill được:** lượt xem cũ hơn 40 ngày tính tới 22/09/2026 đã nằm trong
+  `views_archive` mất chiều ngày. Số "Năm nay" vì thế tính từ mốc bật rollup — Tổng quan ghi
+  rõ câu này thay vì để người dùng tưởng số bị hụt.
 
 ## 7. Nhập hàng loạt
 
@@ -323,13 +362,60 @@ năng bắt buộc**, không phải nice-to-have.
 | | editor | admin | root |
 |---|---|---|---|
 | Thêm/sửa truyện, chương, nhập hàng loạt | ✓ | ✓ | ✓ |
+| Trang của tôi (truyện + lượt xem của chính mình) | ✓ | ✓ | ✓ |
 | **Xoá truyện** (xoá cả trăm chương trong D1) | ✗ | ✓ | ✓ |
-| Bình luận, người dùng, thể loại, cài đặt | ✗ | ✓ | ✓ |
+| Bình luận, người dùng, thể loại, cài đặt, tab Tác giả (tổng hợp) | ✗ | ✓ | ✓ |
 
 - **Chủ script luôn là `root` ngầm định** — dù sheet `Users` bị xoá sạch vẫn vào được.
   `requestOtp` cũng tự cho chủ script qua, nếu không sẽ tự khoá mình ra khỏi CMS ngay lần đầu.
 - `root` **chỉ** sửa được bằng tay trong Sheet, không bao giờ qua CMS.
 - Ẩn nút trên UI **không phải bảo mật** — mọi hàm đều tự `requireRole_` ở server.
+
+### 9b. Tác giả — quy tắc KHÁC NHAU theo quyền
+
+Sheet `Users` có **3 cột: `email`, `role`, `name`**. `name` là **bút danh**. `authorOf_()` quyết
+định `story.author` khi lưu, tuỳ quyền người lưu:
+
+| | editor | admin / root |
+|---|---|---|
+| Ô "Tác giả" ở form truyện | **khoá** (disabled), = bút danh của họ | **có tên mặc định** (= bút danh admin), **sửa tự do** |
+| `saveStory` dùng gì làm `author` | luôn `me.name`, bỏ qua input | `story.author` client gõ; trống khi **sửa** → giữ tên cũ của truyện; trống khi **tạo mới** → `me.name` |
+| Đổi tên tác giả 1 truyện | — | chỉ ghi lại `author` của **truyện đó** (mỗi truyện lưu chuỗi riêng), không đụng truyện khác |
+| Đổi bút danh sau khi tạo | **không** (chỉ root sửa trong Sheet) | không có "bút danh cố định" — mỗi truyện một tên |
+| 1 tài khoản ↔ mấy tên tác giả | đúng **1** | **nhiều** (tab "Trang của tôi" gộp theo `author` cho admin thấy) |
+
+- `saveUser(token, email, role, name)` — `name` **bắt buộc khi `role === "editor"`**, không bắt
+  buộc với admin. Nếu có `name` thì phải **duy nhất**. Bút danh editor sau đó **bất biến qua CMS**.
+- Tài khoản chưa có `name` → `defaultName_()` lấy phần trước `@` của email (không bao giờ rỗng).
+- `ensureNameColumn_()` tự thêm cột `name` vào Sheet nếu DB tạo trước tính năng này.
+
+### 9c. Editor chỉ thấy truyện của chính mình
+
+`created_by` (email tài khoản tạo truyện) là ranh giới. **Enforced ở server, không chỉ ẩn UI:**
+
+- `boot()` trả `visibleStories_(me)` — editor chỉ nhận metadata truyện có `created_by === me.email`.
+- `requireStoryAccess_(me, slug)` chặn editor ở `getStory`, `listChapters`, `getChapter`,
+  `saveChapter`, `deleteChapter`, `importChapters`, `getChapterViews`, và nhánh sửa của `saveStory`.
+  admin/root (`isPrivileged_`) không bị giới hạn.
+- **Tổng quan của editor = đúng truyện của họ, đủ 4 kỳ + Tùy chỉnh.** `STORIES` đã lọc sẵn ở
+  `boot()` nên mọi con số cộng từ đó (lượt xem ngày/tuần/tháng/năm, xếp hạng, truyện mới) tự
+  thu về phạm vi của họ. Hai con số KHÔNG nằm trong `STORIES` phải cắt riêng:
+  - `getCustomStats` (nút "Hôm nay" và "Tùy chỉnh") nhận quyền `viewer` chứ không còn
+    admin-only, nhưng `scopeCustomStats_()` **cắt kết quả ở server trước khi trả về**: bỏ slug
+    không thuộc editor rồi tính lại `total_views`/`chapters_new`. Worker không biết ai sở hữu
+    truyện nào (nó chỉ có D1, không có `data/stories.json`) nên việc lọc bắt buộc nằm ở GAS;
+    lọc ở client là vô nghĩa vì payload vẫn đi qua được.
+  - "Chương mới" lấy từ `CONFIG.chapters_new`. Trường `by_slug` (Worker `GROUP BY slug`) cho
+    phép `chaptersNewInPeriod_()` cộng đúng truyện của editor; admin/root vẫn dùng số tổng.
+    Site-config cũ chưa có `by_slug` → editor thấy **0**, không bao giờ rơi về số toàn site.
+  - Thẻ "Người dùng mới" (số của cả site, không cắt theo tác giả được) chỉ hiện với admin/root.
+- Truyện cũ có `created_by = ""` → không editor nào "sở hữu", chỉ admin/root thấy.
+
+### 9d. `work_type` (Loại truyện)
+
+`"dich"` (mặc định, kể cả truyện cũ) | `"viet"`. Chọn ở form truyện, hiện thành cột **Loại** trong
+danh sách truyện. Nằm trong cả `story.json` lẫn index `stories.json` (qua `indexMetaOf_`).
+`build.py` bỏ qua field này — chưa dùng ở site công khai.
 
 ## 10. Checklist cài đặt
 

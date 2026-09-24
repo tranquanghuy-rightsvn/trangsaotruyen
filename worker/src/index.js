@@ -528,7 +528,11 @@ function recordView(env, slug, chap) {
 
 // Bot/crawler/preview link KHÔNG tính là lượt xem. Trước đây view do JS phía client gửi nên
 // bot không chạy JS tự nhiên bị loại; giờ đếm ngay lúc render trang chương thì phải lọc tay.
-const BOT_UA = /bot|crawl|spider|slurp|preview|facebookexternalhit|embedly|whatsapp|telegram|discord|zalo|skype|headless|lighthouse|pagespeed|python|curl|wget|go-http|java\/|okhttp|axios|node-fetch|httpclient|scrapy/i;
+// KHÔNG lọc theo tên app chat (zalo/telegram/whatsapp/...): trình duyệt NHÚNG trong các app đó
+// (người đọc bấm link chia sẻ trên Zalo) mang tên app trong UA - lọc là mất view người thật.
+// Bot xem trước link của chính các app đó đã có "bot"/"preview" trong UA (TelegramBot,
+// Discordbot, SkypeUriPreview...).
+const BOT_UA = /bot|crawl|spider|slurp|preview|facebookexternalhit|embedly|headless|lighthouse|pagespeed|python|curl|wget|go-http|java\/|okhttp|axios|node-fetch|httpclient|scrapy/i;
 
 function isRealPageview(request) {
   if (request.method !== "GET") return false;

@@ -48,6 +48,12 @@ def esc(s):
     return htmllib.escape("" if s is None else str(s), quote=True)
 
 
+def esc_multiline(s):
+    """Escape + giu xuong dong nguoi dung go (van an truyen): \n -> <br>."""
+    txt = ("" if s is None else str(s)).replace("\r\n", "\n").replace("\r", "\n").strip()
+    return "<br>\n".join(esc(line.rstrip()) for line in txt.split("\n"))
+
+
 def load_json(path, default):
     p = Path(path)
     if not p.exists():
@@ -397,6 +403,8 @@ def build_story(config, stories, story, gmap):
         '<a href="/phan-loai/%s/">%s</a>' % (esc(g), esc(gmap.get(g, g)))
         for g in detail.get("genres", []))
     desc_txt = detail.get("description", "") or ""
+    # meta description 1 dong: gop moi khoang trang/xuong dong thanh 1 dau cach
+    meta_desc = " ".join(desc_txt.split())
 
     page = shell(config, tpl("story.html"), {
         "TITLE": esc(detail["title"]),
@@ -407,7 +415,7 @@ def build_story(config, stories, story, gmap):
         "RATING_STARS": stars(rating),
         "RATING_TEXT": esc(rating_text),
         "VIEWS": esc(format_count(detail.get("views"))),
-        "DESCRIPTION_HTML": esc(desc_txt),
+        "DESCRIPTION_HTML": esc_multiline(desc_txt),
         "BREADCRUMB": esc(detail["title"]),
         "SAME_AUTHOR": "".join(
             '<li><a href="/truyen/%s/">%s</a></li>' % (esc(s["slug"]), esc(s["title"]))
@@ -421,7 +429,7 @@ def build_story(config, stories, story, gmap):
     },
         title="%s - %s | %s" % (detail["title"], detail.get("author", ""),
                                 config.get("site_name") or ""),
-        description=(desc_txt[:157] + "...") if len(desc_txt) > 160 else desc_txt,
+        description=(meta_desc[:157] + "...") if len(meta_desc) > 160 else meta_desc,
         canonical="/truyen/%s/" % slug, og_type="book",
         og_image=cover_url(detail) if cover_url(detail).startswith("http")
                  else (config.get("domain", "").rstrip("/") + cover_url(detail)))

@@ -38,6 +38,39 @@
     "as_of": "2026-09-24",
     "day": 10,
     "week": 31,
-    "month": 56
+    "month": 56,
+    "year": 61,
+    "by_slug": {
+      "anh-trai-ta-hoa-ra-la-con-nuoi": {
+        "day": 0,
+        "week": 12,
+        "month": 12,
+        "year": 12
+      },
+      "nghe-noi-chim-cua-bui-tong-hinh-nhu-rat-lon": {
+        "day": 0,
+        "week": 0,
+        "month": 21,
+        "year": 21
+      },
+      "sau-khi-bi-me-ruot-nem-len-giuong-tinh-nhan-toi-thanh-phu-nhan-hao-mon": {
+        "day": 0,
+        "week": 0,
+        "month": 4,
+        "year": 9
+      },
+      "tieu-bao-cua-toi-la-luc-tong": {
+        "day": 0,
+        "week": 9,
+        "month": 9,
+        "year": 9
+      },
+      "tranh-nguoi-cua-am-ty": {
+        "day": 10,
+        "week": 10,
+        "month": 10,
+        "year": 10
+      }
+    }
   }
 }

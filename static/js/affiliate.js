@@ -10,8 +10,10 @@
      2. Chuyển chương — đổi chương (bấm nút hoặc phím mũi tên trái/phải) có
         `next_chapter_rate`% hiện bảng tài trợ.
      3. Ở lại web  — sau `click_delay_sec` giây, cú chạm/click kế tiếp mở link (tab mới).
-     4. Lần đầu vào web — ở lại đủ `first_visit_delay_sec` giây (cộng dồn qua các trang)
-        thì hiện banner (first_visit_mode = 'banner') hoặc nhảy thẳng link ('redirect').
+     4. Nhảy link — ở lại đủ `first_visit_delay_sec` giây thì tab tự chuyển sang link affiliate.
+     5. Banner      — ở lại đủ `banner.delay_sec` giây thì hiện popup banner.
+     (4) và (5) ĐỘC LẬP: số giây, số giờ lặp lại riêng; bật cả hai thì cả hai cùng chạy.
+     Thời gian ở lại được cộng dồn qua các trang trong cùng tab.
 
    File này CỐ Ý tách khỏi main.js: tắt tính năng chỉ cần bỏ 1 thẻ <script> trong
    layouts/_head.html, và mọi thứ ở đây đều bọc trong try/catch + IIFE để một lỗi
@@ -29,8 +31,8 @@
     next_chapter_rate: 0,
     click_delay_sec: 0,
     click_cooldown_sec: 600,
-    first_visit_delay_sec: 0,
-    first_visit_mode: 'banner',   // 'banner' | 'redirect'
+    first_visit_delay_sec: 0,     // nhảy link: 0 = tắt
+    redirect_repeat_hours: 24,
     max_per_session: 0,           // 0 = không giới hạn
     open_in_new_tab: true,
     chapter_panel: {
@@ -40,14 +42,15 @@
     banner: {
       enabled: true, title: '', message: '', image: '',
       button_text: 'Xem ngay', link: '', position: 'center',
-      auto_close_sec: 0, repeat_hours: 24
+      delay_sec: 0, auto_close_sec: 0, repeat_hours: 24
     }
   };
 
   // sessionStorage = theo TAB (thời gian ở lại, link đang xoay, số lần đã bắn trong phiên).
-  const SS = { TIME: 'tst_aff_time', COUNT: 'tst_aff_count', PICK: 'tst_aff_pick', FV_TIME: 'tst_aff_fv_time' };
+  const SS = { TIME: 'tst_aff_time', COUNT: 'tst_aff_count', PICK: 'tst_aff_pick',
+              BN_TIME: 'tst_aff_fv_time', RD_TIME: 'tst_aff_rd_time' };
   // localStorage = theo TRÌNH DUYỆT (đã thấy banner lần đầu chưa, lần chạm gần nhất).
-  const LS = { FIRST: 'tst_aff_first', TAP: 'tst_aff_tap' };
+  const LS = { FIRST: 'tst_aff_first', REDIRECT: 'tst_aff_redirect', TAP: 'tst_aff_tap' };
 
   // Cửa sổ riêng tư và vài webview ném lỗi ngay ở bước ĐỌC storage — bọc hết như main.js.
   function get(store, k, fallback) {
@@ -72,9 +75,17 @@
      ----------------------------------------------------------- */
 
   function normalize(raw) {
-    const c = Object.assign({}, DEFAULTS, raw || {});
-    c.chapter_panel = Object.assign({}, DEFAULTS.chapter_panel, (raw && raw.chapter_panel) || {});
-    c.banner = Object.assign({}, DEFAULTS.banner, (raw && raw.banner) || {});
+    raw = raw || {};
+    const c = Object.assign({}, DEFAULTS, raw);
+    c.chapter_panel = Object.assign({}, DEFAULTS.chapter_panel, raw.chapter_panel || {});
+    c.banner = Object.assign({}, DEFAULTS.banner, raw.banner || {});
+    // File cấu hình kiểu CŨ (1 ô first_visit_delay_sec dùng chung + first_visit_mode chọn
+    // banner HOẶC nhảy link). Quy đổi sang 2 kịch bản riêng - khớp getAffiliate_() bên GAS.
+    if (raw.first_visit_mode !== undefined && (raw.banner || {}).delay_sec === undefined) {
+      c.banner.delay_sec = num(raw.first_visit_delay_sec, 0);
+      if (raw.first_visit_mode !== 'redirect') c.first_visit_delay_sec = 0;
+      if (raw.redirect_repeat_hours === undefined) c.redirect_repeat_hours = c.banner.repeat_hours;
+    }
     // Admin nhập link ngăn nhau bằng ";" — CMS đã tách sẵn thành mảng, nhưng vẫn chấp nhận
     // chuỗi thô để sửa tay data/affiliate.json cũng chạy được.
     if (typeof c.links === 'string') c.links = c.links.split(/[;\r\n]+/);
@@ -84,6 +95,8 @@
     c.click_delay_sec = Math.max(0, num(c.click_delay_sec, 0));
     c.click_cooldown_sec = Math.max(0, num(c.click_cooldown_sec, 0));
     c.first_visit_delay_sec = Math.max(0, num(c.first_visit_delay_sec, 0));
+    c.redirect_repeat_hours = Math.max(0, num(c.redirect_repeat_hours, 24));
+    c.banner.delay_sec = Math.max(0, num(c.banner.delay_sec, 0));
     c.max_per_session = Math.max(0, num(c.max_per_session, 0));
     return c;
   }
@@ -95,7 +108,8 @@
       if (!CFG.enabled || !CFG.links.length) return;
       initChapterNav();
       initStayTimer();
-      initFirstVisit();
+      initBanner();      // gắn TRƯỚC redirect: cùng mốc giây thì banner hiện trước, nhảy link chờ
+      initRedirect();
     })
     .catch(() => {});
 
@@ -366,31 +380,57 @@
   }
 
   /* -----------------------------------------------------------
-     4. Lần đầu truy cập: sau x giây thì hiện banner (hoặc nhảy link)
+     4 + 5. Nhảy link / Banner sau x giây ở lại web (hai kịch bản độc lập)
      ----------------------------------------------------------- */
 
-  function initFirstVisit() {
-    if (!CFG.first_visit_delay_sec) return;
-    const b = CFG.banner;
-    const last = Number(ls(LS.FIRST, 0)) || 0;
-    const repeatMs = Math.max(0, num(b.repeat_hours, 0)) * 3600000;
-    // repeat_hours = 0 -> đúng nghĩa "lần đầu": hiện một lần duy nhất trên máy đó.
-    if (last && (!repeatMs || Date.now() - last < repeatMs)) return;
-    const redirect = CFG.first_visit_mode === 'redirect';
-    if (!redirect && !b.enabled) return;
+  /** Đã tới lượt hiện lại chưa. repeat_hours = 0 -> đúng nghĩa "lần đầu": 1 lần duy nhất/máy. */
+  function dueAgain(lsKey, repeatHours) {
+    const last = Number(ls(lsKey, 0)) || 0;
+    const repeatMs = Math.max(0, num(repeatHours, 0)) * 3600000;
+    return !last || (repeatMs && Date.now() - last >= repeatMs);
+  }
 
-    // Đếm CỘNG DỒN qua các trang trong cùng tab (sessionStorage), không dùng setTimeout theo
-    // từng trang: người đọc thường bấm sang truyện/chương khác trước khi đủ x giây, nếu mỗi
-    // lần tải trang lại đếm từ 0 thì banner gần như không bao giờ kịp hiện.
-    let waited = Number(ss(SS.FV_TIME, 0)) || 0;
-    const fire = () => {
+  /** Gọi cb() khi người đọc đã ở lại đủ `sec` giây. Đếm CỘNG DỒN qua các trang trong cùng tab
+   * (sessionStorage) chứ không setTimeout theo từng trang: người đọc hay bấm sang truyện/chương
+   * khác trước khi đủ x giây, đếm lại từ 0 mỗi trang thì gần như không bao giờ kịp bắn.
+   * Tab nền và lúc đang có popup mở không tính giờ. */
+  function afterStaying(ssKey, sec, cb) {
+    let waited = Number(ss(ssKey, 0)) || 0;
+    const timer = setInterval(() => {
+      if (document.hidden) return;
+      if (document.querySelector('.aff-overlay')) return;
+      waited += 1;
+      ssSet(ssKey, waited);
+      if (waited < sec) return;
       clearInterval(timer);
+      ssSet(ssKey, 0);
+      cb();
+    }, 1000);
+  }
+
+  function initRedirect() {
+    if (!CFG.first_visit_delay_sec) return;
+    if (!dueAgain(LS.REDIRECT, CFG.redirect_repeat_hours)) return;
+    afterStaying(SS.RD_TIME, CFG.first_visit_delay_sec, () => {
+      if (capReached()) return;
+      const url = pickLink();
+      if (!url) return;
+      lsSet(LS.REDIRECT, Date.now());
+      countFire();
+      // Ngoài cử chỉ người dùng thì window.open bị chặn -> chỉ có thể đi cùng tab.
+      location.href = url;
+    });
+  }
+
+  function initBanner() {
+    const b = CFG.banner;
+    if (!b.enabled || !b.delay_sec) return;
+    if (!dueAgain(LS.FIRST, b.repeat_hours)) return;
+    afterStaying(SS.BN_TIME, b.delay_sec, () => {
       if (capReached()) return;
       const url = b.link || pickLink();
       if (!url) return;
-      lsSet(LS.FIRST, Date.now());   // chỉ đánh dấu "đã thấy" khi THỰC SỰ hiện/nhảy link
-      ssSet(SS.FV_TIME, 0);
-      if (redirect) { countFire(); location.href = url; return; }
+      lsSet(LS.FIRST, Date.now());   // chỉ đánh dấu "đã thấy" khi THỰC SỰ hiện
       showOverlay({
         title: b.title, message: b.message, image: b.image,
         buttonText: b.button_text, href: url,
@@ -398,13 +438,6 @@
         countdownSec: b.auto_close_sec,
         countdownText: 'Tự động đóng sau {s}s'
       });
-    };
-    const timer = setInterval(() => {
-      if (document.hidden) return;                       // tab nền không tính
-      if (document.querySelector('.aff-overlay')) return; // đang có popup khác thì chờ
-      waited += 1;
-      ssSet(SS.FV_TIME, waited);
-      if (waited >= CFG.first_visit_delay_sec) fire();
-    }, 1000);
+    });
   }
 })();

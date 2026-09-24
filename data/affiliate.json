@@ -8,7 +8,7 @@
   "click_delay_sec": 250,
   "click_cooldown_sec": 250,
   "first_visit_delay_sec": 30,
-  "first_visit_mode": "redirect",
+  "redirect_repeat_hours": 1,
   "max_per_session": 0,
   "open_in_new_tab": true,
   "chapter_panel": {
@@ -28,7 +28,8 @@
     "button_text": "Xem ngay",
     "link": "https://shop.tiktok.com/vn/pdp/1731726341503945216?_d=dlh24bj44524mb&_svg=1&chain_key=%7B%22t%22%3A1%2C%22k%22%3A%22000000000000000007687985623161014033%22%2C%22sc%22%3A%22copy%22%7D&checksum=40e35779d8891d00a69b3cb0cd562b4c122a058fe418251908cda9270721cccc&encode_params=MIIBUwQMaFn_VbjAAQsIpcUKBIIBL9ZWTaynLNBaIGqA5T41JedSe4HaQ7cnAFez4UzFzS8JaRpdWN3tpMxXUbqBs-6M1s5fbvdWoYIZX4rDhUcpOF9Cxne6QcMJ2zMSoQLrh95aPHiJ99KVbr7bJyryZin_uLyVlP2H11zkVqsj8FpsWo2XD4xQk6LR2v_FkgifKLv2WToX48NnQ7x4VuY3yGUVf3vTPiAvSZqgukyOL_5bIUBul70R7VRyUhRUnON6-9W2wwhDVh3TFNId4TSi7yEHT7lmKYh5GAaGLYBjUNBG7Zd1UcWgwdCuAc1mCGQN4JyM2vR5ojyYDlC6YoD4JYa009FiAfKA1-Ztwi8Z2OrWoUGOb3_X1il4Wdv20GH8HJ5Tv_TsHjD84khdDj8lIfuPOKeyH6XaoidtU3Eu9AU7QgQQHgeMhsuA5LrDSbucqW_Y-A%3D%3D&og_info=%7B%22title%22%3A%22B%C3%B4ng+t%E1%BA%A9y+trang%5C%2F+trang+%C4%91i%E1%BB%83m++SILCOT+%28+H%E1%BB%99p+82+mi%E1%BA%BFng+%29+nh%E1%BA%ADp+kh%E1%BA%A9u+Nh%E1%BA%ADt+B%E1%BA%A3n%22%2C%22image%22%3A%22https%3A%5C%2F%5C%2Fp16-oec-va.ibyteimg.com%5C%2Ftos-maliva-i-o3syd03w52-us%5C%2F09adf7bc670447ccaef2a3ec808dee9c~tplv-o3syd03w52-resize-webp%3A260%3A260.webp%3Fdr%3D15582%26t%3D555f072d%26ps%3D933b5bde%26shp%3D7745054a%26shcp%3D9b759fb9%26idc%3Dmy3%26from%3D2001012042%22%7D&panel_source_v2=share_panel&sec_user_id=MS4wLjABAAAAr_oIaNkGso2928WLLd4uavDILTE681nPevGUqjGYH6yXax33tGu3h-Wp1sZjwCQx&share_app_id=1180&share_enter_from=&share_link_id=1F826DE8-B7A3-4981-860F-9C47ECD5E416&share_region=VN&social_share_type=15&timestamp=1789998652&trackParams=%7B%22enable_shop_tab_popup%22%3A1%2C%22device_id%22%3A%227028968568495949313%22%2C%22enter_from_info%22%3A%22product_share_outside%22%2C%22source_page_type%22%3A%22product_share%22%7D&tt_from=copy&u_code=EKJKBLKLH7L%3AD9&ug_btm=b0%2Cb6661&unique_id=bot.bien.audio&user_id=7513754999902454801&utm_campaign=client_share&utm_medium=ios&utm_source=copy",
     "position": "center",
-    "auto_close_sec": 20,
+    "delay_sec": 30,
+    "auto_close_sec": 0,
     "repeat_hours": 1
   }
 }

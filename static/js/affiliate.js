@@ -171,12 +171,17 @@
     const box = document.createElement('div');
     box.className = 'aff-box';
 
-    const close = document.createElement('button');
-    close.type = 'button';
-    close.className = 'aff-close';
-    close.setAttribute('aria-label', 'Đóng');
-    close.textContent = '×';
-    box.appendChild(close);
+    // noClose (banner): không có nút × và không đóng khi bấm ra ngoài - người đọc chỉ thoát được
+    // bằng nút chính (mở link) hoặc khi hết `auto_close_sec`.
+    let close = null;
+    if (!opts.noClose) {
+      close = document.createElement('button');
+      close.type = 'button';
+      close.className = 'aff-close';
+      close.setAttribute('aria-label', 'Đóng');
+      close.textContent = '×';
+      box.appendChild(close);
+    }
 
     if (opts.image) {
       const img = document.createElement('img');
@@ -239,8 +244,10 @@
       closeOverlay(ov);
       if (opts.onClose) opts.onClose();
     }
-    close.addEventListener('click', done);
-    ov.addEventListener('click', e => { if (e.target === ov) done(); });
+    if (close) {
+      close.addEventListener('click', done);
+      ov.addEventListener('click', e => { if (e.target === ov) done(); });
+    }
     if (skip) {
       skip.addEventListener('click', () => {
         closeOverlay(ov);
@@ -456,6 +463,7 @@
         title: b.title, message: b.message, image: b.image,
         buttonText: b.button_text, href: url,
         position: b.position,
+        noClose: true,
         countdownSec: b.auto_close_sec,
         countdownText: 'Tự động đóng sau {s}s'
       });

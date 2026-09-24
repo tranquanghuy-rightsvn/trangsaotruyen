@@ -146,8 +146,11 @@
     if (!url) return;
     countFire();
     if (!CFG.open_in_new_tab) { location.href = url; return; }
-    const w = window.open(url, '_blank', 'noopener');
-    if (!w) location.href = url;
+    // KHÔNG truyền 'noopener' vào window.open: có cờ đó thì trình duyệt LUÔN trả về null kể cả
+    // khi đã mở tab thành công -> nhánh dự phòng bên dưới chạy nhầm, tab đang đọc cũng bị kéo đi.
+    const w = window.open(url, '_blank');
+    if (w) { try { w.opener = null; } catch (e) {} return; }
+    location.href = url;   // bị chặn popup thật -> đành đi cùng tab
   }
 
   /* -----------------------------------------------------------
@@ -357,14 +360,14 @@
     const last = Number(ls(LS.TAP, 0)) || 0;
     if (last && Date.now() - last < CFG.click_cooldown_sec * 1000) return; // còn trong thời gian nghỉ
     tapArmed = true;
+    // Chỉ 'click' (chạm trên điện thoại cũng sinh click). KHÔNG dùng 'touchstart': trình duyệt
+    // không coi nó là cử chỉ người dùng -> window.open bị chặn -> rơi vào nhánh đi cùng tab.
     document.addEventListener('click', onTap, true);
-    document.addEventListener('touchstart', onTap, true);
   }
 
   function disarm() {
     tapArmed = false;
     document.removeEventListener('click', onTap, true);
-    document.removeEventListener('touchstart', onTap, true);
   }
 
   /** KHÔNG preventDefault: người dùng bấm gì vẫn được cái đó, link affiliate mở ở tab mới. */
@@ -375,6 +378,7 @@
     if (e.target.closest && e.target.closest('.aff-overlay')) return;  // đang thao tác trong popup
     if (capReached()) { disarm(); return; }
     disarm();
+    suppressUntil = Date.now() + 2000;   // cùng cú bấm này, kịch bản nhảy link không bắn thêm
     lsSet(LS.TAP, Date.now());
     elapsed = 0;
     ssSet(SS.TIME, 0);
@@ -415,12 +419,27 @@
     if (!dueAgain(LS.REDIRECT, CFG.redirect_repeat_hours)) return;
     afterStaying(SS.RD_TIME, CFG.first_visit_delay_sec, () => {
       if (capReached()) return;
-      const url = pickLink();
-      if (!url) return;
-      lsSet(LS.REDIRECT, Date.now());
-      countFire();
-      // Ngoài cử chỉ người dùng thì window.open bị chặn -> chỉ có thể đi cùng tab.
-      location.href = url;
+      if (!CFG.open_in_new_tab) {
+        const url = pickLink();
+        if (!url) return;
+        lsSet(LS.REDIRECT, Date.now());
+        countFire();
+        location.href = url;
+        return;
+      }
+      // Tab mới: trình duyệt chỉ cho window.open NGAY TRONG một cú bấm/chạm của người dùng,
+      // tự mở theo hẹn giờ là bị chặn. Nên đủ giờ thì "lên nòng", cú bấm kế tiếp mới mở link.
+      const onClick = e => {
+        if (Date.now() < suppressUntil) return;                            // kịch bản khác vừa bắn
+        if (document.querySelector('.aff-overlay')) return;                // đang có popup
+        if (e.target.closest && e.target.closest('.aff-overlay')) return;
+        document.removeEventListener('click', onClick, true);
+        if (capReached()) return;
+        suppressUntil = Date.now() + 2000;
+        lsSet(LS.REDIRECT, Date.now());
+        openLink(pickLink());
+      };
+      document.addEventListener('click', onClick, true);
     });
   }
 

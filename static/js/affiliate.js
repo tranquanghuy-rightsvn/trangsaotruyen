@@ -10,7 +10,8 @@
      2. Chuyển chương — đổi chương (bấm nút hoặc phím mũi tên trái/phải) có
         `next_chapter_rate`% hiện bảng tài trợ.
      3. Ở lại web  — sau `click_delay_sec` giây, cú chạm/click kế tiếp mở link (tab mới).
-     4. Lần đầu vào web — sau `first_visit_delay_sec` giây thì hiện banner (hoặc nhảy link).
+     4. Lần đầu vào web — ở lại đủ `first_visit_delay_sec` giây (cộng dồn qua các trang)
+        thì hiện banner (first_visit_mode = 'banner') hoặc nhảy thẳng link ('redirect').
 
    File này CỐ Ý tách khỏi main.js: tắt tính năng chỉ cần bỏ 1 thẻ <script> trong
    layouts/_head.html, và mọi thứ ở đây đều bọc trong try/catch + IIFE để một lỗi
@@ -44,7 +45,7 @@
   };
 
   // sessionStorage = theo TAB (thời gian ở lại, link đang xoay, số lần đã bắn trong phiên).
-  const SS = { TIME: 'tst_aff_time', COUNT: 'tst_aff_count', PICK: 'tst_aff_pick' };
+  const SS = { TIME: 'tst_aff_time', COUNT: 'tst_aff_count', PICK: 'tst_aff_pick', FV_TIME: 'tst_aff_fv_time' };
   // localStorage = theo TRÌNH DUYỆT (đã thấy banner lần đầu chưa, lần chạm gần nhất).
   const LS = { FIRST: 'tst_aff_first', TAP: 'tst_aff_tap' };
 
@@ -375,14 +376,21 @@
     const repeatMs = Math.max(0, num(b.repeat_hours, 0)) * 3600000;
     // repeat_hours = 0 -> đúng nghĩa "lần đầu": hiện một lần duy nhất trên máy đó.
     if (last && (!repeatMs || Date.now() - last < repeatMs)) return;
+    const redirect = CFG.first_visit_mode === 'redirect';
+    if (!redirect && !b.enabled) return;
 
-    setTimeout(() => {
+    // Đếm CỘNG DỒN qua các trang trong cùng tab (sessionStorage), không dùng setTimeout theo
+    // từng trang: người đọc thường bấm sang truyện/chương khác trước khi đủ x giây, nếu mỗi
+    // lần tải trang lại đếm từ 0 thì banner gần như không bao giờ kịp hiện.
+    let waited = Number(ss(SS.FV_TIME, 0)) || 0;
+    const fire = () => {
+      clearInterval(timer);
       if (capReached()) return;
-      lsSet(LS.FIRST, Date.now());
       const url = b.link || pickLink();
       if (!url) return;
-      if (CFG.first_visit_mode === 'redirect') { countFire(); location.href = url; return; }
-      if (!b.enabled) return;
+      lsSet(LS.FIRST, Date.now());   // chỉ đánh dấu "đã thấy" khi THỰC SỰ hiện/nhảy link
+      ssSet(SS.FV_TIME, 0);
+      if (redirect) { countFire(); location.href = url; return; }
       showOverlay({
         title: b.title, message: b.message, image: b.image,
         buttonText: b.button_text, href: url,
@@ -390,6 +398,13 @@
         countdownSec: b.auto_close_sec,
         countdownText: 'Tự động đóng sau {s}s'
       });
-    }, CFG.first_visit_delay_sec * 1000);
+    };
+    const timer = setInterval(() => {
+      if (document.hidden) return;                       // tab nền không tính
+      if (document.querySelector('.aff-overlay')) return; // đang có popup khác thì chờ
+      waited += 1;
+      ssSet(SS.FV_TIME, waited);
+      if (waited >= CFG.first_visit_delay_sec) fire();
+    }, 1000);
   }
 })();

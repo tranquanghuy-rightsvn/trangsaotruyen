@@ -426,27 +426,14 @@
     if (!dueAgain(LS.REDIRECT, CFG.redirect_repeat_hours)) return;
     afterStaying(SS.RD_TIME, CFG.first_visit_delay_sec, () => {
       if (capReached()) return;
-      if (!CFG.open_in_new_tab) {
-        const url = pickLink();
-        if (!url) return;
-        lsSet(LS.REDIRECT, Date.now());
-        countFire();
-        location.href = url;
-        return;
-      }
-      // Tab mới: trình duyệt chỉ cho window.open NGAY TRONG một cú bấm/chạm của người dùng,
-      // tự mở theo hẹn giờ là bị chặn. Nên đủ giờ thì "lên nòng", cú bấm kế tiếp mới mở link.
-      const onClick = e => {
-        if (Date.now() < suppressUntil) return;                            // kịch bản khác vừa bắn
-        if (document.querySelector('.aff-overlay')) return;                // đang có popup
-        if (e.target.closest && e.target.closest('.aff-overlay')) return;
-        document.removeEventListener('click', onClick, true);
-        if (capReached()) return;
-        suppressUntil = Date.now() + 2000;
-        lsSet(LS.REDIRECT, Date.now());
-        openLink(pickLink());
-      };
-      document.addEventListener('click', onClick, true);
+      const url = pickLink();
+      if (!url) return;
+      lsSet(LS.REDIRECT, Date.now());
+      countFire();
+      // LUÔN đi cùng tab, bỏ qua open_in_new_tab: trình duyệt chỉ cho mở tab mới ngay trong một
+      // cú bấm/chạm của người dùng, tự mở theo hẹn giờ là bị chặn. Muốn "tự động nhảy" thì
+      // chỉ có cách này (open_in_new_tab chỉ áp dụng cho các kịch bản có cú bấm).
+      location.href = url;
     });
   }
 

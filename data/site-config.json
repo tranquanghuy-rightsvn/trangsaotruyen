@@ -35,10 +35,10 @@
   },
   "ga": "",
   "chapters_new": {
-    "as_of": "2026-09-25",
+    "as_of": "2026-09-26",
     "day": 0,
     "week": 31,
-    "month": 56,
+    "month": 31,
     "year": 61,
     "by_slug": {
       "anh-trai-ta-hoa-ra-la-con-nuoi": {
@@ -50,13 +50,13 @@
       "nghe-noi-chim-cua-bui-tong-hinh-nhu-rat-lon": {
         "day": 0,
         "week": 0,
-        "month": 21,
+        "month": 0,
         "year": 21
       },
       "sau-khi-bi-me-ruot-nem-len-giuong-tinh-nhan-toi-thanh-phu-nhan-hao-mon": {
         "day": 0,
         "week": 0,
-        "month": 4,
+        "month": 0,
         "year": 9
       },
       "tieu-bao-cua-toi-la-luc-tong": {

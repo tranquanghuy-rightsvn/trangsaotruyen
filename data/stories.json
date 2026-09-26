@@ -145,5 +145,36 @@
     "year_views": 190,
     "rating": null,
     "nominations": 0
+  },
+  {
+    "id": 6,
+    "slug": "khong-ngoan-thi-khong-can-nua",
+    "title": "Không Ngoan Thì Không Cần Nữa!",
+    "author": "Ổ Mật Mật",
+    "genres": [
+      "co-trang"
+    ],
+    "tags": [
+      "Đạn mạc",
+      "nữ cường",
+      "song cặp",
+      "HE",
+      "truy thê"
+    ],
+    "work_type": "dich",
+    "status": "full",
+    "chapter_count": 0,
+    "cover": "assets/truyen/khong-ngoan-thi-khong-can-nua-500x750.webp",
+    "hot": false,
+    "created_at": "2026-09-26T09:10:28+07:00",
+    "updated_at": "2026-09-26T09:10:28+07:00",
+    "created_by": "kimphungft@gmail.com",
+    "views": 0,
+    "day_views": 0,
+    "week_views": 0,
+    "month_views": 0,
+    "year_views": 0,
+    "rating": null,
+    "nominations": 0
   }
 ]

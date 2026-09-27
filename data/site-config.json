@@ -35,11 +35,11 @@
   },
   "ga": "",
   "chapters_new": {
-    "as_of": "2026-09-27",
-    "day": 10,
-    "week": 41,
-    "month": 41,
-    "year": 71,
+    "as_of": "2026-09-28",
+    "day": 11,
+    "week": 52,
+    "month": 52,
+    "year": 82,
     "by_slug": {
       "anh-trai-ta-hoa-ra-la-con-nuoi": {
         "day": 0,
@@ -48,7 +48,7 @@
         "year": 12
       },
       "khong-ngoan-thi-khong-can-nua": {
-        "day": 10,
+        "day": 0,
         "week": 10,
         "month": 10,
         "year": 10
@@ -76,6 +76,12 @@
         "week": 10,
         "month": 10,
         "year": 10
+      },
+      "tu-con-sen-thanh-vuong-phi": {
+        "day": 11,
+        "week": 11,
+        "month": 11,
+        "year": 11
       }
     }
   }

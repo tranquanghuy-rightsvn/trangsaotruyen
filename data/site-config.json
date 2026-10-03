@@ -35,17 +35,23 @@
   },
   "ga": "",
   "chapters_new": {
-    "as_of": "2026-10-03",
-    "day": 0,
+    "as_of": "2026-10-04",
+    "day": 10,
     "week": 40,
-    "month": 71,
-    "year": 101,
+    "month": 81,
+    "year": 111,
     "by_slug": {
       "anh-trai-ta-hoa-ra-la-con-nuoi": {
         "day": 0,
         "week": 0,
         "month": 12,
         "year": 12
+      },
+      "ba-thay-tarot": {
+        "day": 10,
+        "week": 10,
+        "month": 10,
+        "year": 10
       },
       "da-lau-khong-gap-co-phu-nhan": {
         "day": 0,
@@ -55,7 +61,7 @@
       },
       "khong-ngoan-thi-khong-can-nua": {
         "day": 0,
-        "week": 10,
+        "week": 0,
         "month": 10,
         "year": 10
       },

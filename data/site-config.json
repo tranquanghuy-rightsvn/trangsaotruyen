@@ -35,11 +35,11 @@
   },
   "ga": "",
   "chapters_new": {
-    "as_of": "2026-10-04",
+    "as_of": "2026-10-05",
     "day": 10,
-    "week": 40,
-    "month": 81,
-    "year": 111,
+    "week": 39,
+    "month": 91,
+    "year": 121,
     "by_slug": {
       "anh-trai-ta-hoa-ra-la-con-nuoi": {
         "day": 0,
@@ -48,7 +48,7 @@
         "year": 12
       },
       "ba-thay-tarot": {
-        "day": 10,
+        "day": 0,
         "week": 10,
         "month": 10,
         "year": 10
@@ -70,6 +70,12 @@
         "week": 0,
         "month": 0,
         "year": 21
+      },
+      "nguoi-iu-trong-than-xac-ca-ca": {
+        "day": 10,
+        "week": 10,
+        "month": 10,
+        "year": 10
       },
       "sau-khi-bi-me-ruot-nem-len-giuong-tinh-nhan-toi-thanh-phu-nhan-hao-mon": {
         "day": 0,
@@ -97,7 +103,7 @@
       },
       "tu-con-sen-thanh-vuong-phi": {
         "day": 0,
-        "week": 11,
+        "week": 0,
         "month": 11,
         "year": 11
       }

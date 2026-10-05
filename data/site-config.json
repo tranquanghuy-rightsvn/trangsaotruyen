@@ -35,9 +35,9 @@
   },
   "ga": "",
   "chapters_new": {
-    "as_of": "2026-10-05",
-    "day": 10,
-    "week": 39,
+    "as_of": "2026-10-06",
+    "day": 0,
+    "week": 29,
     "month": 91,
     "year": 121,
     "by_slug": {
@@ -72,7 +72,7 @@
         "year": 21
       },
       "nguoi-iu-trong-than-xac-ca-ca": {
-        "day": 10,
+        "day": 0,
         "week": 10,
         "month": 10,
         "year": 10
@@ -85,7 +85,7 @@
       },
       "su-huynh-choi-lon-the": {
         "day": 0,
-        "week": 10,
+        "week": 0,
         "month": 10,
         "year": 10
       },

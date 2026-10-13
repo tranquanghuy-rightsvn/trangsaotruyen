@@ -35,11 +35,11 @@
   },
   "ga": "",
   "chapters_new": {
-    "as_of": "2026-10-13",
-    "day": 0,
-    "week": 28,
-    "month": 119,
-    "year": 149,
+    "as_of": "2026-10-14",
+    "day": 9,
+    "week": 29,
+    "month": 128,
+    "year": 158,
     "by_slug": {
       "anh-trai-ta-hoa-ra-la-con-nuoi": {
         "day": 0,
@@ -58,6 +58,12 @@
         "week": 11,
         "month": 11,
         "year": 11
+      },
+      "cuoc-doi-cua-ta-do-ta-lam-chu": {
+        "day": 9,
+        "week": 9,
+        "month": 9,
+        "year": 9
       },
       "da-lau-khong-gap-co-phu-nhan": {
         "day": 0,
@@ -91,7 +97,7 @@
       },
       "sau-khi-hoa-hinh-ta-thanh-the-tu-cua-chi-ton": {
         "day": 0,
-        "week": 8,
+        "week": 0,
         "month": 8,
         "year": 8
       },

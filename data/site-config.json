@@ -35,10 +35,10 @@
   },
   "ga": "",
   "chapters_new": {
-    "as_of": "2026-10-21",
+    "as_of": "2026-10-22",
     "day": 0,
-    "week": 4,
-    "month": 132,
+    "week": 0,
+    "month": 123,
     "year": 162,
     "by_slug": {
       "anh-trai-ta-hoa-ra-la-con-nuoi": {
@@ -73,7 +73,7 @@
       },
       "hon-nhan-nay-von-la-mot-cai-bay": {
         "day": 0,
-        "week": 4,
+        "week": 0,
         "month": 4,
         "year": 4
       },
@@ -122,7 +122,7 @@
       "tieu-bao-cua-toi-la-luc-tong": {
         "day": 0,
         "week": 0,
-        "month": 9,
+        "month": 0,
         "year": 9
       },
       "tranh-nguoi-cua-am-ty": {

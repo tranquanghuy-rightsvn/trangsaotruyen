@@ -35,12 +35,18 @@
   },
   "ga": "",
   "chapters_new": {
-    "as_of": "2026-10-23",
-    "day": 0,
-    "week": 0,
-    "month": 111,
-    "year": 162,
+    "as_of": "2026-10-24",
+    "day": 8,
+    "week": 8,
+    "month": 109,
+    "year": 170,
     "by_slug": {
+      "anh-trai-15-giay": {
+        "day": 8,
+        "week": 8,
+        "month": 8,
+        "year": 8
+      },
       "anh-trai-ta-hoa-ra-la-con-nuoi": {
         "day": 0,
         "week": 0,
@@ -128,7 +134,7 @@
       "tranh-nguoi-cua-am-ty": {
         "day": 0,
         "week": 0,
-        "month": 10,
+        "month": 0,
         "year": 10
       },
       "tu-con-sen-thanh-vuong-phi": {

@@ -39,14 +39,14 @@
   },
   "ga": "",
   "chapters_new": {
-    "as_of": "2026-10-24",
-    "day": 8,
-    "week": 8,
-    "month": 109,
-    "year": 170,
+    "as_of": "2026-10-25",
+    "day": 12,
+    "week": 20,
+    "month": 121,
+    "year": 182,
     "by_slug": {
       "anh-trai-15-giay": {
-        "day": 8,
+        "day": 0,
         "week": 8,
         "month": 8,
         "year": 8
@@ -98,6 +98,12 @@
         "week": 0,
         "month": 0,
         "year": 21
+      },
+      "ngoc-sanh-ben-tram": {
+        "day": 12,
+        "week": 12,
+        "month": 12,
+        "year": 12
       },
       "nguoi-iu-trong-than-xac-ca-ca": {
         "day": 0,

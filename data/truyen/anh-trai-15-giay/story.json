@@ -4,7 +4,8 @@
   "title": "Anh trai 15 giây",
   "author": "Han",
   "genres": [
-    "hien-dai"
+    "hien-dai",
+    "dam-my"
   ],
   "tags": [
     "Đam mỹ",
@@ -19,6 +20,6 @@
   "hot": false,
   "chapter_count": 8,
   "created_at": "2026-10-23T19:43:21+07:00",
-  "updated_at": "2026-10-23T19:48:52+07:00",
+  "updated_at": "2026-10-24T16:38:28+07:00",
   "created_by": "han11052406@gmail.com"
 }

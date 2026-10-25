@@ -39,11 +39,11 @@
   },
   "ga": "",
   "chapters_new": {
-    "as_of": "2026-10-25",
-    "day": 12,
-    "week": 20,
-    "month": 121,
-    "year": 182,
+    "as_of": "2026-10-26",
+    "day": 8,
+    "week": 28,
+    "month": 129,
+    "year": 190,
     "by_slug": {
       "anh-trai-15-giay": {
         "day": 0,
@@ -81,6 +81,12 @@
         "month": 9,
         "year": 9
       },
+      "hom-nay-tong-giam-doc-lai-say-mui-huong-cua-toi": {
+        "day": 8,
+        "week": 8,
+        "month": 8,
+        "year": 8
+      },
       "hon-nhan-nay-von-la-mot-cai-bay": {
         "day": 0,
         "week": 0,
@@ -100,7 +106,7 @@
         "year": 21
       },
       "ngoc-sanh-ben-tram": {
-        "day": 12,
+        "day": 0,
         "week": 12,
         "month": 12,
         "year": 12

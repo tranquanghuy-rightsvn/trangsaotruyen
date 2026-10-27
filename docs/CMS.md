@@ -747,6 +747,11 @@ và JS chỉ tải thêm ~1KB.
 | Ở lại web | `click_delay_sec` + `click_cooldown_sec` | Cộng dồn thời gian **thực sự nhìn màn hình** (`document.hidden` thì không cộng) qua các trang trong cùng tab; đủ giờ thì cú click/chạm kế tiếp mở link ở tab mới — **không** chặn thao tác gốc của người dùng. Sau đó nghỉ đúng `click_cooldown_sec` giây. |
 | Lần đầu truy cập | `first_visit_delay_sec` + `first_visit_mode` | Sau ngần ấy giây hiện banner (`banner`) hoặc nhảy thẳng sang link. Mốc "đã hiện" nằm ở `localStorage`; `banner.repeat_hours = 0` nghĩa là đúng 1 lần/máy. |
 
+**Ảnh banner** nhập link, hoặc chọn file từ máy: CMS thu nhỏ còn ngang tối đa 1000px (giữ tỉ
+lệ, xuất webp), gọi `uploadAffiliateImage` ghi vào `static/assets/affiliate/banner-<thời điểm>.webp`
+rồi điền `/assets/affiliate/...` vào ô — bấm **Lưu** mới vào `affiliate.json`. Tên file theo thời
+điểm (không ghi đè) để CDN không giữ ảnh cũ.
+
 `max_per_session` là trần số lần bắn trong 1 phiên (0 = không giới hạn). `open_in_new_tab`
 mặc định **bật**: cướp tab đang đọc là cách nhanh nhất để mất người đọc.
 

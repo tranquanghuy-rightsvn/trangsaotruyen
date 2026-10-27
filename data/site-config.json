@@ -39,10 +39,10 @@
   },
   "ga": "",
   "chapters_new": {
-    "as_of": "2026-10-27",
-    "day": 20,
+    "as_of": "2026-10-28",
+    "day": 0,
     "week": 48,
-    "month": 139,
+    "month": 128,
     "year": 210,
     "by_slug": {
       "anh-trai-15-giay": {
@@ -94,7 +94,7 @@
         "year": 4
       },
       "ke-san-moi-sap-bay": {
-        "day": 9,
+        "day": 0,
         "week": 9,
         "month": 9,
         "year": 9
@@ -148,7 +148,7 @@
         "year": 10
       },
       "thuong-uyen-ky": {
-        "day": 11,
+        "day": 0,
         "week": 11,
         "month": 11,
         "year": 11
@@ -168,7 +168,7 @@
       "tu-con-sen-thanh-vuong-phi": {
         "day": 0,
         "week": 0,
-        "month": 11,
+        "month": 0,
         "year": 11
       }
     }

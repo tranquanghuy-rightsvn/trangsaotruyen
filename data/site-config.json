@@ -39,11 +39,11 @@
   },
   "ga": "",
   "chapters_new": {
-    "as_of": "2026-10-28",
-    "day": 0,
-    "week": 48,
-    "month": 128,
-    "year": 210,
+    "as_of": "2026-10-29",
+    "day": 6,
+    "week": 54,
+    "month": 124,
+    "year": 216,
     "by_slug": {
       "anh-trai-15-giay": {
         "day": 0,
@@ -135,6 +135,12 @@
         "month": 8,
         "year": 8
       },
+      "sau-khi-toi-xoa-bo-thiet-lap-alpha-cua-toi-phat-dien-roi": {
+        "day": 6,
+        "week": 6,
+        "month": 6,
+        "year": 6
+      },
       "su-de-cua-ta-khong-tam-thuong": {
         "day": 0,
         "week": 0,
@@ -144,7 +150,7 @@
       "su-huynh-choi-lon-the": {
         "day": 0,
         "week": 0,
-        "month": 10,
+        "month": 0,
         "year": 10
       },
       "thuong-uyen-ky": {

@@ -1424,6 +1424,8 @@ p {
   display: flex;
   justify-content: space-between;
   align-items: center;
+  flex-wrap: wrap;
+  gap: 0 12px;
 }
 
 .comment-login-note {
@@ -2195,8 +2197,9 @@ p {
   .detail-top-layout {
     grid-template-columns: 1fr;
   }
+  /* minmax(0, 1fr): cột 1fr mặc định không co nhỏ hơn nội dung -> form bình luận đẩy tràn viền */
   .detail-content-row {
-    grid-template-columns: 1fr;
+    grid-template-columns: minmax(0, 1fr);
   }
   .detail-body {
     grid-template-columns: 1fr;
@@ -2346,6 +2349,16 @@ p {
   }
   .category-row-chapter {
     font-size: 0.78rem;
+  }
+
+  /* Form bình luận: ô tên chiếm cả dòng, hàng sao xuống dưới — tránh tràn viền */
+  .comment-name-field {
+    flex: 1 1 100%;
+    margin-bottom: 12px;
+  }
+  .comment-name-input {
+    width: 100%;
+    min-width: 0;
   }
 
   /* Di động: 4 truyện mỗi hàng (thay vì 2) — chuyển sang grid 4 cột đều nhau */

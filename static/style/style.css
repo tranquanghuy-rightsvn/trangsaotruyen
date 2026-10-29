@@ -2204,6 +2204,24 @@ p {
   .footer-grid {
     grid-template-columns: 1fr 1fr;
   }
+
+  /* Trang truyện khi xếp 1 cột (mobile/tablet): đưa "Truyện cùng tác giả" xuống dưới
+     danh sách chương. `display: contents` gỡ 2 section bọc để các khối con thành con trực
+     tiếp của <main>, rồi sắp lại bằng `order`. Desktop giữ nguyên bố cục 2 cột. */
+  .detail-page-main {
+    display: flex;
+    flex-direction: column;
+    gap: 40px;
+  }
+  .detail-page-main .detail-top-layout,
+  .detail-page-main .detail-body {
+    display: contents;
+  }
+  .detail-page-main .detail-info-block { order: 1; }
+  .detail-page-main .detail-main { order: 2; }
+  .detail-page-main .detail-same-author { order: 3; }
+  .detail-page-main .detail-sidebar { order: 4; }
+  .detail-page-main .detail-content-row { order: 5; }
 }
 
 @media (max-width: 860px) {

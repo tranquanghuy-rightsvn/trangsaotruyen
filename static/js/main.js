@@ -187,6 +187,8 @@ function initSearch() {
   const input = document.querySelector('.search-input');
   const results = document.querySelector('.search-results');
   if (!input || !results) return;
+  // Ô tìm kiếm trên mobile rất hẹp (nhường chỗ cho tên thương hiệu) -> placeholder ngắn
+  if (window.matchMedia('(max-width: 640px)').matches) input.placeholder = 'Tìm kiếm...';
 
   let index = null;
   let loading = null;

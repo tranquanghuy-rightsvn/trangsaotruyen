@@ -2269,11 +2269,39 @@ p {
 }
 
 @media (max-width: 640px) {
+  /* Mobile: vẫn hiện tên thương hiệu cạnh logo, ô tìm kiếm co ngắn lấp phần còn lại */
   .header-top {
-    gap: 12px;
+    position: relative;
+    gap: 10px;
+    padding: 0 12px;
+  }
+  .logo {
+    gap: 6px;
+  }
+  .logo img {
+    height: 32px;
+    width: 32px;
   }
   .logo-text {
-    display: none;
+    font-size: 0.95rem;
+  }
+  .search-box {
+    position: static;
+    flex: 1 1 auto;
+    min-width: 0;
+    max-width: none;
+  }
+  .search-input {
+    padding: 7px 30px 7px 10px;
+    font-size: 0.85rem;
+  }
+  .search-icon {
+    right: 10px;
+  }
+  /* Ô tìm kiếm hẹp -> cho bảng kết quả trải theo cả chiều ngang header */
+  .search-results {
+    left: 12px;
+    right: 12px;
   }
   .footer-grid {
     grid-template-columns: 1fr;
@@ -2302,15 +2330,37 @@ p {
     font-size: 0.78rem;
   }
 
-  /* Thu nhỏ thẻ truyện trên di động để vừa 2 cột trên màn hình hẹp (~360-430px) */
+  /* Di động: 4 truyện mỗi hàng (thay vì 2) — chuyển sang grid 4 cột đều nhau */
   .novel-grid {
-    gap: 12px;
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 8px;
   }
-  .novel-card {
-    flex-basis: 150px;
+  .novel-title-overlay {
+    padding: 3px 4px;
   }
-  .novel-card-completed {
-    flex-basis: 140px;
+  .novel-title-overlay .novel-title {
+    font-size: 10px;
+    line-height: 1.25;
+  }
+  .badge-ribbon {
+    top: -2px;
+    left: -38px;
+    width: 100px;
+    padding: 2px 0;
+    font-size: 8px;
+  }
+  .novel-card-completed .novel-info {
+    padding: 6px 2px;
+  }
+  .novel-card-completed .novel-title {
+    font-size: 11px;
+  }
+  .chip-full {
+    margin-top: 4px;
+    padding: 2px 4px;
+    font-size: 8px;
+    white-space: nowrap;
   }
 }
 

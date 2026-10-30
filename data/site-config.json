@@ -39,15 +39,15 @@
   },
   "ga": "",
   "chapters_new": {
-    "as_of": "2026-10-30",
-    "day": 15,
-    "week": 69,
-    "month": 130,
-    "year": 231,
+    "as_of": "2026-10-31",
+    "day": 6,
+    "week": 67,
+    "month": 136,
+    "year": 237,
     "by_slug": {
       "anh-trai-15-giay": {
         "day": 0,
-        "week": 8,
+        "week": 0,
         "month": 8,
         "year": 8
       },
@@ -82,7 +82,7 @@
         "year": 9
       },
       "gio-tuyet-nam-ay": {
-        "day": 15,
+        "day": 0,
         "week": 15,
         "month": 15,
         "year": 15
@@ -110,6 +110,12 @@
         "week": 0,
         "month": 0,
         "year": 10
+      },
+      "muoi-nam-cho-mot-loi-hoi-dap": {
+        "day": 6,
+        "week": 6,
+        "month": 6,
+        "year": 6
       },
       "nghe-noi-chim-cua-bui-tong-hinh-nhu-rat-lon": {
         "day": 0,

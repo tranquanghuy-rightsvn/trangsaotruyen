@@ -39,11 +39,11 @@
   },
   "ga": "",
   "chapters_new": {
-    "as_of": "2026-10-31",
-    "day": 6,
-    "week": 67,
-    "month": 136,
-    "year": 237,
+    "as_of": "2026-11-01",
+    "day": 10,
+    "week": 65,
+    "month": 146,
+    "year": 247,
     "by_slug": {
       "anh-trai-15-giay": {
         "day": 0,
@@ -112,7 +112,7 @@
         "year": 10
       },
       "muoi-nam-cho-mot-loi-hoi-dap": {
-        "day": 6,
+        "day": 0,
         "week": 6,
         "month": 6,
         "year": 6
@@ -125,13 +125,19 @@
       },
       "ngoc-sanh-ben-tram": {
         "day": 0,
-        "week": 12,
+        "week": 0,
         "month": 12,
         "year": 12
       },
       "nguoi-iu-trong-than-xac-ca-ca": {
         "day": 0,
         "week": 0,
+        "month": 10,
+        "year": 10
+      },
+      "phu-quan-cua-ta-la-soi-doi-lot-cuu": {
+        "day": 10,
+        "week": 10,
         "month": 10,
         "year": 10
       },

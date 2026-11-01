@@ -39,11 +39,11 @@
   },
   "ga": "",
   "chapters_new": {
-    "as_of": "2026-11-01",
-    "day": 10,
-    "week": 65,
-    "month": 146,
-    "year": 247,
+    "as_of": "2026-11-02",
+    "day": 7,
+    "week": 64,
+    "month": 153,
+    "year": 254,
     "by_slug": {
       "anh-trai-15-giay": {
         "day": 0,
@@ -89,7 +89,7 @@
       },
       "hom-nay-tong-giam-doc-lai-say-mui-huong-cua-toi": {
         "day": 0,
-        "week": 8,
+        "week": 0,
         "month": 8,
         "year": 8
       },
@@ -110,6 +110,12 @@
         "week": 0,
         "month": 0,
         "year": 10
+      },
+      "khong-phai-ngoc-bach-ngot-van-ga-cho-thai-tu-gia-bac-kinh": {
+        "day": 7,
+        "week": 7,
+        "month": 7,
+        "year": 7
       },
       "muoi-nam-cho-mot-loi-hoi-dap": {
         "day": 0,
@@ -136,7 +142,7 @@
         "year": 10
       },
       "phu-quan-cua-ta-la-soi-doi-lot-cuu": {
-        "day": 10,
+        "day": 0,
         "week": 10,
         "month": 10,
         "year": 10

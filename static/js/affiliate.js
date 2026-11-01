@@ -42,7 +42,7 @@
     banner: {
       enabled: true, title: '', message: '', image: '',
       button_text: 'Xem ngay', link: '', position: 'center',
-      delay_sec: 0, auto_close_sec: 0, repeat_hours: 24
+      delay_sec: 0, auto_close_sec: 0, repeat_sec: 86400
     }
   };
 
@@ -51,7 +51,7 @@
               BN_TIME: 'tst_aff_fv_time', RD_TIME: 'tst_aff_rd_time' };
   // localStorage = theo TRÌNH DUYỆT (đã thấy banner lần đầu chưa, lần chạm gần nhất).
   // BANNER dùng key MỚI (không phải 'tst_aff_first' cũ): bản trước ghi 'tst_aff_first' cả khi
-  // NHẢY LINK, nên máy nào vừa bị nhảy link sẽ bị chặn banner suốt `repeat_hours` giờ.
+  // NHẢY LINK, nên máy nào vừa bị nhảy link sẽ bị chặn banner suốt `repeat_sec` giây.
   const LS = { BANNER: 'tst_aff_banner', REDIRECT: 'tst_aff_redirect', TAP: 'tst_aff_tap' };
 
   // Cửa sổ riêng tư và vài webview ném lỗi ngay ở bước ĐỌC storage — bọc hết như main.js.
@@ -81,12 +81,17 @@
     const c = Object.assign({}, DEFAULTS, raw);
     c.chapter_panel = Object.assign({}, DEFAULTS.chapter_panel, raw.chapter_panel || {});
     c.banner = Object.assign({}, DEFAULTS.banner, raw.banner || {});
+    // File cấu hình CŨ lưu banner.repeat_hours (giờ) -> quy ra giây.
+    const rawBn = raw.banner || {};
+    if (rawBn.repeat_sec === undefined && rawBn.repeat_hours !== undefined) {
+      c.banner.repeat_sec = num(rawBn.repeat_hours, 0) * 3600;
+    }
     // File cấu hình kiểu CŨ (1 ô first_visit_delay_sec dùng chung + first_visit_mode chọn
     // banner HOẶC nhảy link). Quy đổi sang 2 kịch bản riêng - khớp getAffiliate_() bên GAS.
     if (raw.first_visit_mode !== undefined && (raw.banner || {}).delay_sec === undefined) {
       c.banner.delay_sec = num(raw.first_visit_delay_sec, 0);
       if (raw.first_visit_mode !== 'redirect') c.first_visit_delay_sec = 0;
-      if (raw.redirect_repeat_hours === undefined) c.redirect_repeat_hours = c.banner.repeat_hours;
+      if (raw.redirect_repeat_hours === undefined) c.redirect_repeat_hours = c.banner.repeat_sec / 3600;
     }
     // Admin nhập link ngăn nhau bằng ";" — CMS đã tách sẵn thành mảng, nhưng vẫn chấp nhận
     // chuỗi thô để sửa tay data/affiliate.json cũng chạy được.
@@ -99,6 +104,7 @@
     c.first_visit_delay_sec = Math.max(0, num(c.first_visit_delay_sec, 0));
     c.redirect_repeat_hours = Math.max(0, num(c.redirect_repeat_hours, 24));
     c.banner.delay_sec = Math.max(0, num(c.banner.delay_sec, 0));
+    c.banner.repeat_sec = Math.max(0, num(c.banner.repeat_sec, 86400));
     c.max_per_session = Math.max(0, num(c.max_per_session, 0));
     return c;
   }
@@ -396,10 +402,10 @@
      4 + 5. Nhảy link / Banner sau x giây ở lại web (hai kịch bản độc lập)
      ----------------------------------------------------------- */
 
-  /** Đã tới lượt hiện lại chưa. repeat_hours = 0 -> đúng nghĩa "lần đầu": 1 lần duy nhất/máy. */
-  function dueAgain(lsKey, repeatHours) {
+  /** Đã tới lượt hiện lại chưa. repeatSec = 0 -> đúng nghĩa "lần đầu": 1 lần duy nhất/máy. */
+  function dueAgain(lsKey, repeatSec) {
     const last = Number(ls(lsKey, 0)) || 0;
-    const repeatMs = Math.max(0, num(repeatHours, 0)) * 3600000;
+    const repeatMs = Math.max(0, num(repeatSec, 0)) * 1000;
     return !last || (repeatMs && Date.now() - last >= repeatMs);
   }
 
@@ -423,7 +429,7 @@
 
   function initRedirect() {
     if (!CFG.first_visit_delay_sec) return;
-    if (!dueAgain(LS.REDIRECT, CFG.redirect_repeat_hours)) return;
+    if (!dueAgain(LS.REDIRECT, CFG.redirect_repeat_hours * 3600)) return;
     afterStaying(SS.RD_TIME, CFG.first_visit_delay_sec, () => {
       if (capReached()) return;
       if (!CFG.open_in_new_tab) {
@@ -453,7 +459,7 @@
   function initBanner() {
     const b = CFG.banner;
     if (!b.enabled || !b.delay_sec) return;
-    if (!dueAgain(LS.BANNER, b.repeat_hours)) return;
+    if (!dueAgain(LS.BANNER, b.repeat_sec)) return;
     afterStaying(SS.BN_TIME, b.delay_sec, () => {
       if (capReached()) return;
       const url = b.link || pickLink();

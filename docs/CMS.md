@@ -745,7 +745,7 @@ và JS chỉ tải thêm ~1KB.
 | Xoay link | `rotate_sec` | Cứ ngần ấy giây random lại 1 link trong `links`. Link đang chọn nằm ở `sessionStorage` nên **chuyển trang vẫn giữ nguyên link** cho tới khi hết hạn — chọn lại mỗi lần tải trang thì "xoay theo giây" không còn nghĩa. |
 | Chuyển chương | `next_chapter_rate` | Đổi chương có ngần ấy % hiện bảng tài trợ (`chapter_panel`) — tính cho **cả hai chiều** và **cả hai cách**: bấm nút "Chương trước"/"Chương tiếp" lẫn phím mũi tên trái/phải. Bấm nút chính = mở link ở tab mới **và vẫn sang chương tiếp**; bấm "bỏ qua"/"×"/nền = sang chương tiếp ngay. Không có đường nào làm người đọc kẹt lại. |
 | Ở lại web | `click_delay_sec` + `click_cooldown_sec` | Cộng dồn thời gian **thực sự nhìn màn hình** (`document.hidden` thì không cộng) qua các trang trong cùng tab; đủ giờ thì cú click/chạm kế tiếp mở link ở tab mới — **không** chặn thao tác gốc của người dùng. Sau đó nghỉ đúng `click_cooldown_sec` giây. |
-| Lần đầu truy cập | `first_visit_delay_sec` + `first_visit_mode` | Sau ngần ấy giây hiện banner (`banner`) hoặc nhảy thẳng sang link. Mốc "đã hiện" nằm ở `localStorage`; `banner.repeat_hours = 0` nghĩa là đúng 1 lần/máy. |
+| Lần đầu truy cập | `first_visit_delay_sec` + `first_visit_mode` | Sau ngần ấy giây hiện banner (`banner`) hoặc nhảy thẳng sang link. Mốc "đã hiện" nằm ở `localStorage`; `banner.repeat_sec` (giây) = 0 nghĩa là đúng 1 lần/máy. |
 
 **Ảnh banner** nhập link, hoặc chọn file từ máy: CMS thu nhỏ còn ngang tối đa 1000px (giữ tỉ
 lệ, xuất webp), gọi `uploadAffiliateImage` ghi vào `static/assets/affiliate/banner-<thời điểm>.webp`

@@ -39,11 +39,11 @@
   },
   "ga": "",
   "chapters_new": {
-    "as_of": "2026-11-02",
-    "day": 7,
-    "week": 64,
-    "month": 153,
-    "year": 254,
+    "as_of": "2026-11-03",
+    "day": 9,
+    "week": 53,
+    "month": 152,
+    "year": 263,
     "by_slug": {
       "anh-trai-15-giay": {
         "day": 0,
@@ -60,7 +60,7 @@
       "ba-thay-tarot": {
         "day": 0,
         "week": 0,
-        "month": 10,
+        "month": 0,
         "year": 10
       },
       "cam-on-vi-chang-luon-o-ben": {
@@ -101,7 +101,7 @@
       },
       "ke-san-moi-sap-bay": {
         "day": 0,
-        "week": 9,
+        "week": 0,
         "month": 9,
         "year": 9
       },
@@ -112,7 +112,7 @@
         "year": 10
       },
       "khong-phai-ngoc-bach-ngot-van-ga-cho-thai-tu-gia-bac-kinh": {
-        "day": 7,
+        "day": 0,
         "week": 7,
         "month": 7,
         "year": 7
@@ -147,6 +147,12 @@
         "month": 10,
         "year": 10
       },
+      "phuong-hoang-me-hoac-chim-se": {
+        "day": 9,
+        "week": 9,
+        "month": 9,
+        "year": 9
+      },
       "sau-khi-bi-me-ruot-nem-len-giuong-tinh-nhan-toi-thanh-phu-nhan-hao-mon": {
         "day": 0,
         "week": 0,
@@ -179,7 +185,7 @@
       },
       "thuong-uyen-ky": {
         "day": 0,
-        "week": 11,
+        "week": 0,
         "month": 11,
         "year": 11
       },

@@ -39,10 +39,10 @@
   },
   "ga": "",
   "chapters_new": {
-    "as_of": "2026-11-03",
-    "day": 9,
+    "as_of": "2026-11-04",
+    "day": 0,
     "week": 53,
-    "month": 152,
+    "month": 142,
     "year": 263,
     "by_slug": {
       "anh-trai-15-giay": {
@@ -138,7 +138,7 @@
       "nguoi-iu-trong-than-xac-ca-ca": {
         "day": 0,
         "week": 0,
-        "month": 10,
+        "month": 0,
         "year": 10
       },
       "phu-quan-cua-ta-la-soi-doi-lot-cuu": {
@@ -148,7 +148,7 @@
         "year": 10
       },
       "phuong-hoang-me-hoac-chim-se": {
-        "day": 9,
+        "day": 0,
         "week": 9,
         "month": 9,
         "year": 9

@@ -39,9 +39,9 @@
   },
   "ga": "",
   "chapters_new": {
-    "as_of": "2026-11-04",
+    "as_of": "2026-11-05",
     "day": 0,
-    "week": 53,
+    "week": 47,
     "month": 142,
     "year": 263,
     "by_slug": {
@@ -167,7 +167,7 @@
       },
       "sau-khi-toi-xoa-bo-thiet-lap-alpha-cua-toi-phat-dien-roi": {
         "day": 0,
-        "week": 6,
+        "week": 0,
         "month": 6,
         "year": 6
       },

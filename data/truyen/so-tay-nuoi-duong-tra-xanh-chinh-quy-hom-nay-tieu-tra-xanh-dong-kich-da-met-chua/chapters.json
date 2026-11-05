@@ -1,1 +1,37 @@
-[]
+[
+  {
+    "n": 1,
+    "title": "CHƯƠNG 1: NHẬP HỌC ĐẠI HỌC",
+    "updated_at": "2026-11-05T10:41:02+07:00"
+  },
+  {
+    "n": 2,
+    "title": "CHƯƠNG 2: CUỘC GẶP GỠ ĐỊNH MỆNH VỚI \"MỎ VÀNG\"",
+    "updated_at": "2026-11-05T10:41:02+07:00"
+  },
+  {
+    "n": 3,
+    "title": "CHƯƠNG 3: THẢ THÍNH",
+    "updated_at": "2026-11-05T10:41:02+07:00"
+  },
+  {
+    "n": 4,
+    "title": "CHƯƠNG 4: TRÀ XANH THẬT GIẢ",
+    "updated_at": "2026-11-05T10:41:02+07:00"
+  },
+  {
+    "n": 5,
+    "title": "CHƯƠNG 5: KHI TRÀ XANH \"SẬP BẪY\" THỢ SĂN",
+    "updated_at": "2026-11-05T10:41:02+07:00"
+  },
+  {
+    "n": 6,
+    "title": "CHƯƠNG 6: RA MẮT GIA ĐÌNH",
+    "updated_at": "2026-11-05T10:41:02+07:00"
+  },
+  {
+    "n": 7,
+    "title": "CHƯƠNG 7: ĐỈNH CAO CUỘC ĐỜI CỦA TRA THỤ",
+    "updated_at": "2026-11-05T10:41:02+07:00"
+  }
+]

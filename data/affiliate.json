@@ -28,7 +28,7 @@
     "button_text": "Xem ngay",
     "link": "https://s.shopee.vn/7AeW1xmcUL",
     "position": "center",
-    "delay_sec": 20,
+    "delay_sec": 10,
     "auto_close_sec": 0,
     "repeat_sec": 100
   }

@@ -39,10 +39,10 @@
   },
   "ga": "",
   "chapters_new": {
-    "as_of": "2026-11-08",
+    "as_of": "2026-11-09",
     "day": 0,
-    "week": 48,
-    "month": 166,
+    "week": 41,
+    "month": 155,
     "year": 295,
     "by_slug": {
       "anh-trai-15-giay": {
@@ -78,7 +78,7 @@
       "cam-on-vi-chang-luon-o-ben": {
         "day": 0,
         "week": 0,
-        "month": 11,
+        "month": 0,
         "year": 11
       },
       "cuoc-doi-cua-ta-do-ta-lam-chu": {
@@ -125,7 +125,7 @@
       },
       "khong-phai-ngoc-bach-ngot-van-ga-cho-thai-tu-gia-bac-kinh": {
         "day": 0,
-        "week": 7,
+        "week": 0,
         "month": 7,
         "year": 7
       },

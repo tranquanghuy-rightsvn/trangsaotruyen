@@ -39,11 +39,11 @@
   },
   "ga": "",
   "chapters_new": {
-    "as_of": "2026-11-10",
-    "day": 0,
-    "week": 32,
-    "month": 146,
-    "year": 295,
+    "as_of": "2026-11-11",
+    "day": 33,
+    "week": 65,
+    "month": 179,
+    "year": 328,
     "by_slug": {
       "anh-trai-15-giay": {
         "day": 0,
@@ -75,17 +75,35 @@
         "month": 9,
         "year": 9
       },
+      "ca-lo-nha-toi-deu-trong-sinh": {
+        "day": 10,
+        "week": 10,
+        "month": 10,
+        "year": 10
+      },
       "cam-on-vi-chang-luon-o-ben": {
         "day": 0,
         "week": 0,
         "month": 0,
         "year": 11
       },
+      "cong-luoc-alpha-cap-s": {
+        "day": 8,
+        "week": 8,
+        "month": 8,
+        "year": 8
+      },
       "cuoc-doi-cua-ta-do-ta-lam-chu": {
         "day": 0,
         "week": 0,
         "month": 9,
         "year": 9
+      },
+      "cuu-toi-ban-than-cua-tong-tai-muon-nam-tren": {
+        "day": 8,
+        "week": 8,
+        "month": 8,
+        "year": 8
       },
       "da-lau-khong-gap-co-phu-nhan": {
         "day": 0,
@@ -212,6 +230,12 @@
         "week": 0,
         "month": 0,
         "year": 9
+      },
+      "tin-do-be-cung": {
+        "day": 7,
+        "week": 7,
+        "month": 7,
+        "year": 7
       },
       "tranh-nguoi-cua-am-ty": {
         "day": 0,

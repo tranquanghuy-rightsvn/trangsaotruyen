@@ -1011,5 +1011,38 @@
     "year_views": 0,
     "rating": null,
     "nominations": 0
+  },
+  {
+    "id": 34,
+    "slug": "tin-do-be-cung",
+    "title": "TÍN ĐỒ BÉ CƯNG",
+    "author": "Long long team",
+    "genres": [
+      "dam-my"
+    ],
+    "tags": [
+      "Đam mỹ",
+      "Hiện đại",
+      "giam cầm",
+      "chiếm hữu",
+      "bệnh kiều âm trầm tàn nhẫn công x lẵng lơ tâm cơ thụ",
+      "1x1",
+      "HE"
+    ],
+    "work_type": "viet",
+    "status": "full",
+    "chapter_count": 0,
+    "cover": "assets/truyen/tin-do-be-cung-500x750.webp",
+    "hot": false,
+    "created_at": "2026-11-10T13:55:41+07:00",
+    "updated_at": "2026-11-10T13:55:41+07:00",
+    "created_by": "trangsaotruyen@gmail.com",
+    "views": 0,
+    "day_views": 0,
+    "week_views": 0,
+    "month_views": 0,
+    "year_views": 0,
+    "rating": null,
+    "nominations": 0
   }
 ]

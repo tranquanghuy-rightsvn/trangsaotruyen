@@ -39,11 +39,11 @@
   },
   "ga": "",
   "chapters_new": {
-    "as_of": "2026-11-11",
-    "day": 33,
-    "week": 65,
-    "month": 179,
-    "year": 328,
+    "as_of": "2026-11-12",
+    "day": 7,
+    "week": 72,
+    "month": 186,
+    "year": 335,
     "by_slug": {
       "anh-trai-15-giay": {
         "day": 0,
@@ -76,7 +76,7 @@
         "year": 9
       },
       "ca-lo-nha-toi-deu-trong-sinh": {
-        "day": 10,
+        "day": 0,
         "week": 10,
         "month": 10,
         "year": 10
@@ -88,7 +88,7 @@
         "year": 11
       },
       "cong-luoc-alpha-cap-s": {
-        "day": 8,
+        "day": 0,
         "week": 8,
         "month": 8,
         "year": 8
@@ -100,7 +100,7 @@
         "year": 9
       },
       "cuu-toi-ban-than-cua-tong-tai-muon-nam-tren": {
-        "day": 8,
+        "day": 0,
         "week": 8,
         "month": 8,
         "year": 8
@@ -219,6 +219,12 @@
         "month": 0,
         "year": 10
       },
+      "that-gia-bat-phan": {
+        "day": 7,
+        "week": 7,
+        "month": 7,
+        "year": 7
+      },
       "thuong-uyen-ky": {
         "day": 0,
         "week": 0,
@@ -232,7 +238,7 @@
         "year": 9
       },
       "tin-do-be-cung": {
-        "day": 7,
+        "day": 0,
         "week": 7,
         "month": 7,
         "year": 7

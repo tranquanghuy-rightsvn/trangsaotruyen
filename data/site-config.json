@@ -39,11 +39,11 @@
   },
   "ga": "",
   "chapters_new": {
-    "as_of": "2026-11-12",
-    "day": 7,
-    "week": 72,
+    "as_of": "2026-11-13",
+    "day": 9,
+    "week": 58,
     "month": 186,
-    "year": 335,
+    "year": 344,
     "by_slug": {
       "anh-trai-15-giay": {
         "day": 0,
@@ -65,13 +65,13 @@
       },
       "ban-gai-loli-la-ten-bai-thien": {
         "day": 0,
-        "week": 7,
+        "week": 0,
         "month": 7,
         "year": 7
       },
       "binh-sinh-hoan": {
         "day": 0,
-        "week": 9,
+        "week": 0,
         "month": 9,
         "year": 9
       },
@@ -96,7 +96,7 @@
       "cuoc-doi-cua-ta-do-ta-lam-chu": {
         "day": 0,
         "week": 0,
-        "month": 9,
+        "month": 0,
         "year": 9
       },
       "cuu-toi-ban-than-cua-tong-tai-muon-nam-tren": {
@@ -146,6 +146,12 @@
         "week": 0,
         "month": 7,
         "year": 7
+      },
+      "loi-xin-loi-den-muon": {
+        "day": 9,
+        "week": 9,
+        "month": 9,
+        "year": 9
       },
       "muoi-nam-cho-mot-loi-hoi-dap": {
         "day": 0,
@@ -203,7 +209,7 @@
       },
       "so-tay-nuoi-duong-tra-xanh-chinh-quy-hom-nay-tieu-tra-xanh-dong-kich-da-met-chua": {
         "day": 0,
-        "week": 7,
+        "week": 0,
         "month": 7,
         "year": 7
       },
@@ -220,7 +226,7 @@
         "year": 10
       },
       "that-gia-bat-phan": {
-        "day": 7,
+        "day": 0,
         "week": 7,
         "month": 7,
         "year": 7

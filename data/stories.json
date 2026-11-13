@@ -27,7 +27,7 @@
     "title": "Nghe Nói Chim Của Bùi Tổng Hình Như Rất Lớn",
     "author": "sứa",
     "genres": [
-      "hien-dai"
+      "dam-my"
     ],
     "tags": [
       "Đam mỹ",
@@ -38,20 +38,21 @@
       "Tổng tài thâm tình - Cục súc kiêu ngạo thụ",
       "HE."
     ],
+    "work_type": "dich",
     "status": "full",
     "chapter_count": 21,
     "cover": "assets/truyen/nghe-noi-chim-cua-bui-tong-hinh-nhu-rat-lon-500x750.webp",
     "hot": false,
     "created_at": "2026-08-26T15:31:09+07:00",
-    "updated_at": "2026-08-26T15:34:18+07:00",
+    "updated_at": "2026-11-13T20:06:48+07:00",
     "created_by": "trangsaotruyen@gmail.com",
     "views": 2088,
     "day_views": 40,
     "week_views": 1748,
     "month_views": 1902,
+    "year_views": 2088,
     "rating": null,
-    "nominations": 0,
-    "year_views": 2088
+    "nominations": 0
   },
   {
     "id": 3,

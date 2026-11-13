@@ -279,7 +279,7 @@ function initCategoryPage() {
     ).forEach(r => list.appendChild(r));
   } else if (sort === 'hot') {
     rows.slice().sort((a, b) =>
-      (b.querySelector('.row-badge-hot') ? 1 : 0) - (a.querySelector('.row-badge-hot') ? 1 : 0)
+      (Number(b.dataset.views) || 0) - (Number(a.dataset.views) || 0)
     ).forEach(r => list.appendChild(r));
   }
 

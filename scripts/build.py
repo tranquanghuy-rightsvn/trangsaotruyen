@@ -173,10 +173,10 @@ def card_completed(s):
 
 
 def row_category(s):
-    badge = ('<span class="row-badge row-badge-hot">Hot</span>' if s.get("hot") else "")
     return render(tpl("_row-category.html"), {
         "SLUG": esc(s["slug"]), "TITLE": esc(s["title"]), "AUTHOR": esc(s.get("author", "")),
-        "COVER": esc(cover_url(s)), "BADGE": badge,
+        "COVER": esc(cover_url(s)),
+        "VIEWS": int(s.get("views") or 0),
         "CHAPTER_COUNT": s.get("chapter_count", 0),
         "UPDATED_AT": esc(s.get("updated_at", "")),
     })
@@ -265,8 +265,7 @@ def shell(config, page_tpl, mapping, title, description, canonical, og_type="web
 # ---------------------------------------------------------------- trang
 
 def build_home(config, stories, gmap):
-    hot = sorted([s for s in stories if s.get("hot")],
-                 key=lambda s: -int(s.get("week_views") or 0))[:12]
+    hot = sorted(stories, key=lambda s: -int(s.get("views") or 0))[:12]
     latest = sorted(stories, key=lambda s: s.get("updated_at", ""), reverse=True)[:12]
     completed = sorted([s for s in stories if s.get("status") == "full"],
                        key=lambda s: -int(s.get("views") or 0))[:12]

@@ -35,11 +35,11 @@
   },
   "ga": "",
   "chapters_new": {
-    "as_of": "2026-11-13",
-    "day": 9,
-    "week": 58,
-    "month": 186,
-    "year": 344,
+    "as_of": "2026-11-14",
+    "day": 8,
+    "week": 57,
+    "month": 190,
+    "year": 352,
     "by_slug": {
       "anh-trai-15-giay": {
         "day": 0,
@@ -113,6 +113,12 @@
         "month": 15,
         "year": 15
       },
+      "hom-nay-anh-cung-nho-em": {
+        "day": 8,
+        "week": 8,
+        "month": 8,
+        "year": 8
+      },
       "hom-nay-tong-giam-doc-lai-say-mui-huong-cua-toi": {
         "day": 0,
         "week": 0,
@@ -121,8 +127,8 @@
       },
       "hon-nhan-nay-von-la-mot-cai-bay": {
         "day": 0,
-        "week": 9,
-        "month": 13,
+        "week": 0,
+        "month": 9,
         "year": 13
       },
       "ke-san-moi-sap-bay": {
@@ -144,7 +150,7 @@
         "year": 7
       },
       "loi-xin-loi-den-muon": {
-        "day": 9,
+        "day": 0,
         "week": 9,
         "month": 9,
         "year": 9

@@ -35,11 +35,11 @@
   },
   "ga": "",
   "chapters_new": {
-    "as_of": "2026-11-15",
-    "day": 9,
-    "week": 66,
-    "month": 199,
-    "year": 361,
+    "as_of": "2026-11-16",
+    "day": 11,
+    "week": 77,
+    "month": 210,
+    "year": 372,
     "by_slug": {
       "anh-trai-15-giay": {
         "day": 0,
@@ -108,7 +108,7 @@
         "year": 9
       },
       "gap-lai-anh-sau-3-nam": {
-        "day": 9,
+        "day": 0,
         "week": 9,
         "month": 9,
         "year": 9
@@ -214,6 +214,12 @@
         "week": 0,
         "month": 6,
         "year": 6
+      },
+      "sep-toi-hinh-nhu-thich-toi": {
+        "day": 11,
+        "week": 11,
+        "month": 11,
+        "year": 11
       },
       "so-tay-nuoi-duong-tra-xanh-chinh-quy-hom-nay-tieu-tra-xanh-dong-kich-da-met-chua": {
         "day": 0,

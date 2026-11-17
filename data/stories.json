@@ -1247,5 +1247,38 @@
     "year_views": 0,
     "rating": null,
     "nominations": 0
+  },
+  {
+    "id": 42,
+    "slug": "vo-cua-chau-trai",
+    "title": "VỢ CỦA CHÁU TRAI",
+    "author": "Long Long Team",
+    "genres": [
+      "dam-my"
+    ],
+    "tags": [
+      "Đam mỹ",
+      "Hiện đại đô thị",
+      "Cưới trước yêu sau",
+      "Chú cháu văn",
+      "Giấu giếm thân phận",
+      "Ngọt sủng",
+      "Chiếm hữu cao",
+      "H nặng."
+    ],
+    "work_type": "viet",
+    "status": "full",
+    "chapter_count": 0,
+    "cover": "assets/truyen/vo-cua-chau-trai-500x750.webp",
+    "created_at": "2026-11-18T01:41:42+07:00",
+    "updated_at": "2026-11-18T01:41:42+07:00",
+    "created_by": "trangsaotruyen@gmail.com",
+    "views": 0,
+    "day_views": 0,
+    "week_views": 0,
+    "month_views": 0,
+    "year_views": 0,
+    "rating": null,
+    "nominations": 0
   }
 ]

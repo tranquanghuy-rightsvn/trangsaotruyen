@@ -35,11 +35,11 @@
   },
   "ga": "",
   "chapters_new": {
-    "as_of": "2026-11-17",
-    "day": 9,
-    "week": 86,
-    "month": 219,
-    "year": 381,
+    "as_of": "2026-11-18",
+    "day": 10,
+    "week": 78,
+    "month": 244,
+    "year": 406,
     "by_slug": {
       "anh-trai-15-giay": {
         "day": 0,
@@ -73,7 +73,7 @@
       },
       "ca-lo-nha-toi-deu-trong-sinh": {
         "day": 0,
-        "week": 10,
+        "week": 0,
         "month": 10,
         "year": 10
       },
@@ -85,7 +85,7 @@
       },
       "cong-luoc-alpha-cap-s": {
         "day": 0,
-        "week": 8,
+        "week": 0,
         "month": 8,
         "year": 8
       },
@@ -97,7 +97,7 @@
       },
       "cuu-toi-ban-than-cua-tong-tai-muon-nam-tren": {
         "day": 0,
-        "week": 8,
+        "week": 0,
         "month": 8,
         "year": 8
       },
@@ -108,7 +108,7 @@
         "year": 9
       },
       "di-tam-qua-phan-1": {
-        "day": 9,
+        "day": 0,
         "week": 9,
         "month": 9,
         "year": 9
@@ -124,6 +124,12 @@
         "week": 0,
         "month": 15,
         "year": 15
+      },
+      "hang-xom-moi-la-nguoi-yeu-cu-cua-toi": {
+        "day": 10,
+        "week": 10,
+        "month": 10,
+        "year": 10
       },
       "hom-nay-anh-cung-nho-em": {
         "day": 0,
@@ -265,9 +271,15 @@
       },
       "tin-do-be-cung": {
         "day": 0,
-        "week": 7,
+        "week": 0,
         "month": 7,
         "year": 7
+      },
+      "toi-la-trai-thang-du-peter-cua-toi-hoi-khiem-ton-thi-toi-van-la-trai-thang": {
+        "day": 0,
+        "week": 8,
+        "month": 8,
+        "year": 8
       },
       "tranh-nguoi-cua-am-ty": {
         "day": 0,
@@ -280,6 +292,12 @@
         "week": 0,
         "month": 0,
         "year": 11
+      },
+      "vo-cua-chau-trai": {
+        "day": 0,
+        "week": 7,
+        "month": 7,
+        "year": 7
       }
     }
   }

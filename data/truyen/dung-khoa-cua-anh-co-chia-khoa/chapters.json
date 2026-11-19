@@ -1,1 +1,17 @@
-[]
+[
+  {
+    "n": 1,
+    "title": "Chương 1: Chủ nhà không mặc áo",
+    "updated_at": "2026-11-19T20:45:03+07:00"
+  },
+  {
+    "n": 2,
+    "title": "Chương 2: Người quen cũ",
+    "updated_at": "2026-11-19T20:45:03+07:00"
+  },
+  {
+    "n": 3,
+    "title": "Chương 3: Cuộc gặp ở Hoài Thịnh",
+    "updated_at": "2026-11-19T20:45:03+07:00"
+  }
+]

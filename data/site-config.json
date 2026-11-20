@@ -35,11 +35,11 @@
   },
   "ga": "",
   "chapters_new": {
-    "as_of": "2026-11-20",
-    "day": 12,
-    "week": 86,
-    "month": 268,
-    "year": 430,
+    "as_of": "2026-11-21",
+    "day": 10,
+    "week": 88,
+    "month": 278,
+    "year": 440,
     "by_slug": {
       "anh-trai-15-giay": {
         "day": 0,
@@ -83,6 +83,12 @@
         "month": 0,
         "year": 11
       },
+      "chon-ve-cua-hai-cay-chi": {
+        "day": 10,
+        "week": 10,
+        "month": 10,
+        "year": 10
+      },
       "chu-nho-dung-gia-vo-nua": {
         "day": 0,
         "week": 12,
@@ -120,7 +126,7 @@
         "year": 9
       },
       "dung-khoa-cua-anh-co-chia-khoa": {
-        "day": 3,
+        "day": 0,
         "week": 3,
         "month": 3,
         "year": 3
@@ -145,7 +151,7 @@
       },
       "hom-nay-anh-cung-nho-em": {
         "day": 0,
-        "week": 8,
+        "week": 0,
         "month": 8,
         "year": 8
       },
@@ -210,7 +216,7 @@
         "year": 10
       },
       "o-linh-gioi-nang-muu-sinh-lai-muu-ai": {
-        "day": 9,
+        "day": 0,
         "week": 9,
         "month": 9,
         "year": 9

@@ -35,11 +35,11 @@
   },
   "ga": "",
   "chapters_new": {
-    "as_of": "2026-11-21",
-    "day": 10,
-    "week": 88,
-    "month": 278,
-    "year": 440,
+    "as_of": "2026-11-22",
+    "day": 14,
+    "week": 93,
+    "month": 292,
+    "year": 454,
     "by_slug": {
       "anh-trai-15-giay": {
         "day": 0,
@@ -84,7 +84,7 @@
         "year": 11
       },
       "chon-ve-cua-hai-cay-chi": {
-        "day": 10,
+        "day": 0,
         "week": 10,
         "month": 10,
         "year": 10
@@ -126,14 +126,14 @@
         "year": 9
       },
       "dung-khoa-cua-anh-co-chia-khoa": {
-        "day": 0,
-        "week": 3,
-        "month": 3,
-        "year": 3
+        "day": 7,
+        "week": 10,
+        "month": 10,
+        "year": 10
       },
       "gap-lai-anh-sau-3-nam": {
         "day": 0,
-        "week": 9,
+        "week": 0,
         "month": 9,
         "year": 9
       },
@@ -232,6 +232,12 @@
         "week": 0,
         "month": 9,
         "year": 9
+      },
+      "ruou-qua-moi-nguoi-trong-mong": {
+        "day": 7,
+        "week": 7,
+        "month": 7,
+        "year": 7
       },
       "sau-khi-bi-me-ruot-nem-len-giuong-tinh-nhan-toi-thanh-phu-nhan-hao-mon": {
         "day": 0,

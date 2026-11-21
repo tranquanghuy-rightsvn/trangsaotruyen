@@ -1,1 +1,37 @@
-[]
+[
+  {
+    "n": 1,
+    "title": "Chương 1: Đêm say ở Thẩm phủ",
+    "updated_at": "2026-11-21T17:22:32+07:00"
+  },
+  {
+    "n": 2,
+    "title": "Chương 2: Trên triều, dưới hiên",
+    "updated_at": "2026-11-21T17:22:32+07:00"
+  },
+  {
+    "n": 3,
+    "title": "Chương 3: Người trong lòng dưới mái hiên",
+    "updated_at": "2026-11-21T17:22:32+07:00"
+  },
+  {
+    "n": 4,
+    "title": "Chương 4: Hồng trang đón người về",
+    "updated_at": "2026-11-21T17:22:32+07:00"
+  },
+  {
+    "n": 5,
+    "title": "Chương 5: Đêm dài trong phủ tướng quân",
+    "updated_at": "2026-11-21T17:22:32+07:00"
+  },
+  {
+    "n": 6,
+    "title": "Chương 6: Xuân về có người bên cạnh",
+    "updated_at": "2026-11-21T17:22:32+07:00"
+  },
+  {
+    "n": 7,
+    "title": "Chương 7: Một đời bên nhau",
+    "updated_at": "2026-11-21T17:22:32+07:00"
+  }
+]

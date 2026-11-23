@@ -35,11 +35,11 @@
   },
   "ga": "",
   "chapters_new": {
-    "as_of": "2026-11-23",
-    "day": 9,
-    "week": 91,
-    "month": 293,
-    "year": 463,
+    "as_of": "2026-11-24",
+    "day": 15,
+    "week": 97,
+    "month": 296,
+    "year": 478,
     "by_slug": {
       "anh-trai-15-giay": {
         "day": 0,
@@ -120,14 +120,14 @@
         "year": 9
       },
       "dan-em-bien-thai-dan-anh-cung-chang-vua": {
-        "day": 9,
+        "day": 0,
         "week": 9,
         "month": 9,
         "year": 9
       },
       "di-tam-qua-phan-1": {
         "day": 0,
-        "week": 9,
+        "week": 0,
         "month": 9,
         "year": 9
       },
@@ -203,6 +203,12 @@
         "month": 6,
         "year": 6
       },
+      "nang-la-som-som-chieu-chieu": {
+        "day": 15,
+        "week": 15,
+        "month": 15,
+        "year": 15
+      },
       "nghe-noi-chim-cua-bui-tong-hinh-nhu-rat-lon": {
         "day": 0,
         "week": 0,
@@ -212,7 +218,7 @@
       "ngoc-sanh-ben-tram": {
         "day": 0,
         "week": 0,
-        "month": 12,
+        "month": 0,
         "year": 12
       },
       "nguoi-iu-trong-than-xac-ca-ca": {

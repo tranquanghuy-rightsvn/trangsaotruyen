@@ -35,11 +35,11 @@
   },
   "ga": "",
   "chapters_new": {
-    "as_of": "2026-11-24",
-    "day": 15,
-    "week": 97,
-    "month": 296,
-    "year": 478,
+    "as_of": "2026-11-25",
+    "day": 6,
+    "week": 93,
+    "month": 294,
+    "year": 484,
     "by_slug": {
       "anh-trai-15-giay": {
         "day": 0,
@@ -82,6 +82,12 @@
         "week": 0,
         "month": 0,
         "year": 11
+      },
+      "chim-hoang-yen-cua-ta-tong": {
+        "day": 6,
+        "week": 6,
+        "month": 6,
+        "year": 6
       },
       "chon-ve-cua-hai-cay-chi": {
         "day": 0,
@@ -151,7 +157,7 @@
       },
       "hang-xom-moi-la-nguoi-yeu-cu-cua-toi": {
         "day": 0,
-        "week": 10,
+        "week": 0,
         "month": 10,
         "year": 10
       },
@@ -164,7 +170,7 @@
       "hom-nay-tong-giam-doc-lai-say-mui-huong-cua-toi": {
         "day": 0,
         "week": 0,
-        "month": 8,
+        "month": 0,
         "year": 8
       },
       "hon-nhan-nay-von-la-mot-cai-bay": {
@@ -204,7 +210,7 @@
         "year": 6
       },
       "nang-la-som-som-chieu-chieu": {
-        "day": 15,
+        "day": 0,
         "week": 15,
         "month": 15,
         "year": 15

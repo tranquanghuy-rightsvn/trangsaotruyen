@@ -1,1 +1,32 @@
-[]
+[
+  {
+    "n": 1,
+    "title": "Chương 1: Chim hoàng yến nhà họ Tạ",
+    "updated_at": "2026-11-24T22:24:43+07:00"
+  },
+  {
+    "n": 2,
+    "title": "Chương 2: Buổi đấu giá tối thứ Sáu",
+    "updated_at": "2026-11-24T22:24:43+07:00"
+  },
+  {
+    "n": 3,
+    "title": "Chương 3: Những người bạn cũ",
+    "updated_at": "2026-11-24T22:24:43+07:00"
+  },
+  {
+    "n": 4,
+    "title": "Chương 4: Người từng bị cười nhạo",
+    "updated_at": "2026-11-24T22:24:43+07:00"
+  },
+  {
+    "n": 5,
+    "title": "Chương 5: Người không muốn buông tay",
+    "updated_at": "2026-11-24T22:24:43+07:00"
+  },
+  {
+    "n": 6,
+    "title": "Chương 6: Chuyện xảy ra ba năm trước",
+    "updated_at": "2026-11-24T22:24:43+07:00"
+  }
+]

@@ -35,11 +35,11 @@
   },
   "ga": "",
   "chapters_new": {
-    "as_of": "2026-11-25",
-    "day": 6,
-    "week": 93,
-    "month": 294,
-    "year": 484,
+    "as_of": "2026-11-26",
+    "day": 48,
+    "week": 114,
+    "month": 322,
+    "year": 532,
     "by_slug": {
       "anh-trai-15-giay": {
         "day": 0,
@@ -52,6 +52,12 @@
         "week": 0,
         "month": 0,
         "year": 12
+      },
+      "ba-gay-me-les-toi-la-tong-cong-dai-nhan": {
+        "day": 9,
+        "week": 9,
+        "month": 9,
+        "year": 9
       },
       "ba-thay-tarot": {
         "day": 0,
@@ -84,7 +90,7 @@
         "year": 11
       },
       "chim-hoang-yen-cua-ta-tong": {
-        "day": 6,
+        "day": 0,
         "week": 6,
         "month": 6,
         "year": 6
@@ -97,7 +103,7 @@
       },
       "chu-nho-dung-gia-vo-nua": {
         "day": 0,
-        "week": 12,
+        "week": 0,
         "month": 12,
         "year": 12
       },
@@ -137,6 +143,12 @@
         "month": 9,
         "year": 9
       },
+      "du-phu-nhan-cho-con-100-trieu-con-cung-khong-roi-xa-anh-ay": {
+        "day": 8,
+        "week": 8,
+        "month": 8,
+        "year": 8
+      },
       "dung-khoa-cua-anh-co-chia-khoa": {
         "day": 0,
         "week": 10,
@@ -148,6 +160,12 @@
         "week": 0,
         "month": 9,
         "year": 9
+      },
+      "ghen-tuong-cung-can-coi-tuoi-sao": {
+        "day": 7,
+        "week": 7,
+        "month": 7,
+        "year": 7
       },
       "gio-tuyet-nam-ay": {
         "day": 0,
@@ -182,7 +200,7 @@
       "ke-san-moi-sap-bay": {
         "day": 0,
         "week": 0,
-        "month": 9,
+        "month": 0,
         "year": 9
       },
       "khong-ngoan-thi-khong-can-nua": {
@@ -305,10 +323,16 @@
         "month": 7,
         "year": 7
       },
+      "thieu-tuong-tra-xanh-cuop-vo-cua-nguoi-ta-roi": {
+        "day": 8,
+        "week": 8,
+        "month": 8,
+        "year": 8
+      },
       "thuong-uyen-ky": {
         "day": 0,
         "week": 0,
-        "month": 11,
+        "month": 0,
         "year": 11
       },
       "tieu-bao-cua-toi-la-luc-tong": {
@@ -325,6 +349,12 @@
       },
       "toi-la-trai-thang-du-peter-cua-toi-hoi-khiem-ton-thi-toi-van-la-trai-thang": {
         "day": 0,
+        "week": 0,
+        "month": 8,
+        "year": 8
+      },
+      "tong-tai-ot-hiem-noi-thich-toi": {
+        "day": 8,
         "week": 8,
         "month": 8,
         "year": 8
@@ -343,9 +373,15 @@
       },
       "vo-cua-chau-trai": {
         "day": 0,
-        "week": 7,
+        "week": 0,
         "month": 7,
         "year": 7
+      },
+      "xuyen-vao-co-the-cua-cua-mot-ten-dan-ong-co-bap": {
+        "day": 8,
+        "week": 8,
+        "month": 8,
+        "year": 8
       }
     }
   }

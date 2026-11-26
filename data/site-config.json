@@ -35,11 +35,11 @@
   },
   "ga": "",
   "chapters_new": {
-    "as_of": "2026-11-26",
-    "day": 48,
-    "week": 114,
-    "month": 322,
-    "year": 532,
+    "as_of": "2026-11-27",
+    "day": 29,
+    "week": 131,
+    "month": 351,
+    "year": 561,
     "by_slug": {
       "anh-trai-15-giay": {
         "day": 0,
@@ -54,7 +54,7 @@
         "year": 12
       },
       "ba-gay-me-les-toi-la-tong-cong-dai-nhan": {
-        "day": 9,
+        "day": 0,
         "week": 9,
         "month": 9,
         "year": 9
@@ -90,10 +90,10 @@
         "year": 11
       },
       "chim-hoang-yen-cua-ta-tong": {
-        "day": 0,
-        "week": 6,
-        "month": 6,
-        "year": 6
+        "day": 3,
+        "week": 9,
+        "month": 9,
+        "year": 9
       },
       "chon-ve-cua-hai-cay-chi": {
         "day": 0,
@@ -144,14 +144,20 @@
         "year": 9
       },
       "du-phu-nhan-cho-con-100-trieu-con-cung-khong-roi-xa-anh-ay": {
-        "day": 8,
+        "day": 0,
         "week": 8,
         "month": 8,
         "year": 8
       },
+      "dung-bat-toi-chon-mot-trong-hai-nguoi": {
+        "day": 12,
+        "week": 12,
+        "month": 12,
+        "year": 12
+      },
       "dung-khoa-cua-anh-co-chia-khoa": {
         "day": 0,
-        "week": 10,
+        "week": 7,
         "month": 10,
         "year": 10
       },
@@ -162,10 +168,16 @@
         "year": 9
       },
       "ghen-tuong-cung-can-coi-tuoi-sao": {
-        "day": 7,
+        "day": 0,
         "week": 7,
         "month": 7,
         "year": 7
+      },
+      "gia-dinh-ca-man": {
+        "day": 14,
+        "week": 14,
+        "month": 14,
+        "year": 14
       },
       "gio-tuyet-nam-ay": {
         "day": 0,
@@ -253,7 +265,7 @@
       },
       "o-linh-gioi-nang-muu-sinh-lai-muu-ai": {
         "day": 0,
-        "week": 9,
+        "week": 0,
         "month": 9,
         "year": 9
       },
@@ -324,7 +336,7 @@
         "year": 7
       },
       "thieu-tuong-tra-xanh-cuop-vo-cua-nguoi-ta-roi": {
-        "day": 8,
+        "day": 0,
         "week": 8,
         "month": 8,
         "year": 8
@@ -354,7 +366,7 @@
         "year": 8
       },
       "tong-tai-ot-hiem-noi-thich-toi": {
-        "day": 8,
+        "day": 0,
         "week": 8,
         "month": 8,
         "year": 8
@@ -378,7 +390,7 @@
         "year": 7
       },
       "xuyen-vao-co-the-cua-cua-mot-ten-dan-ong-co-bap": {
-        "day": 8,
+        "day": 0,
         "week": 8,
         "month": 8,
         "year": 8

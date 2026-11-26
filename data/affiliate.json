@@ -30,6 +30,6 @@
     "position": "center",
     "delay_sec": 10,
     "auto_close_sec": 0,
-    "repeat_sec": 100
+    "repeat_sec": 200
   }
 }

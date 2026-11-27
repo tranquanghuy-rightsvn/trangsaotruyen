@@ -35,10 +35,10 @@
   },
   "ga": "",
   "chapters_new": {
-    "as_of": "2026-11-27",
-    "day": 29,
-    "week": 131,
-    "month": 351,
+    "as_of": "2026-11-28",
+    "day": 0,
+    "week": 121,
+    "month": 345,
     "year": 561,
     "by_slug": {
       "anh-trai-15-giay": {
@@ -90,14 +90,14 @@
         "year": 11
       },
       "chim-hoang-yen-cua-ta-tong": {
-        "day": 3,
+        "day": 0,
         "week": 9,
         "month": 9,
         "year": 9
       },
       "chon-ve-cua-hai-cay-chi": {
         "day": 0,
-        "week": 10,
+        "week": 0,
         "month": 10,
         "year": 10
       },
@@ -150,7 +150,7 @@
         "year": 8
       },
       "dung-bat-toi-chon-mot-trong-hai-nguoi": {
-        "day": 12,
+        "day": 0,
         "week": 12,
         "month": 12,
         "year": 12
@@ -174,7 +174,7 @@
         "year": 7
       },
       "gia-dinh-ca-man": {
-        "day": 14,
+        "day": 0,
         "week": 14,
         "month": 14,
         "year": 14
@@ -302,7 +302,7 @@
       "sau-khi-toi-xoa-bo-thiet-lap-alpha-cua-toi-phat-dien-roi": {
         "day": 0,
         "week": 0,
-        "month": 6,
+        "month": 0,
         "year": 6
       },
       "sep-toi-hinh-nhu-thich-toi": {
